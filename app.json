@@ -9,11 +9,5 @@
   },
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate"
-  },
-
-  "formation": {
-  },
-  "buildpacks": [
-
-  ]
+  }
 }
