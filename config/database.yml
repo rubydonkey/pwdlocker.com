@@ -21,4 +21,4 @@ test:
   database: pwdlocker_test
 
 production:
-  encoding: utf8
+  url: <%= ENV['DATABASE_URL'] %>
