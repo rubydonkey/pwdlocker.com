@@ -1,0 +1,31 @@
+<% provide(:title, "Home") %>
+<div class="container">
+  <div class="jumbotron center">
+    <div class="row">
+      <div class="col-md-6 col-centered">
+        <h2> My Passwords </h2>
+        <%= link_to passwords_new_path, remote: true, id: "new_password_link" do %>
+            <button class="btn btn-success">Add</button>
+        <% end %>
+      </div>
+      <div class="col-md-6 col-centered form-pwd" id="password_form" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+<div class='container table-pwd'>
+  <table class="table table-passwords">
+    <thead>
+    <tr>
+      <th> Title </th>
+      <th> Username </th>
+      <th> Password </th>
+      <th> URL </th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody id="passwords">
+    <%= render @passwords %>
+    </tbody>
+  </table>
+</div>
