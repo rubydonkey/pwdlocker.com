@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class PasswordsControllerTest < ActionDispatch::IntegrationTest
-
   def setup
     @password = passwords(:password_0)
   end

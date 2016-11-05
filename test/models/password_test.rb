@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class PasswordTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-
   def setup
     @password = Password.new(title: "Example", username: "ExampleUser", password: "ExamplePassword", URL: "www.example.com")
   end
@@ -27,5 +23,4 @@ class PasswordTest < ActiveSupport::TestCase
     @password.username = " " * 5
     assert_not @password.valid?
   end
-
 end

@@ -6,12 +6,14 @@
 #
 default: &default
   adapter: postgresql
+  encoding: unicode
   pool: 5
   timeout: 5000
+  username: zarko
 
 development:
   <<: *default
-  database: pwdlocker_dev
+  database: pwdlocker_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
