@@ -1,12 +1,6 @@
 require 'test_helper'
 
 class PasswordsAddTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-
-  def setup
-  end
 
   test 'page layout' do
 
@@ -169,6 +163,3 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
   end
 
 end
-
-
-

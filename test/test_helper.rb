@@ -35,7 +35,6 @@ class ActiveSupport::TestCase
     data
   end
 
-
   VALID_URLS = %w[  http://www.altpress.org/
                     http://www.nzfortress.co.nz
                     http://www.evillasforsale.com
