@@ -6,14 +6,18 @@
     <div class="form-group row">
       <label for="example-tel-input" class="col-md-3 col-form-label">Cellphone:</label>
       <div class="col-md-9">
-        <input class="form-control" type="tel" value="" placeholder="+1 (234) 567 - 890" id="example-tel-input">
+       <form accept-charset="UTF-8" method='post' action='/signin/show'>
+         <input class="form-control" name="phone_number" type="tel" value="" placeholder="+1 (234) 567 - 890" id="example-tel-input"> 
+       </form>
       </div>
 
     </div>
 
     <p><em>We will text you a secret token in SMS message. On next page you can use this secret token to sign in to <a href="/">pwdlocker.com</a></em></p>
-
-    <input type='submit' value='Get token' class='btn btn-primary' />
+    
+    <form accept-charset="UTF-8" method='post' action='/signin/show'>
+    <input type='submit' value='Get token' class='btn btn-primary' name="phone_number" />
+    </form>
   </div>
 
 </div>
