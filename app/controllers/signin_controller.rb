@@ -1,22 +1,7 @@
 class SigninController < ApplicationController
   
-    skip_before_filter :verify_authenticity_token, :only => [:show]
+   skip_before_filter :verify_authenticity_token, :only => [:show]
  
-   def valid?(phone_number)
-     lookup_client = Twilio::REST::LookupsClient.new(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-     begin
-       response = lookup_client.phone_numbers.get(phone_number)
-       response.phone_number #if invalid, throws an exception. If valid, no problems.
-       return true
-       rescue => e
-       if e.code == 20404
-        return false
-       else
-        raise e
-       end
-     end  
-   end
-
    def new
    end
 
@@ -34,4 +19,22 @@ class SigninController < ApplicationController
 
    def secret_token
    end
+
+  private
+
+    def valid?(phone_number)
+     lookup_client = Twilio::REST::LookupsClient.new(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+     begin
+       response = lookup_client.phone_numbers.get(phone_number)
+       response.phone_number #if invalid, throws an exception. If valid, no problems.
+       return true
+       rescue => e
+       if e.code == 20404
+        return false
+       else
+        raise e
+       end
+     end  
+   end
+
 end
