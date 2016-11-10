@@ -13,7 +13,7 @@ class SigninController < ApplicationController
       if valid?(phone_number)
       	render 'secret_token'
       else
-      	 render 'new'
+      	 render 'shared/warnning_message'
       end
    end
 
