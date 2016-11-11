@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'capybara/poltergeist'
 
 class PasswordsAddTest < ActionDispatch::IntegrationTest
   # test "the truth" do
@@ -8,7 +7,6 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
 
   def setup
     @password = passwords(:password_0)
-    Capybara.javascript_driver = :poltergeist
   end
 
 
@@ -18,6 +16,8 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     click_button('Add')
 
     data = get_random_password_data
+
+    save_and_open_screenshot
     page.fill_in('Title',    :with => data[:title])
 
   end

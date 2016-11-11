@@ -3,6 +3,10 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'capybara/rails'
 
+require 'capybara/poltergeist'
+
+Capybara.default_driver = :poltergeist
+
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
