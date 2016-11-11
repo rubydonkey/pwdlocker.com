@@ -2,6 +2,11 @@ require 'test_helper'
 
 class PasswordsAddTest < ActionDispatch::IntegrationTest
 
+  def setup
+    @password = passwords(:password_0)
+  end
+
+
   test 'page layout' do
 
     # test page layout

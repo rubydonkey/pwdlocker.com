@@ -6,6 +6,10 @@ require 'capybara/poltergeist'
 
 Capybara.default_driver = :poltergeist
 
+require 'capybara/poltergeist'
+
+Capybara.default_driver = :poltergeist
+
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
