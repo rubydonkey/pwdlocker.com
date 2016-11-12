@@ -32,7 +32,7 @@ class SigninController < ApplicationController
        if e.code == 20404
         return false
        else
-        raise e
+        raise e 
        end
      end  
    end
