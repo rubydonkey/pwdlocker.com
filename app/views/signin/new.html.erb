@@ -13,6 +13,10 @@
      
     </div>
 
+    <% if @error == true %>
+    <p style="color:red;"><em>You have entered wrong phone number format, please try again! </em></p>
+    <% end %>
+
     <p><em>We will text you a secret token in SMS message. On next page you can use this secret token to sign in to <a href="/">pwdlocker.com</a></em></p>
     
     <input type='submit' value='Get token' class='btn btn-primary' name = "submit" />
