@@ -11,7 +11,7 @@ class SigninController < ApplicationController
    	  #@code = response.country_code
 
       if valid?(@phone_number)
-      	render 'secret_token'
+      	render 'signin/secret_token'
       else
       	 render 'new.html.erb'
       end
@@ -33,8 +33,8 @@ class SigninController < ApplicationController
        if e.code == 20404
        	@error = true
         return false
-       else
-         raise e 
+       #else
+        # raise e 
        end
      end  
    end
