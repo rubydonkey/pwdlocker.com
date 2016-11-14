@@ -10,14 +10,15 @@ class SigninController < ApplicationController
       
    	 
       if valid?(@phone_number)
-      	redirect_to signin_secret_token_path
+      	redirect_to signin_secret_token_path({"phone"=>@response.phone_number, "national_format"=>@response.national_format, "country_code" => @response.country_code}
+)
       else
       	render 'new'
       end
    end
 
    def secret_token 
-     
+       
    end
 
   private
