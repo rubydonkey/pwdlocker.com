@@ -3,7 +3,7 @@
     <h2>Sign in</h2>
     <p>Please sign in using your cellphone number.</p>
 
-    <form name="myForm"  accept-charset="UTF-8" method='post' action='/signin/show' onsubmit="return validateForm()">
+    <form   accept-charset="UTF-8" method='post' action='/signin/show' >
 
     <div class="form-group row">
       <label for="example-tel-input" class="col-md-3 col-form-label">Cellphone:</label>
@@ -15,6 +15,10 @@
 
     <% if @error == true %>
     <p style="color:red;"><em>You have entered wrong phone number format, please try again! </em></p>
+    <% end %>
+
+    <% if @blank == true %>
+    <p style="color:red;"><em>Empty phone number! </em></p>
     <% end %>
 
     <p><em>We will text you a secret token in SMS message. On next page you can use this secret token to sign in to <a href="/">pwdlocker.com</a></em></p>

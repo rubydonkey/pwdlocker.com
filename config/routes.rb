@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   get  'signin/show'
   post 'signin/show'
   get  'signin/secret_token'
+  
 
 end
