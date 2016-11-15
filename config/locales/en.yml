@@ -21,3 +21,7 @@
 
 en:
   hello: "Hello world"
+  phone_number:
+    invalid: You have entered invalid phone number, please try again.
+    blank: Phone number can not be blank, please try again.
+

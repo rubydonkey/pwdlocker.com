@@ -8,21 +8,25 @@
     <div class="form-group row">
       <label for="example-tel-input" class="col-md-3 col-form-label">Cellphone:</label>
       <div class="col-md-9">
-         <input class="form-control" name="phone_number" type="tel" value="" placeholder="+1 (234) 567 - 890" id="example-tel-input"> 
+         <input class="form-control" name="phone_number" type="tel" value="<%=params[:phone_number]%>" placeholder="+1 (234) 567 - 890" id="example-tel-input">
       </div>
-     
+
     </div>
 
     <% if @error == true %>
-    <p style="color:red;"><em>You have entered wrong phone number format, please try again! </em></p>
+      <p class="text-danger">
+        <em><%= t 'phone_number.invalid' %></em>
+      </p>
     <% end %>
 
     <% if @blank == true %>
-    <p style="color:red;"><em>Empty phone number! </em></p>
+      <p class="text-danger">
+        <em><%= t 'phone_number.blank' %></em>
+      </p>
     <% end %>
 
     <p><em>We will text you a secret token in SMS message. On next page you can use this secret token to sign in to <a href="/">pwdlocker.com</a></em></p>
-    
+
     <input type='submit' value='Get token' class='btn btn-primary' name = "submit" />
     </form>
   </div>
