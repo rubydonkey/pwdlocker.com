@@ -3,6 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'capybara/rails'
 
+
 require 'capybara/poltergeist'
 
 Capybara.default_driver = :poltergeist
@@ -30,7 +31,7 @@ class ActiveSupport::TestCase
     data = Hash.new
 
     data[:title]    = Faker::Lorem.words(2).join(' ')
-    data[:url]      = Faker::Internet.url
+    data[:URL]      = Faker::Internet.url
     data[:username] = Faker::Internet.user_name
     data[:password] = Faker::Internet.password(6, 10)
 

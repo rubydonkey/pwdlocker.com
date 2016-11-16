@@ -4,5 +4,5 @@
   $('#password_form').hide();
   $('.new_password').remove();
   $('#new_password_link').show();
-  $('#passwords').append('<%= j render @password %>');
+  $('#passwords').prepend('<%= j render @password %>');
 <% end %>
