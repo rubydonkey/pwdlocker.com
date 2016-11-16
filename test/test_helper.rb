@@ -6,6 +6,7 @@ require 'capybara/poltergeist'
 
 Capybara.default_driver = :poltergeist
 
+
 require 'capybara/poltergeist'
 
 Capybara.default_driver = :poltergeist

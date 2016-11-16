@@ -2,13 +2,7 @@ require 'test_helper'
 
 class PasswordsAddTest < ActionDispatch::IntegrationTest
 
-  def setup
-    @password = passwords(:password_0)
-  end
-
-
   test 'page layout' do
-
     # test page layout
     visit(root_path)
 
@@ -88,7 +82,6 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     password.errors.count.times do |i|
       assert(page.has_css?("li:nth-child(#{i + 1})", :text => password.errors.full_messages[i]))
     end
-
   end
 
   test 'edit and update password' do
@@ -141,7 +134,6 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     password.errors.count.times do |i|
       assert(page.has_css?("li:nth-child(#{i + 1})", :text => password.errors.full_messages[i]))
     end
-
   end
 
   test 'destroy password' do
@@ -166,5 +158,6 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     assert(page.has_css?('form', :count => 1))
 
   end
+
 
 end
