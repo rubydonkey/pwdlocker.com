@@ -5,7 +5,7 @@
   "success_url": "/",
   "addons": ["heroku-postgresql:hobby-dev"],
   "env": {
-    "RAILS_ENV": "production",
+    "RAILS_ENV": "production"
   },
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate"

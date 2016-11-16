@@ -14,3 +14,30 @@
  */
 
 @import "bootstrap";
+
+html {
+  background: asset-url('cover.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.cover.jpg', sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='cover.jpg', sizingMethod='scale')";
+
+  background-color: #fff;
+}
+
+body {
+  background-color: transparent;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 5em;
+
+    h1 {
+      background-color: rgba(0,0,0,0.5);
+      text-align: center;
+      color: #fff;
+    }
+  }
+}
