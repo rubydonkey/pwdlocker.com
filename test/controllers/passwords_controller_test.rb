@@ -33,21 +33,47 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'get edit password' do
+    get edit_password_path(@password), xhr: true
+    assert_response :success
+  end
+
   test 'should update valid password' do
 
     data = get_random_password_data
 
-    patch edit_password_path(@password), xhr: true, params: { password:      { title:     data[:title],
-                                                                               URL:       data[:URL],
-                                                                               username:  data[:username],
-                                                                               password:  data[:password] }}
+    patch password_path(@password), xhr: true, params: { password:     { title:     data[:title],
+                                                                         URL:       data[:URL],
+                                                                         username:  data[:username],
+                                                                         password:  data[:password] }}
 
     @password.reload
 
     data.keys.each do |key|
       assert(@password.attributes.has_value?(data[key]))
     end
+  end
 
+  test 'should not update with invalid password data' do
+
+    data = get_random_password_data
+    data[:password] = "foo" #password to short
+
+    patch password_path(@password), xhr: true, params: { password:     { title:     data[:title],
+                                                                         URL:       data[:URL],
+                                                                         username:  data[:username],
+                                                                         password:  data[:password] }}
+
+    @password.reload
+    data.keys.each do |key|
+      assert_not @password.attributes.has_value?(data[key])
+    end
+  end
+
+  test 'destroy password' do
+    assert_difference 'Password.count', -1 do
+      delete password_path(@password), xhr: true
+    end
   end
 
 end
