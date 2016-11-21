@@ -109,7 +109,7 @@ GEM
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
     public_suffix (2.0.4)
-    puma (3.6.0)
+    puma (3.6.1)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
