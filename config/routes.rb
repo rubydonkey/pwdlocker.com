@@ -6,5 +6,12 @@ Rails.application.routes.draw do
   root to: "pages#index"
 
   resources :passwords
+  # root to: "signin#new"
 
+  get '/signin', to: 'signin#new', as: :signin
+
+  get  'signin/show'
+  post 'signin/show'
+  get  'signin/secret_token'
+  post 'signin/secret_token'
 end

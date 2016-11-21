@@ -1,7 +1,8 @@
 module ApplicationHelper
 
   def full_title(title = "")
-    base_title = "pwdlocker.com"
+    base_title = "keys Locker"
+
     if(title.empty?)
       base_title
     else
