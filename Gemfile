@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+gem 'faker', '1.6.3'
 
 gem 'pg'
 
@@ -28,11 +29,21 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'bootstrap', '~> 4.0.0.alpha4'
+#gem 'bootstrap', '~> 4.0.0.alpha4'
+gem 'bootstrap-sass', '3.3.6'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'capybara'
+  gem "launchy"
+  # gem 'capybara-webkit', git: "https://github.com/thoughtbot/capybara-webkit.git"
+  gem 'selenium-webdriver'
+  gem 'poltergeist'
+
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
+
+  gem 'rails-controller-testing'
 end
 
 group :development do
@@ -49,6 +60,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'twilio-ruby', '4.13.0'
 
-gem 'rails-controller-testing'
 
 gem 'capybara'

@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>keys Locker</title>
+    <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -13,8 +13,6 @@
 
   <body>
     <div class='container'>
-      <h1 class='display-3 hidden-xs hidden-xs-down'>keys Locker | passwords no more!</h1>
-      <h1 class='hidden-sm-up'>pwdlocker.com</h1>
       <div class='row'>
         <div class='col-md-12'>
           <%= yield %>

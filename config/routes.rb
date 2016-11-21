@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  get 'passwords/new'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root to: "signin#new"
+  root to: "pages#index"
+
+  resources :passwords
+  # root to: "signin#new"
 
   get '/signin', to: 'signin#new', as: :signin
 
@@ -9,6 +14,4 @@ Rails.application.routes.draw do
   post 'signin/show'
   get  'signin/secret_token'
   post 'signin/secret_token'
-
-
 end

@@ -1,0 +1,18 @@
+<%= form_for @password, remote: true do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
+
+    <%= f.label :URL %>
+    <%= f.text_field :URL, class: "form-control" %>
+
+    <%= f.label :username %>
+    <%= f.text_field :username, class: "form-control" %>
+
+    <%= f.label :password %>
+    <%= f.text_field :password, class: "form-control" %>
+
+    <%= f.submit class: "btn btn-success" %>
+
+<% end %>

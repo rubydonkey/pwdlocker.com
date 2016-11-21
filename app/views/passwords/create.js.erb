@@ -1,0 +1,8 @@
+<% if @password.errors.any? %>
+  $('.new_password').replaceWith("<%= j render 'passwords/form' %>")
+<% else %>
+  $('#password_form').hide();
+  $('.new_password').remove();
+  $('#new_password_link').show();
+  $('#passwords').prepend('<%= j render @password %>');
+<% end %>
