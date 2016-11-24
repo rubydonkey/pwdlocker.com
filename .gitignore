@@ -21,3 +21,4 @@
 
 .idea/
 config/database.yml
+.env.local

@@ -39,17 +39,9 @@ class ValidatePhoneNumberTest < ActionDispatch::IntegrationTest
   end
 
   test 'Getting secret token page without phone number' do
-    get '/signin/secret_token', params: {phone_number: ''}
+    get '/signin/secret_token'
     follow_redirect!
 
     assert_equal signin_path, path
-  end
-
-  test 'Getting secret token page with phone number' do
-    get '/signin/secret_token', params: {phone_number: '+381652932222'}
-    assert_response :success
-
-    assert_equal '/signin/secret_token', path
-
   end
 end
