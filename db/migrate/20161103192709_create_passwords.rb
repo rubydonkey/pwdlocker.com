@@ -4,7 +4,7 @@ class CreatePasswords < ActiveRecord::Migration[5.0]
       t.string :title
       t.string :URL
       t.string :username
-      t.text :password
+      t.string :password
 
       t.timestamps
     end
