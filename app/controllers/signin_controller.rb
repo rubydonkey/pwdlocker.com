@@ -1,4 +1,6 @@
 require 'twilio-ruby'
+require 'securerandom'
+
 
 class SigninController < ApplicationController
 
@@ -10,6 +12,14 @@ class SigninController < ApplicationController
   def show
   	if phone_number = valid?(params[:phone_number])
       session[:phone_number] = phone_number
+      token = SecureRandom.random_number * (10**8)
+      twilio_phone_number = "+17032910306"
+      @twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+      @twilio_client.account.sms.messages.create(
+      :from => "#{twilio_phone_number}",
+      :to => phone_number,
+      :body => " #{token.round.to_s}"
+      )
     	redirect_to signin_secret_token_path()
     else
     	render 'new'
@@ -20,6 +30,13 @@ class SigninController < ApplicationController
     @phone_number = session[:phone_number]
     redirect_to signin_path unless @phone_number
   end
+
+
+  
+
+
+
+
 
   private
 
