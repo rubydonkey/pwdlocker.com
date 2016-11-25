@@ -7,12 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-100.times do |n|
+10.times do |n|
 
   title = Faker::Lorem.words(2).join(' ')
   url = Faker::Internet.url
   username = Faker::Internet.user_name
-  password = Faker::Internet.password(6, 10)
+  password = Faker::Internet.password(3, 100)
 
   Password.create!( title: title,
                     URL: url,

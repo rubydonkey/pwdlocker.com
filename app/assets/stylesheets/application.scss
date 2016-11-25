@@ -48,6 +48,16 @@ body {
   padding-top: 10px;
 }
 
+table {
+  table-layout: fixed;
+  width: 100%;
+
+  td {
+    word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+  }
+}
+
 .col-centered{
   float: none;
   margin: 0 auto;

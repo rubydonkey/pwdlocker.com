@@ -18,11 +18,6 @@ class PasswordTest < ActiveSupport::TestCase
     assert_not @password.valid?
   end
 
-  test 'password should be min length of 6 characters' do
-    @password.password = 'foo'
-    assert_not @password.valid?
-  end
-
   test 'title should be present' do
     @password.title = " " * 5
     assert_not @password.valid?

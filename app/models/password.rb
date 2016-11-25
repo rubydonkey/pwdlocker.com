@@ -4,7 +4,7 @@ class Password < ApplicationRecord
 
   validates :title, presence: true
   validates :username, presence: true
-  validates :password, presence: true, length: {minimum: 6}
+  validates :password, presence: true
 
   default_scope -> { order(title: :asc) }
 
