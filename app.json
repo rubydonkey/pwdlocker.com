@@ -11,6 +11,9 @@
     },
     "TWILIO_AUTH_TOKEN": {
       "required": true
+    },
+    "TWILIO_PHONE_NUMBER": {
+      "required": true
     }
   },
   "scripts": {
