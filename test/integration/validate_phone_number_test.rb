@@ -2,9 +2,15 @@ require 'test_helper'
 
 class ValidatePhoneNumberTest < ActionDispatch::IntegrationTest
   INVALID_PHONE_NUMBER = "+3816453"
+  VALID_PHONE_NUMBERS = ["+381640347000", "381640347000", "+381(64)034-7000", "+381 64 034 70 00"]
+
+  def setup
+    Twilio::REST::Messages.any_instance.stubs(:create)
+  end
 
   test "Invalid phone number" do
     get signin_path
+
     assert_response :success
     assert_equal signin_path, path
     post "/signin/show", params: {:phone_number => INVALID_PHONE_NUMBER}
@@ -23,7 +29,7 @@ class ValidatePhoneNumberTest < ActionDispatch::IntegrationTest
 
   end
 
-  ["+381652932222", "381652932222", "+381(65)293-2222", "+381 65 293 22 22"].each_with_index do |phone_number, i|
+  VALID_PHONE_NUMBERS.each_with_index do |phone_number, i|
     test "Valid phone number #{i}" do
       get signin_path
       assert_response :success
@@ -33,7 +39,7 @@ class ValidatePhoneNumberTest < ActionDispatch::IntegrationTest
       follow_redirect!
 
       assert_equal '/signin/secret_token', path
-      assert_select 'input.disabled[value=?]', '+381652932222'
+      assert_select 'input.disabled[value=?]', '+381640347000'
 
     end
   end
