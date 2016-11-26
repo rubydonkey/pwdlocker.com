@@ -8,6 +8,9 @@ gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'faker', '1.6.3'
 gem 'foundation-rails'
 
+gem 'httparty'
+gem 'nokogiri'
+
 gem 'pg'
 
 # Use Puma as the app server
