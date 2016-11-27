@@ -71,7 +71,9 @@ body {
   }
 
   .password-data {
+    margin-left: 20px;
     display: block;
+    word-wrap: break-word;
   }
 
   &:nth-child(2n+1)  { margin-right: 2%; }

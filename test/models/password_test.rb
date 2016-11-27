@@ -28,4 +28,12 @@ class PasswordTest < ActiveSupport::TestCase
     @password.username = " " * 5
     assert_not @password.valid?
   end
+
+  test 'scheme should be added if does not exist in input url' do
+    url = "www.example.com"
+    @password.save
+    @password.reload
+    assert_not_equal url, @password.URL
+    assert_not_nil URI.parse(@password.URL).scheme
+  end
 end

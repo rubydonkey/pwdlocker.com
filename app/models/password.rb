@@ -1,4 +1,5 @@
 require 'uri'
+require 'favicon'
 
 class Password < ApplicationRecord
   before_save :check_url
@@ -20,6 +21,13 @@ class Password < ApplicationRecord
     if(!uri.scheme)
       self.URL = "http://#{self.URL}"
     end
+    get_favicon_uri
+  end
+
+  def get_favicon_uri
+    favicon = Favicon.new(self.URL)
+    self.favicon_URI = favicon.uri
+    self.favicon_DataURI = favicon.base64
   end
 
 end
