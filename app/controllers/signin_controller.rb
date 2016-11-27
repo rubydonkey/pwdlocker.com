@@ -4,6 +4,8 @@ require 'securerandom'
 class SigninController < ApplicationController
   INVALID_PHONE_NUMBER_CODE = 20404
 
+  TWILIO_PHONE_NUMBER = '17032910306'
+
   skip_before_action :verify_authenticity_token, :only => [:show]
 
   def new
@@ -56,9 +58,9 @@ class SigninController < ApplicationController
   def send_token_to_phone_number(token, phone_number)
     twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
     twilio_client.account.messages.create(
-      :from => ENV['TWILIO_PHONE_NUMBER'],
-      :to => phone_number,
-      :body => "#{token} is your secret code"
+      :from =>  TWILIO_PHONE_NUMBER,
+      :to =>    phone_number,
+      :body =>  "#{token} is your secret code"
     )
   end
 
