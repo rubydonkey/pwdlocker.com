@@ -22,7 +22,7 @@ class SigninControllerTest < ActionController::TestCase
     Twilio::REST::Messages.any_instance.expects(:create).with(
       has_entries(
         body: "#{@token} is your secret code",
-        from: ENV['TWILIO_PHONE_NUMBER'],
+        from: SigninController::TWILIO_PHONE_NUMBER,
         to: phone_number
       )
     )
