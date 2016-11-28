@@ -17,6 +17,10 @@ class SigninControllerTest < ActionController::TestCase
     refute_equal @token, @controller.send(:generate_token)
   end
 
+  test 'it does not strip leading zeros from token' do
+    assert_equal '00045678', @controller.send(:generate_token, 0.00045678)
+  end
+
   test 'it sends sms message with secret token in it' do
     phone_number = "+381640347000"
     Twilio::REST::Messages.any_instance.expects(:create).with(

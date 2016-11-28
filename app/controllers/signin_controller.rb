@@ -50,8 +50,8 @@ class SigninController < ApplicationController
     end
   end
 
-  def generate_token
-    token = SecureRandom.random_number * (10**8)
+  def generate_token(rnd = SecureRandom.random_number)
+    token =  rnd * (10**8)
     token.round.to_s.rjust(8, "0")
   end
 
