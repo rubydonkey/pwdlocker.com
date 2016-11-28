@@ -25,7 +25,6 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 
   def get_random_password_data
-
     data = Hash.new
 
     data[:title]    = Faker::Lorem.words(2).join(' ')
@@ -34,7 +33,6 @@ class ActiveSupport::TestCase
     data[:password] = Faker::Internet.password(6, 10)
 
     data
-
   end
 
 
@@ -88,8 +86,6 @@ class ActiveSupport::TestCase
                           http://.www.foo.bar./
                           http://10.1.1.1 ]
 
-
-
-
-
 end
+
+require 'mocha/mini_test'

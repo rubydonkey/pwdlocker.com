@@ -42,6 +42,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'phantomjs', :require => 'phantomjs/poltergeist'
   gem 'rails-controller-testing'
+  gem 'mocha'
 end
 
 group :development do
