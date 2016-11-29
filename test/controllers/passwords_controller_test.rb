@@ -73,7 +73,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   test 'should not update with invalid password data' do
 
     data = get_random_password_data
-    data[:password] = "foo" #password to short
+    data[:password] = " " #should not update with empty password
 
     patch password_path(@password), xhr: true, params: { password:     { title:     data[:title],
                                                                          URL:       data[:URL],

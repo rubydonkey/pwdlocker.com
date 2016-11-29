@@ -9,25 +9,24 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     assert(page.has_button?('Add'))
     assert(page.has_link?(href: new_password_path))
 
-    # test table data
-    assert(page.has_css?('table.table-passwords'))
-    assert_equal(page.all('tbody#passwords tr').size, Password.count)
+    # test cards
+    assert(page.has_css?('div.passwords'))
+    assert_equal(page.all('div.password-block').size, Password.count)
     Password.all.each_with_index do |password, rowID|
-      assert(page.has_css?("tr#password_#{password.id}"))
+      assert(page.has_css?("div#password-block-#{password.id}"))
 
-      for i in 1..4
-        td = page.find("tr:nth-child(#{rowID + 1}) td:nth-child(#{i})")
-        assert_not_nil td
-        assert password.attributes.has_value?(td.text)
-      end
+      assert(page.has_text?(password.title.to_s.downcase.capitalize))
+      assert(page.has_text?(password.username.to_s))
+      assert(page.has_text?(password.password.to_s))
 
+      assert(page.has_link?(href: password.URL))
       assert(page.has_link?(href: edit_password_path(password)))
       # delete link
       assert(page.has_link?(href: password_path(password)))
     end
   end
 
-  test 'create valid passwords' do
+  test 'form layout' do
 
     # test page layout
     visit(root_path)
@@ -44,6 +43,13 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     end
     assert(has_button?('Create Password'))
 
+  end
+
+  test 'create valid passwords' do
+
+    visit(root_path)
+    click_button('Add')
+
     data = get_random_password_data
 
     page.fill_in('Title',    :with => data[:title])
@@ -52,13 +58,14 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     page.fill_in('Password', :with => data[:password])
 
     click_button('Create Password')
-    assert(page.has_no_css?('form'))
+    assert(page.has_no_css?('form', wait: 10))
     assert(has_button?('Add', :visible => true))
 
-    for i in 1..4
-      td = page.find("tr:nth-child(1) td:nth-child(#{i})")
-      assert(data.has_value?(td.text))
-    end
+    assert(page.has_text?(data[:title].to_s.downcase.capitalize))
+    assert(page.has_text?(data[:username]))
+    assert(page.has_text?(data[:password]))
+    assert(page.has_link?(href: data[:URL]))
+
   end
 
   test 'create invalid passwords' do
@@ -106,12 +113,13 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     page.fill_in('Password', :with => data[:password])
 
     click_button('Update Password')
-    assert(page.has_no_css?('form'))
 
-    for i in 1..4
-      td = page.find("tr:nth-child(1) td:nth-child(#{i})")
-      assert data.has_value?(td.text)
-    end
+    assert(page.has_no_css?('form', wait: 10))
+
+    assert(page.has_text?(data[:title].to_s.downcase.capitalize))
+    assert(page.has_text?(data[:username]))
+    assert(page.has_text?(data[:password]))
+    assert(page.has_link?(href: data[:URL]))
 
   end
 
@@ -141,9 +149,9 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     visit(root_path)
 
     id = Password.first.id
-    assert(page.has_css?("tr#password_#{id}"))
+    assert(page.has_css?("#password-block-#{id}"))
     click_link(:href => password_path(Password.first))
-    assert(page.has_no_css?("tr#password_#{id}"))
+    assert(page.has_no_css?("#password-block-#{id}"))
 
   end
 
