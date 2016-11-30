@@ -12,8 +12,9 @@ class Favicon
 
   def initialize(uri)
     @host = URI(uri).host
-    get_favicon_from_uri
-    get_favicon_from_html_tag
+    if(!get_favicon_from_html_tag)
+      get_favicon_from_uri
+    end
   end
 
   protected
@@ -27,7 +28,7 @@ class Favicon
         @base64 = Base64.encode64(response.body)
       end
     rescue
-      return
+      return false
     end
   end
 
@@ -52,7 +53,7 @@ class Favicon
         end
       end
     rescue
-      return
+      return false
     end
   end
 
