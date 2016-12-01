@@ -58,7 +58,7 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     page.fill_in('Password', :with => data[:password])
 
     click_button('Create Password')
-    assert(page.has_no_css?('form', wait: 10))
+    assert(page.has_no_css?('form', wait: 30))
     assert(has_button?('Add', :visible => true))
 
     assert(page.has_text?(data[:title].to_s.downcase.capitalize))
@@ -114,7 +114,7 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
 
     click_button('Update Password')
 
-    assert(page.has_no_css?('form', wait: 10))
+    assert(page.has_no_css?('form', wait: 30))
 
     assert(page.has_text?(data[:title].to_s.downcase.capitalize))
     assert(page.has_text?(data[:username]))
