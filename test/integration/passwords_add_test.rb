@@ -16,8 +16,9 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
       assert(page.has_css?("div#password-block-#{password.id}"))
 
       assert(page.has_text?(password.title.to_s.downcase.capitalize))
-      assert(page.has_text?(password.username.to_s))
-      assert(page.has_text?(password.password.to_s))
+
+      assert(page.has_css?("#password-data-username-#{password.id}", :visible => false, text: password.username.to_s))
+      assert(page.has_css?("#password-data-password-#{password.id}", :visible => false, text: password.password.to_s))
 
       assert(page.has_link?(href: password.URL))
       assert(page.has_link?(href: edit_password_path(password)))
@@ -62,8 +63,10 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     assert(has_button?('Add', :visible => true))
 
     assert(page.has_text?(data[:title].to_s.downcase.capitalize))
-    assert(page.has_text?(data[:username]))
-    assert(page.has_text?(data[:password]))
+
+    assert(page.has_css?('.password-data', :visible => false, :text => data[:username].to_s))
+    assert(page.has_css?('.password-data', :visible => false, :text => data[:password].to_s))
+
     assert(page.has_link?(href: data[:URL]))
 
   end
@@ -117,8 +120,8 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     assert(page.has_no_css?('form', wait: 30))
 
     assert(page.has_text?(data[:title].to_s.downcase.capitalize))
-    assert(page.has_text?(data[:username]))
-    assert(page.has_text?(data[:password]))
+    assert(page.has_css?('.password-data', :visible => false, :text => data[:username].to_s))
+    assert(page.has_css?('.password-data', :visible => false, :text => data[:password].to_s))
     assert(page.has_link?(href: data[:URL]))
 
   end
@@ -167,5 +170,21 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
 
   end
 
+  test 'click on password block show username and password' do
+
+    visit(root_path)
+
+    password = Password.first
+    assert(page.has_css?("#password-data-username-#{password.id}", :visible => false, :text => password.username.to_s))
+    assert(page.has_css?("#password-data-password-#{password.id}", :visible => false, :text => password.password.to_s))
+
+    password_block = page.find_by_id("password-block-#{password.id}")
+    assert_not_nil password_block
+    password_block.click
+
+    assert(page.has_css?("#password-data-username-#{password.id}", :visible => true, :text => password.username.to_s))
+    assert(page.has_css?("#password-data-password-#{password.id}", :visible => true, :text => password.password.to_s))
+
+  end
 
 end
