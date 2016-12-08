@@ -13,6 +13,12 @@
     <%= f.label :password %>
     <%= f.text_area :password, class: "form-control" %>
 
+   
+
     <%= f.submit class: "btn btn-success" %>
 
+    <%= link_to new_password_group_path, remote: true, id: "new_password_group_link" do %>
+            <button class="btn btn-success">Add group</button>
+        <% end %>
+        
 <% end %>

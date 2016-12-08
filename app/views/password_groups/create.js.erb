@@ -1,0 +1,9 @@
+<% if @password_group.errors.any? %>
+  $('.new_password_group').replaceWith("<%= j render 'password_groups/formnewgroup' %>")
+<% else %>
+  $('#password_group_form').hide();
+  $('.new_password_group').remove();
+  $('#new_password_group_link').show();
+  $('#password_group').show();
+  $('#dropdown').html("<%= j  collection_select(:password, :pasword_group_id, PasswordGroup.all, :id, :name, prompt: true) %>");
+<% end %>

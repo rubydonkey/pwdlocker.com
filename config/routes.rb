@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root to: "pages#index"
 
   resources :passwords
+  resources :password_groups
   # root to: "signin#new"
 
   get '/signin', to: 'signin#new', as: :signin

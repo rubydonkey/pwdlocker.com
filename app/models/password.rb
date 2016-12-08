@@ -2,6 +2,8 @@ class Password < ApplicationRecord
 
   require 'uri'
 
+  belongs_to :password_group, optional: true
+
   validates :title, presence: true
   validates :username, presence: true
   validates :password, presence: true

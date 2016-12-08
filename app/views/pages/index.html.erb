@@ -6,13 +6,18 @@
         <h2> My Passwords </h2>
         <%= link_to passwords_new_path, remote: true, id: "new_password_link" do %>
             <button class="btn btn-success">Add</button>
-        <% end %>
+         <% end %>   
       </div>
       <div class="col-md-6 col-centered form-pwd" id="password_form" style="display:none;"></div>
+      <div class="col-md-6 col-centered form-pwd" id="password_group_form" > </div>
+      <div class="col-md-6 col-centered form-pwd" id="dropdown" style="display:none;">
+       <%= collection_select(:password, :pasword_group_id, PasswordGroup.all, :id, :name, prompt: true) %>
+      </div>
+
+      
     </div>
   </div>
 </div>
-
 <div class='container'>
   <table class="table table-passwords" id="table-ID">
     <thead>
