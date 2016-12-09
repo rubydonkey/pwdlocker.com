@@ -8,11 +8,13 @@
             <button class="btn btn-success">Add</button>
          <% end %>   
       </div>
+      
       <div class="col-md-6 col-centered form-pwd" id="password_form" style="display:none;"></div>
-      <div class="col-md-6 col-centered form-pwd" id="password_group_form" > </div>
+      <hr>
       <div class="col-md-6 col-centered form-pwd" id="dropdown" style="display:none;">
-       <%= collection_select(:password, :pasword_group_id, PasswordGroup.all, :id, :name, prompt: true) %>
+       <%= collection_select(:password, :password_group_id, PasswordGroup.all, :id, :name, prompt: true) %>
       </div>
+      <div class="col-md-6 col-centered form-pwd" id="password_group_form" > </div>
 
       
     </div>
@@ -26,6 +28,7 @@
       <th> Username </th>
       <th> Password </th>
       <th> URL </th>
+      <th> Password Group </th>
       <th></th>
     </tr>
     </thead>
