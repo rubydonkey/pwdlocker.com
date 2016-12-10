@@ -13,10 +13,17 @@
     <%= f.label :password %>
     <%= f.text_area :password, class: "form-control" %>
 
-    <%= f.submit class: "btn btn-success" %>
-        
+    <div class="col-md-6 col-centered form-pwd" id="dropdown" style="display:none;">
+     <%= f.label :select_password_group %>
+     <%= collection_select(:password, :password_group_id, PasswordGroup.all, :id, :name, prompt: true) %>
+    </div>
+
     <%= link_to new_password_group_path, remote: true, id: "new_password_group_link" do %>
             <button class="btn btn-success">Add group</button>
     <% end %>
+
+    <%= f.submit class: "btn btn-success" %>
+        
+    
 
 <% end %>

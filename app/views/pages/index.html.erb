@@ -10,10 +10,7 @@
       </div>
       
       <div class="col-md-6 col-centered form-pwd" id="password_form" style="display:none;"></div>
-      <hr>
-      <div class="col-md-6 col-centered form-pwd" id="dropdown" style="display:none;">
-       <%= collection_select(:password, :password_group_id, PasswordGroup.all, :id, :name, prompt: true) %>
-      </div>
+      
       <div class="col-md-6 col-centered form-pwd" id="password_group_form" > </div>
 
       
