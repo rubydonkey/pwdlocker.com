@@ -17,31 +17,3 @@
     <%= render @passwords %>
   </div>
 </div>
-<script>
-  function pickPasswordBlock(e) {
-
-    for(var i = 0; i < e.children.length; i++)
-    {
-      if (e.children[i].className == 'col-2')
-      {
-        var elCol = e.children[i];
-        for(var j = 0; j < elCol.children.length; j++)
-        {
-          var title = elCol.children[j].id.split('-')[2];
-          if(title == 'password' || title == 'username')
-          {
-            var el = $('#'+elCol.children[j].id);
-            if(el.css('visibility') == 'hidden') {
-              el.css('visibility', 'visible');
-            }
-            else {
-              el.css('visibility', 'hidden');
-            }
-          }
-        }
-      }
-    }
-  }
-</script>
-
-

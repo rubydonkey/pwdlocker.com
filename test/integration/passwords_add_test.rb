@@ -64,8 +64,8 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
 
     assert(page.has_text?(data[:title].to_s.downcase.capitalize))
 
-    assert(page.has_css?('.password-data', :visible => false, :text => data[:username].to_s))
-    assert(page.has_css?('.password-data', :visible => false, :text => data[:password].to_s))
+    assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:username].to_s))
+    assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:password].to_s))
 
     assert(page.has_link?(href: data[:URL]))
 
@@ -120,8 +120,8 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     assert(page.has_no_css?('form', wait: 30))
 
     assert(page.has_text?(data[:title].to_s.downcase.capitalize))
-    assert(page.has_css?('.password-data', :visible => false, :text => data[:username].to_s))
-    assert(page.has_css?('.password-data', :visible => false, :text => data[:password].to_s))
+    assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:username].to_s))
+    assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:password].to_s))
     assert(page.has_link?(href: data[:URL]))
 
   end
