@@ -77,7 +77,7 @@ class PasswordsController < ApplicationController
 
   def get_favicon
     if host = get_host
-      if favico = Favicon.where(host: get_host).first
+      if favico = Favicon.where(host: host).first
         favico
       else
         favico = Favicon.new(host: get_host)
@@ -112,8 +112,12 @@ class PasswordsController < ApplicationController
       page.css('link[rel="shortcut icon"]').each do |link|
         linkURI = URI(link['href'])
 
-        if(!linkURI.host)
+        unless linkURI.host
           linkURI = URI.join(uri, linkURI)
+        end
+
+        unless linkURI.scheme
+          linkURI.scheme = 'http'
         end
 
         resp = RestClient.get(linkURI.to_s)
