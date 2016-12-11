@@ -7,7 +7,6 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'faker', '1.6.3'
 
-gem 'httparty'
 gem 'nokogiri'
 gem 'rest-client'
 
