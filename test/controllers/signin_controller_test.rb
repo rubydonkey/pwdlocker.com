@@ -22,7 +22,9 @@ class SigninControllerTest < ActionController::TestCase
   end
 
   test 'it sends sms message with secret token in it' do
-    phone_number = "+381640347000"
+    #phone_number = "+381640347000"
+    phone_number = "+381622015217"
+
     Twilio::REST::Messages.any_instance.expects(:create).with(
       has_entries(
         body: "#{@token} is your secret code",
