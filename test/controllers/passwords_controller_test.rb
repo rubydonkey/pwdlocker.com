@@ -12,7 +12,6 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create valid password' do
-
     data = get_random_password_data
 
     assert_difference 'Password.count' do
@@ -90,5 +89,25 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_difference 'Password.count', -1 do
       delete password_path(@password), xhr: true
     end
+  end
+
+
+  test 'scheme should be added if does not exist in input url' do
+    url = "www.pwdlocker.com"
+    data = get_random_password_data
+
+    assert_difference 'Password.count' do
+      post passwords_path, xhr: true, params: {
+        password: {
+          URL:      url,
+          title:    data[:title],
+          username: data[:username],
+          password: data[:password]
+        }
+      }
+    end
+
+    assert_not_equal url, @password.URL.to_s
+    assert_equal 'http', URI.parse(@password.URL).scheme
   end
 end

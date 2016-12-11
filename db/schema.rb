@@ -10,19 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126182416) do
+ActiveRecord::Schema.define(version: 20161211164742) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "favicons", force: :cascade do |t|
+    t.string   "host"
+    t.text     "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "password_groups", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "passwords", force: :cascade do |t|
     t.string   "title"
     t.string   "URL"
     t.string   "username"
-    t.string   "password"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "favicon_URI"
-    t.text     "favicon_DataURI"
+    t.text     "password"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "password_group_id"
+    t.integer  "favicon_id"
+    t.index ["favicon_id"], name: "index_passwords_on_favicon_id", using: :btree
+    t.index ["password_group_id"], name: "index_passwords_on_password_group_id", unique: true, using: :btree
   end
 
+  add_foreign_key "passwords", "favicons"
 end
