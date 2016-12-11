@@ -1,4 +1,3 @@
-require 'httparty'
 require 'nokogiri'
 require 'base64'
 require 'uri'
