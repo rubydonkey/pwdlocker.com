@@ -15,7 +15,7 @@
 
     <div class="col-md-6 col-centered form-pwd" id="dropdown" >
      <%= f.label :select_password_group %>
-     <%= collection_select(:password, :password_group_id, PasswordGroup.all, :id, :name, prompt: true) %>
+     <%= collection_select(:password, :password_group_id, PasswordGroup.all, :id, :name, {prompt: "(empty)"}) %>
     </div>
 
     <%= link_to new_password_group_path, remote: true, id: "new_password_group_link" do %>
