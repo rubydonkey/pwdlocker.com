@@ -13,7 +13,7 @@
     <%= f.label :password %>
     <%= f.text_area :password, class: "form-control" %>
 
-    <div class="col-md-6 col-centered form-pwd" id="dropdown" style="display:none;">
+    <div class="col-md-6 col-centered form-pwd" id="dropdown" >
      <%= f.label :select_password_group %>
      <%= collection_select(:password, :password_group_id, PasswordGroup.all, :id, :name, prompt: true) %>
     </div>

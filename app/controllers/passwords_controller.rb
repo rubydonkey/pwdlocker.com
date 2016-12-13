@@ -4,7 +4,7 @@ class PasswordsController < ApplicationController
 
   def new
     @password = Password.new
-
+    
     respond_to do |format|
       format.js
     end
@@ -13,7 +13,7 @@ class PasswordsController < ApplicationController
 
   def create
     @password = Password.create(password_params)
-
+    
     respond_to do |format|
       format.js
     end
@@ -52,7 +52,7 @@ class PasswordsController < ApplicationController
   private
 
   def password_params
-    params.require(:password).permit(:title, :URL, :username, :password)
+    params.require(:password).permit(:title, :URL, :username, :password, :password_group_id)
   end
 
   def get_all_passwords
