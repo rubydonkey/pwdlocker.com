@@ -120,14 +120,12 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
       td = page.find("tr:nth-child(1) td:nth-child(#{i})")
       assert data.has_value?(td.text)
     end
-
   end
 
   test 'invalid edit password' do
+
     visit(root_path)
-
     click_link(:href => edit_password_path(Password.first))
-
     password = Password.create()
 
     for i in 1..4 do

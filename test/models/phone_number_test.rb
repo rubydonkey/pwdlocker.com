@@ -55,20 +55,31 @@ class PhoneNumberTest < ActiveSupport::TestCase
     Twilio::REST::Messages.any_instance.expects(:create).with(
         has_entries(
             body: "#{token} is your secret code",
-            from: SigninController::TWILIO_PHONE_NUMBER,
+            from: PhoneNumber::TWILIO_PHONE_NUMBER,
             to: @phone_number.number
         )
     )
 
     @phone_number.send_token(token)
-
   end
 
   test 'authentication via token' do
-
     token = @phone_number.get_token
     @phone_number.send_token(token)
-    assert @phone_number.authenticate(token)
+    assert_equal PhoneNumber::TOKEN_VALID, @phone_number.authenticate(token)
+  end
+
+  test 'authentication fails with wrong token' do
+    token = @phone_number.get_token
+    @phone_number.send_token(token)
+    assert_equal PhoneNumber::TOKEN_INVALID, @phone_number.authenticate(@phone_number.get_token)
+  end
+
+  test 'authentication fails if token expired' do
+    token = @phone_number.get_token
+    @phone_number.send_token(token)
+    @phone_number.update_attribute(:token_sent_at, 2.hours.ago)
+    assert_equal PhoneNumber::TOKEN_EXPIRED, @phone_number.authenticate(token)
   end
 
 end

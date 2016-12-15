@@ -6,6 +6,9 @@ require 'digest/sha2'
 class PhoneNumber < ApplicationRecord
   TWILIO_PHONE_NUMBER = '17032910306'
 
+  TOKEN_INVALID = 0
+  TOKEN_VALID = 1
+  TOKEN_EXPIRED = 2
 
   validates :number, presence: true, uniqueness: true
   before_validation :validate_number
@@ -25,8 +28,10 @@ class PhoneNumber < ApplicationRecord
                                             :to =>    self.number,
                                             :body =>  "#{token} is your secret code"
                                           )
+    update_attribute(:token_sent_at, Time.now.utc.localtime)
   end
 
+  # this added to be able to test model
   def get_token
     token = SecureRandom.random_number
     token = token * (10 ** 8)
@@ -37,7 +42,13 @@ class PhoneNumber < ApplicationRecord
     salted_hash_bytes = Base64::decode64(self.token_digest)
     salt_bytes = salted_hash_bytes[0..7]
     hash_bytes = salted_hash_bytes[8..39]
-    hash_bytes == Digest::SHA256.digest(salt_bytes+token)
+    if((Time.zone.now - token_sent_at) > 90.seconds)
+      return TOKEN_EXPIRED
+    elsif (hash_bytes == Digest::SHA256.digest(salt_bytes+token))
+      return TOKEN_VALID
+    else
+      return TOKEN_INVALID
+    end
   end
 
   private

@@ -1,15 +1,13 @@
 <% provide(:title, "Signin") %>
-<div class="container">
-  <div class="jumbotron center">
-    <div class='row'>
-      <div class='col-md-6 col-centered'>
-        <h2>Sign in</h2>
-        <p>Please sign in using your cellphone number.</p>
-        <%= link_to new_signin_path, remote: true, id: "new_signin_link" do %>
-            <button class="btn btn-success">Signin</button>
-        <% end %>
-        <div class="col-md-6 col-centered form-pwd" id="signin_form" style="display:none"></div>
-      </div>
+<div class="jumbotron center">
+  <div class='row'>
+    <div class='col-md-6 col-centered'>
+      <h2>Sign in</h2>
+      <p>Please sign in using your cellphone number.</p>
+      <%= link_to new_signin_path, remote: true, id: "new_signin_link" do %>
+          <button class="btn btn-success">Signin</button>
+      <% end %>
+      <div class="col-md-6 col-centered form-pwd" id="signin_form" style="display:none"></div>
     </div>
   </div>
 </div>

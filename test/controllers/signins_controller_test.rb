@@ -13,11 +13,10 @@ class SigninsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create valid phone number' do
     assert_difference 'PhoneNumber.count' do
-      post signins_path, xhr: true, params: { phone_number: { number: '+38162205217'} }
+      post signins_path, xhr: true, params: { phone_number: { number: '+381608449690'} }
     end
     assert_not_nil PhoneNumber.last.token_digest
     assert_not_nil session[:phone_number_id]
-
   end
 
   test 'should not create invalid phone number' do
