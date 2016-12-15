@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class SigninControllerTest < ActionController::TestCase
+
   def setup
     @token = @controller.send(:generate_token)
   end
@@ -32,7 +33,6 @@ class SigninControllerTest < ActionController::TestCase
         to: phone_number
       )
     )
-
     @controller.send(:send_token_to_phone_number, @token, phone_number)
   end
 end

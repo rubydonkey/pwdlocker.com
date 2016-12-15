@@ -10,7 +10,13 @@ class SigninsController < ApplicationController
     respond_to do |format|
       format.js {
         @phone_number = PhoneNumber.create(phone_number_params)
-        @phone_number.skip_callback(:all)
+        if(@phone_number.taken?)
+          @phone_number = PhoneNumber.where(:number => @phone_number.number).first
+        end
+        if(@phone_number.errors.empty?)
+          @phone_number.send_token
+          session[:phone_number_id] = @phone_number.id
+        end
       }
     end
   end
@@ -19,7 +25,7 @@ class SigninsController < ApplicationController
   end
   
   private
-  
+
   def phone_number_params
     params.require(:phone_number).permit(:number)
   end
