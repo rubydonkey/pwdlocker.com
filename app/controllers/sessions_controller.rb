@@ -6,9 +6,9 @@ class SessionsController < ApplicationController
       token = params[:session][:token]
       @phone_number = PhoneNumber.find(id)
       auth_ret = @phone_number.authenticate(token)
-      if(auth_ret == 1)
+      if(auth_ret == PhoneNumber::TOKEN_VALID)
         # token ok
-      elsif(auth_ret == 0)
+      elsif(auth_ret == PhoneNumber::TOKEN_INVALID)
         # token invalid
       else
         # token expired
