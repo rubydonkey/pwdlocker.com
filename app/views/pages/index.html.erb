@@ -3,11 +3,21 @@
 <div class="container">
   <div class="row">
     <div class='col-md-3'>
-      <div class='well'>
+      <div class='well main-form affix' data-spy="affix">
+        <div class="form-group">
+          <div class="icon-addon addon-lg">
+            <input type="text" placeholder="Search" class="form-control" id="query" name="query">
+            <label for="query" class="glyphicon glyphicon-search" rel="tooltip" title="search"></label>
+          </div>
+        </div>
+
         <%= link_to passwords_new_path, remote: true, id: "new_password_link" do %>
-            <button class="btn btn-success" data-disable-with='Wait...'>Add</button>
+          <button class="btn btn-success" data-disable-with='Wait...'>
+            <i class='glyphicon glyphicon-plus'></i>
+            New Password
+          </button>
         <% end %>
-        <div class="form-pwd" id="password_form" style="display:none;"></div>
+        <div class="form-pwd" id="password_form" style="display:none;" ></div>
       </div>
     </div>
 

@@ -13,27 +13,24 @@
  */
 
 @import "bootstrap-sprockets";
+@import "bootswatch/slate/variables";
 @import "bootstrap";
 
 @import 'passwords';
+@import 'forms';
 
-* {
-  box-sizing: border-box;
-}
 
-.glyphicon, .fa {
-  color: rgba(57, 57, 57, 0.98);
-}
+@import "bootswatch/slate/bootswatch";
 
-body {
-  margin: 0;
-  padding: 0;
-
+table {
+  background-color: none;
   background-color: transparent;
 }
 
 @media(max-width: $screen-xs-max){
-
+  .affix {
+    position: static;
+  }
 }
 
 @media(min-width: $screen-sm-min){
@@ -42,7 +39,7 @@ body {
 
 @media(min-width: $screen-md-min){
   html {
-    background: asset-url('cover.jpg') no-repeat center center fixed;
+    background: asset-url('StockSnap_7DF5CC19A6.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -54,9 +51,11 @@ body {
 
   body {
     padding-top: 40px;
+    background-color: transparent;
   }
 }
 
 @media(min-width: $screen-lg-min){
 
 }
+

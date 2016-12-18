@@ -1,4 +1,11 @@
+
 <%= form_for @password, remote: true do |f| %>
+    <% if @password.persisted? %>
+      <h3>Edit Password</h3>
+    <% else %>
+      <h3>Add Password</h3>
+    <% end %>
+
     <%= render 'shared/error_messages', object: f.object %>
 
     <%= f.label :title %>
@@ -15,4 +22,5 @@
 
     <br />
     <%= f.submit class: "btn btn-success" %>
+    <%= f.button "Cancel", class: "btn btn-default" %>
 <% end %>
