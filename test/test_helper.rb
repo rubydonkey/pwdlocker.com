@@ -31,10 +31,15 @@ class ActiveSupport::TestCase
     data[:URL]      = Faker::Internet.url
     data[:username] = Faker::Internet.user_name
     data[:password] = Faker::Internet.password(6, 10)
-
+    
     data
   end
+  
+  def get_random_password_group_name
+    data = Hash.new
 
+    data[:name]  = Faker::Lorem.words(2).join(' ')
+  end
 
   VALID_URLS = %w[  http://www.altpress.org/
                     http://www.nzfortress.co.nz
