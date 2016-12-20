@@ -23,8 +23,6 @@ class SigninsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference 'PhoneNumber.count' do
       post signins_path, xhr: true, params: { phone_number: { number: '0000' }}
     end
-    assert_nil PhoneNumber.last.token_digest
-    assert_nil session[:phone_number_id]
   end
 
   test 'should not create duplicate number' do
