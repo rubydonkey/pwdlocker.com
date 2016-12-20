@@ -20,6 +20,7 @@ class PhoneNumber < ApplicationRecord
     end
   end
 
+  # this added to be able to test model
   def send_token(token = get_token)
     generate_token_digest(token)
     twilio_client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
@@ -31,7 +32,6 @@ class PhoneNumber < ApplicationRecord
     update_attribute(:token_sent_at, Time.now.utc.localtime)
   end
 
-  # this added to be able to test model
   def get_token
     token = SecureRandom.random_number
     token = token * (10 ** 8)
@@ -72,12 +72,15 @@ class PhoneNumber < ApplicationRecord
     return unless(self.number.present?)
     lookup_client = Twilio::REST::LookupsClient.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
     begin
-      response = lookup_client.phone_numbers.get(self.number)
-
+      response = lookup_client.phone_numbers.get(self.number, type: 'carrier')
       # if number valid twillo self.number will be reformatted to canonical form
       # this is required in order to all valid same numbers be saved with same value
       # if invalid number will remain unchanged and in rescue error is added
       self.number = response.phone_number
+      if(response.carrier['type'] != 'mobile')
+        # number have to be mobile - voip and landline not allowed
+        errors.add(:number, response.carrier['type'].capitalize + " numbers not allowed!")
+      end
     rescue => e
       if e.code == 20404
         errors.add(:number, 'invalid!')

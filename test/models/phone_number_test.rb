@@ -25,6 +25,11 @@ class PhoneNumberTest < ActiveSupport::TestCase
     assert_not @phone_number.valid?
   end
 
+  test 'number have to be mobile' do
+    @phone_number.number = "+38134342480"
+    assert_not @phone_number.valid?
+  end
+
   test 'number have to be unique' do
     phone_number_dup = @phone_number.dup
     @phone_number.save

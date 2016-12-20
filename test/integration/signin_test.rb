@@ -44,6 +44,13 @@ class SigninTest < ActionDispatch::IntegrationTest
     page.click_button('Send me token')
     assert(page.has_css?("#error_explanation", wait: 30))
 
+    # number have to be mobile - voip and landline not allowed
+    visit(new_signin_path)
+    click_button('Signin')
+    page.fill_in('Number', :with => "+38134342480")
+    page.click_button('Send me token')
+    assert(page.has_css?("#error_explanation", wait: 30))
+
   end
 
 end
