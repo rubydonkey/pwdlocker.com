@@ -1,6 +1,11 @@
 require 'test_helper'
 
 class SigninsControllerTest < ActionDispatch::IntegrationTest
+
+  def setup
+    Twilio::REST::Messages.any_instance.stubs(:create)
+  end
+
   test "should get new" do
     get new_signin_path
     assert_response :success

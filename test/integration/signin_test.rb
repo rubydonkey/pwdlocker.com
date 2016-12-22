@@ -5,6 +5,10 @@ class SigninTest < ActionDispatch::IntegrationTest
   #   assert true
   # end
 
+  def setup
+    Twilio::REST::Messages.any_instance.stubs(:create)
+  end
+
   test 'signin with phone number' do
 
     visit(new_signin_path)

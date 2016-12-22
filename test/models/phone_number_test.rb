@@ -9,6 +9,7 @@ class PhoneNumberTest < ActiveSupport::TestCase
 
   def setup
     @phone_number = phone_numbers(:one)
+    Twilio::REST::Messages.any_instance.stubs(:create)
   end
 
   test 'phone number is valid' do
