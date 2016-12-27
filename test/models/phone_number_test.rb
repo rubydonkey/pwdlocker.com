@@ -9,6 +9,7 @@ class PhoneNumberTest < ActiveSupport::TestCase
 
   def setup
     @phone_number = phone_numbers(:one)
+    @token = @phone_number.get_token
     Twilio::REST::Messages.any_instance.stubs(:create)
   end
 
@@ -54,6 +55,22 @@ class PhoneNumberTest < ActiveSupport::TestCase
     end
   end
 
+  test 'it generates secret token 8 digits long' do
+    assert_equal 8, @token.length
+  end
+
+  test 'it generates secret token with only alpha chars' do
+    refute @token.match(/[A-Za-z]/)
+  end
+
+  test 'it does not generate same token twice' do
+    refute_equal @token, @phone_number.get_token
+  end
+
+  test 'it does not strip leading zeros from token' do
+    assert_equal '00045678', @phone_number.get_token(0.00045678)
+  end
+
   test 'sending token' do
 
     token = @phone_number.get_token
@@ -87,5 +104,7 @@ class PhoneNumberTest < ActiveSupport::TestCase
     @phone_number.update_attribute(:token_sent_at, 2.hours.ago)
     assert_equal PhoneNumber::TOKEN_EXPIRED, @phone_number.authenticate(token)
   end
+
+
 
 end

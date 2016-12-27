@@ -32,8 +32,7 @@ class PhoneNumber < ApplicationRecord
     update_attribute(:token_sent_at, Time.now.utc.localtime)
   end
 
-  def get_token
-    token = SecureRandom.random_number
+  def get_token(token = SecureRandom.random_number)
     token = token * (10 ** 8)
     token = token.round.to_s.rjust(8, "0")
   end
