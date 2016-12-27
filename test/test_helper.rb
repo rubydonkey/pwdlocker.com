@@ -1,10 +1,12 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
+
 require 'rails/test_help'
 require 'capybara/rails'
 require 'capybara/poltergeist'
 
 Capybara.default_driver = :poltergeist
+Capybara.default_max_wait_time = 10
 
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
@@ -37,7 +39,6 @@ class ActiveSupport::TestCase
   
   def get_random_password_group_name
     data = Hash.new
-
     data[:name]  = Faker::Lorem.words(2).join(' ')
   end
 

@@ -15,77 +15,48 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-html {
-  background: asset-url('cover.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+@import 'passwords';
 
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.cover.jpg', sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='cover.jpg', sizingMethod='scale')";
+* {
+  box-sizing: border-box;
+}
 
-  background-color: #fff;
+.glyphicon, .fa {
+  color: rgba(57, 57, 57, 0.98);
 }
 
 body {
-  background-color : #484848;
   margin: 0;
   padding: 0;
 
-  // @include media-breakpoint-up(md) {
-  //   padding-top: 5em;
-
-  //   h1 {
-  //     background-color: rgba(0,0,0,0.5);
-  //     text-align: center;
-  //     color: #fff;
-  //   }
-  // }
+  background-color: transparent;
 }
 
-.table-passwords {
-  padding-top: 10px;
+@media(max-width: $screen-xs-max){
+
 }
 
-table {
-  table-layout: fixed;
-  width: 100%;
+@media(min-width: $screen-sm-min){
 
-  td {
-    word-wrap: break-word;         /* All browsers since IE 5.5+ */
-    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+}
+
+@media(min-width: $screen-md-min){
+  html {
+    background: asset-url('cover.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.cover.jpg', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='cover.jpg', sizingMethod='scale')";
+  }
+
+  body {
+    padding-top: 40px;
   }
 }
 
-.col-centered{
-  float: none;
-  margin: 0 auto;
+@media(min-width: $screen-lg-min){
 
-}
-
-.center {
-  text-align: center;
-  display: block;
-  margin: 0 auto;
-  margin-top: 50px;
-}
-
-.btn-success {
-  margin-bottom: 10px;
-  margin-top: 10px;
-  display: block;
-  width: 100%;
-}
-
-.table-passwords tbody td {
-  text-align: center;
-  font-size: 14px;
-  color: white;
-}
-
-.table-passwords thead th {
-  text-align: center;
-  font-size: 14px;
-  color: white;
 }
