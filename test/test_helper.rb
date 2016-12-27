@@ -1,10 +1,12 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
+
 require 'rails/test_help'
 require 'capybara/rails'
 require 'capybara/poltergeist'
 
 Capybara.default_driver = :poltergeist
+Capybara.default_max_wait_time = 10
 
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
@@ -34,7 +36,6 @@ class ActiveSupport::TestCase
 
     data
   end
-
 
   VALID_URLS = %w[  http://www.altpress.org/
                     http://www.nzfortress.co.nz

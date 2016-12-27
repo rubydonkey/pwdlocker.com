@@ -15,6 +15,13 @@ ActiveRecord::Schema.define(version: 20161215134022) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "favicons", force: :cascade do |t|
+    t.string   "host"
+    t.text     "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "passwords", force: :cascade do |t|
     t.string   "title"
     t.string   "URL"
@@ -22,6 +29,8 @@ ActiveRecord::Schema.define(version: 20161215134022) do
     t.text     "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "favicon_id"
+    t.index ["favicon_id"], name: "index_passwords_on_favicon_id", using: :btree
   end
 
   create_table "phone_numbers", force: :cascade do |t|
@@ -32,4 +41,5 @@ ActiveRecord::Schema.define(version: 20161215134022) do
     t.datetime "token_sent_at"
   end
 
+  add_foreign_key "passwords", "favicons"
 end

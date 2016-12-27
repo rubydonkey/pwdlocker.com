@@ -1,11 +1,9 @@
 if($('.new_password').lenght)
 {
-  $('.new_password').hide();
   $('.new_password').remove();
 }
 else if($('.edit_password').lenght)
 {
-  $('.edit_password').hide();
   $('.edit_password').remove();
 }
 else
@@ -14,4 +12,3 @@ else
 }
 $('#password_form').html("<%= j render 'passwords/form' %>");
 $('#password_form').show();
-

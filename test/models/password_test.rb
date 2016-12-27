@@ -1,12 +1,10 @@
 require 'test_helper'
 
 class PasswordTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-
   def setup
-    @password = Password.new(title: "Example", username: "ExampleUser", password: "ExamplePassword", URL: "www.example.com")
+    @data = get_random_password_data
+    @data[:URL] = "www.pwdlocker.com"
+    @password = Password.new(@data)
   end
 
   test 'password should be valid' do
@@ -27,5 +25,4 @@ class PasswordTest < ActiveSupport::TestCase
     @password.username = " " * 5
     assert_not @password.valid?
   end
-
 end

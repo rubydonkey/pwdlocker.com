@@ -3,5 +3,5 @@
 <% else %>
   $('.edit_password').remove();
   $('#new_password_link').show();
-  $('#password_<%=@password.id%>').replaceWith("<%= j render(@password) %>");
+  $('#password-block-<%=@password.id%>').replaceWith("<%= j render(@password) %>");
 <% end %>
