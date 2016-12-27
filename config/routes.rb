@@ -9,13 +9,4 @@ Rails.application.routes.draw do
   get     'login'     =>  'sessions#new'
   post    'login'     =>  'sessions#create'
   delete  'logout'    =>  'sessions#destroy'
-
-  # root to: "signin#new"
-
-  #get '/signin', to: 'signin#new', as: :signin
-
-  #get  'signin/show'
-  #post 'signin/show'
-  #get  'signin/secret_token'
-  #post 'signin/secret_token'
 end

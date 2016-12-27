@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class SigninTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-
   def setup
     Twilio::REST::Messages.any_instance.stubs(:create)
   end
