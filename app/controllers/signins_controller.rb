@@ -23,6 +23,15 @@ class SigninsController < ApplicationController
 
   def show
   end
+
+  def resend_token
+    if(session[:phone_number_id])
+      @phone_number = PhoneNumber.find(session[:phone_number_id])
+      if(@phone_number)
+        @phone_number.send_token
+      end
+    end
+  end
   
   private
 

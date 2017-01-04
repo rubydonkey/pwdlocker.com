@@ -4,9 +4,14 @@ Rails.application.routes.draw do
   root to: "pages#index"
 
   resources :passwords
-  resources :signins
+  resources :signins do
+    collection do
+      get 'resend_token'
+    end
+  end
 
   get     'login'     =>  'sessions#new'
   post    'login'     =>  'sessions#create'
   delete  'logout'    =>  'sessions#destroy'
+
 end

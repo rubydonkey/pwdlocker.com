@@ -4,5 +4,7 @@
     <%= f.text_field :token , class: "form-control" %>
 
     <%= f.submit "Submit", class: "btn btn-success" %>
+    <%= f.submit "Resend token", class: "btn btn-success", formaction: resend_token_signins_path %>
+
 
 <% end %>
