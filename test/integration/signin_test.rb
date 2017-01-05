@@ -28,7 +28,8 @@ class SigninTest < ActionDispatch::IntegrationTest
 
     assert(page.has_css?("label[for=session_token]", wait: 30))
     assert(page.has_field?("Token"))
-    assert(page.has_button?('Submit'))
+    assert(page.has_button?('Login'))
+    assert(page.has_button?('Resend'))
 
     # invalid number signin
     visit(new_signin_path)

@@ -36,4 +36,16 @@ class SigninsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'resend token' do
+    phone_number = phone_numbers(:one)
+
+    post signins_path, xhr: true, params: { phone_number: { number: phone_number.number } }
+    assert_not_nil session[:phone_number_id]
+    phone_number.reload
+    token_digest = phone_number.token_digest
+    post resend_token_signins_path
+    phone_number.reload
+    assert_not_equal token_digest, phone_number.token_digest
+  end
+
 end

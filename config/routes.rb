@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :passwords
   resources :signins do
     collection do
-      get 'resend_token'
+      post 'resend_token'
     end
   end
 
