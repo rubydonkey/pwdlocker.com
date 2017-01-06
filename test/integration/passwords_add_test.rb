@@ -194,7 +194,7 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     page.fill_in('Password', :with => "NewPassword")
 
     click_button('Update Password')
-    sleep 5
+    sleep 15
 
     password_block = page.find_by_id("password-block-#{password.id}", wait: 30)
     assert_not_nil password_block
@@ -214,7 +214,7 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     page.fill_in('Title', :with => "NewTitle")
 
     click_button('Update Password')
-    sleep 5
+    sleep 15
 
     password_block = page.find_by_id("password-block-#{password.id}")
     assert_not_nil password_block
