@@ -25,4 +25,19 @@ class PasswordTest < ActiveSupport::TestCase
     @password.username = " " * 5
     assert_not @password.valid?
   end
+
+  test 'password_last_changed_at attribute updated only when password is changed' do
+    @password.save
+    assert_nil @password.password_last_changed_at
+    @password.update_attribute(:password, "NewPassword")
+    assert_not_nil @password.password_last_changed_at
+  end
+
+  test 'password_last_changed_at attribute not updated when any other attribute from password is changed' do
+    @password.save
+    assert_nil @password.password_last_changed_at
+    @password.update_attribute(:title, "NewTitle")
+    assert_nil @password.password_last_changed_at
+  end
+
 end

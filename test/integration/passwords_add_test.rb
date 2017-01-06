@@ -185,4 +185,43 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
 
   end
 
+  test 'password last change time stamp shown when password updated' do
+    visit(root_path)
+
+    password = Password.first
+    click_link(:href => edit_password_path(password))
+
+    page.fill_in('Password', :with => "NewPassword")
+
+    click_button('Update Password')
+    sleep 5
+
+    password_block = page.find_by_id("password-block-#{password.id}", wait: 30)
+    assert_not_nil password_block
+    password_block.click
+
+    assert(page.has_css?("#password-data-password-changed-#{password.id}", wait: 30))
+
+  end
+
+  test 'password last change time stamp not be shown when non password field is updated' do
+
+    visit(root_path)
+
+    password = Password.first
+    click_link(:href => edit_password_path(password))
+
+    page.fill_in('Title', :with => "NewTitle")
+
+    click_button('Update Password')
+    sleep 5
+
+    password_block = page.find_by_id("password-block-#{password.id}")
+    assert_not_nil password_block
+    password_block.click
+
+    assert(page.has_no_css?("#password-data-password-changed-#{password.id}", wait: 30))
+
+  end
+
 end
