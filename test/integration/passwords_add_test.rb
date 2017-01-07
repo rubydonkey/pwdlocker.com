@@ -194,12 +194,6 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     page.fill_in('Password', :with => "NewPassword")
 
     click_button('Update Password')
-    #sleep 5
-#
-    #password_block = page.find_by_id("password-block-#{password.id}", wait: 30)
-    #assert_not_nil password_block
-    #password_block.click
-
     assert(page.has_css?("#password-data-password-changed-#{password.id}", :visible => false, wait: 30))
 
   end
@@ -214,12 +208,6 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     page.fill_in('Title', :with => "NewTitle")
 
     click_button('Update Password')
-    #sleep 5
-
-    #password_block = page.find_by_id("password-block-#{password.id}")
-    #assert_not_nil password_block
-    #password_block.click
-
     assert(page.has_no_css?("#password-data-password-changed-#{password.id}", :visible => false, wait: 30))
 
   end
