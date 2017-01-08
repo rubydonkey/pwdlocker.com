@@ -4,7 +4,7 @@
   <div class="row">
     <div class='col-md-3'>
       <div class='well'>
-        <%= link_to passwords_new_path, remote: true, id: "new_password_link" do %>
+        <%= link_to new_password_path, remote: true, id: "new_password_link" do %>
             <button class="btn btn-success" data-disable-with='Wait...'>Add</button>
         <% end %>
         <div class="form-pwd" id="password_form" style="display:none;"></div>

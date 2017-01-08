@@ -123,14 +123,12 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:username].to_s))
     assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:password].to_s))
     assert(page.has_link?(href: data[:URL]))
-
   end
 
   test 'invalid edit password' do
+
     visit(root_path)
-
     click_link(:href => edit_password_path(Password.first))
-
     password = Password.create()
 
     for i in 1..4 do
