@@ -1,0 +1,5 @@
+<% if @phone_number.errors.any? %>
+  $('.new_phone_number').replaceWith("<%= j render 'signins/form' %>")
+<% else %>
+  $('#signin_form').html("<%= j render 'sessions/form' %> ");
+<% end %>
