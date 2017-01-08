@@ -1,13 +1,6 @@
 require 'test_helper'
 
 class AddPasswordGroupTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-
-  def setup
-  end
-
   test 'create valid password groups' do
 
     # test page layout
@@ -19,24 +12,18 @@ class AddPasswordGroupTest < ActionDispatch::IntegrationTest
 
     # test form layout
     
-    assert(has_button?('Add group'))
+    assert(has_link?('Add group'))
 
-    click_button('Add group')
+    click_link('Add group')
     assert(page.has_css?('form'), :count => 1)
 
     data = get_random_password_group_name
 
-    page.fill_in('name',    :with => data[1])
+    page.fill_in('name', :with => data[1])
     
 
     click_button('Create Password group')
  
   end
-
-
-
-
-
-
 
 end

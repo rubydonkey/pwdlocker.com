@@ -1,9 +1,10 @@
 <%= form_for @password_group, remote: true do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
 
-    <%= f.label :group_name %>
+    <%= f.label :name, label: "Group name" %>
     <%= f.text_field :name, class: "form-control" %>
 
-    <%= f.submit class: "btn btn-success" %>
+    <br />
+    <%= f.submit class: "btn btn-primary"  %>
 
 <% end %>

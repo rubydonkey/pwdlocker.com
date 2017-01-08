@@ -1,5 +1,7 @@
 class PasswordGroupsController < ApplicationController
 
+  skip_before_action :verify_authenticity_token
+
   def index
   	@password_groups = PasswordGroup.all
   end
