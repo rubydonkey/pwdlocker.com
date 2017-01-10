@@ -220,11 +220,15 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     page.fill_in('Title', :with => "NewTitle")
 
     click_button('Update Password')
+<<<<<<< HEAD
     wait_for_ajax
 
     password_block = page.find_by_id("password-block-#{password.id}")
     assert_not_nil password_block
     password_block.click
+=======
+    assert(page.has_no_css?("#password-data-password-changed-#{password.id}", :visible => false, wait: 30))
+>>>>>>> 44e5f242df9cf2ea032f87013c05ae2f68a917d0
 
     password.reload
     assert(password_block.text.include?(time_ago_in_words(password.created_at)))
