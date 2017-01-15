@@ -1,6 +1,9 @@
 require 'test_helper'
+require_relative '../support/wait_for_ajax'
 
 class SigninTest < ActionDispatch::IntegrationTest
+  include WaitForAjax
+
   def setup
     Twilio::REST::Messages.any_instance.stubs(:create)
   end
@@ -23,6 +26,7 @@ class SigninTest < ActionDispatch::IntegrationTest
     # valid number signin
     page.fill_in('Number', :with => "+38162205217")
     click_button("Send me token")
+    wait_for_ajax
 
     assert(page.has_css?('form', :count => 1))
 

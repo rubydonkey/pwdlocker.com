@@ -1,6 +1,10 @@
+require_relative '../support/wait_for_ajax'
 require 'test_helper'
 
 class PasswordsAddTest < ActionDispatch::IntegrationTest
+  include ActionView::Helpers::DateHelper
+
+  include WaitForAjax
 
   test 'page layout' do
     # test page layout
@@ -92,6 +96,7 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     password.errors.count.times do |i|
       assert(page.has_css?("li:nth-child(#{i + 1})", :text => password.errors.full_messages[i]))
     end
+
   end
 
   test 'edit and update password' do
@@ -123,6 +128,7 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:username].to_s))
     assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:password].to_s))
     assert(page.has_link?(href: data[:URL]))
+
   end
 
   test 'invalid edit password' do
@@ -183,6 +189,45 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     assert(page.has_css?("#password-data-username-#{password.id}", :visible => true, :text => password.username.to_s))
     assert(page.has_css?("#password-data-password-#{password.id}", :visible => true, :text => password.password.to_s))
 
+  end
+
+  test 'password last change time stamp shown when password updated' do
+    visit(root_path)
+
+    password = Password.first
+    click_link(:href => edit_password_path(password))
+
+    page.fill_in('Password', :with => "NewPassword")
+
+    click_button('Update Password')
+    wait_for_ajax
+
+    password_block = page.find_by_id("password-block-#{password.id}", wait: 30)
+    assert_not_nil password_block
+    password_block.click
+
+    password.reload
+    assert(password_block.text.include?(time_ago_in_words(password.password_last_changed_at)))
+  end
+
+  test 'password last change time stamp not be shown when non password field is updated' do
+
+    visit(root_path)
+
+    password = Password.first
+    click_link(:href => edit_password_path(password))
+
+    page.fill_in('Title', :with => "NewTitle")
+
+    click_button('Update Password')
+    wait_for_ajax
+
+    password_block = page.find_by_id("password-block-#{password.id}")
+    assert_not_nil password_block
+    password_block.click
+
+    password.reload
+    assert(password_block.text.include?(time_ago_in_words(password.created_at)))
   end
 
 end
