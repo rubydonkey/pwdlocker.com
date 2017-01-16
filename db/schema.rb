@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20170112223043) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,10 +33,11 @@ ActiveRecord::Schema.define(version: 20170112223043) do
     t.string   "URL"
     t.string   "username"
     t.text     "password"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "password_group_id"
     t.integer  "favicon_id"
+    t.datetime "password_last_changed_at"
     t.index ["favicon_id"], name: "index_passwords_on_favicon_id", using: :btree
   end
 

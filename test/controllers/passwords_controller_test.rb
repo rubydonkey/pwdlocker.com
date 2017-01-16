@@ -110,4 +110,35 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal url, @password.URL.to_s
     assert_equal 'http', URI.parse(@password.URL).scheme
   end
+
+  test 'password_last_changed_at attribute updated only when password is changed' do
+    password = Password.new(get_random_password_data)
+    password.save
+
+    assert_nil password.password_last_changed_at
+
+    patch password_path(password), xhr:true, params: { password: {  title: password.title,
+                                                                    URL: password.URL,
+                                                                    username: password.username,
+                                                                    password: "NewPassword"}}
+    password.reload
+    assert_not_nil password.password_last_changed_at
+  end
+
+  test 'password_last_changed_at attribute not updated when any other attribute from password is changed' do
+
+    password = Password.new(get_random_password_data)
+    password.save
+
+    assert_nil password.password_last_changed_at
+
+    patch password_path(password), xhr:true, params: { password: {  title: "New Title",
+                                                                    URL: password.URL,
+                                                                    username: password.username,
+                                                                    password: password.password }}
+    password.reload
+    assert_nil password.password_last_changed_at
+
+  end
+
 end
