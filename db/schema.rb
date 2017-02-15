@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170105202636) do
+ActiveRecord::Schema.define(version: 20170112223043) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,9 +22,10 @@ ActiveRecord::Schema.define(version: 20170105202636) do
   end
 
   create_table "password_groups", force: :cascade do |t|
-    t.string   "name",       default: "empty"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_password_groups_on_name", unique: true, using: :btree
   end
 
   create_table "passwords", force: :cascade do |t|
@@ -38,7 +39,6 @@ ActiveRecord::Schema.define(version: 20170105202636) do
     t.integer  "favicon_id"
     t.datetime "password_last_changed_at"
     t.index ["favicon_id"], name: "index_passwords_on_favicon_id", using: :btree
-    t.index ["password_group_id"], name: "index_passwords_on_password_group_id", using: :btree
   end
 
   create_table "phone_numbers", force: :cascade do |t|
