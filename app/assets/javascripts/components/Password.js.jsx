@@ -35,7 +35,7 @@ class Password extends React.Component
         return(
                 <div className="col-xs-2">
                   <a target="_blank" href= {password.URL} >
-                    <img className="favicon password-block-favicon" src="<%= asset_path( 'favicon.ico' )%>" alt="pwdlocker"/>
+                    <img className="favicon password-block-favicon" src="assets/favicon.ico" alt="pwdlocker"/>
                   </a>
                 </div>
         );
@@ -45,10 +45,13 @@ class Password extends React.Component
     renderColumnData()
     {
       const password = this.props.password;
+        let group_name = null;
+        if(password.password_group)
+            group_name = password.password_group.name;
 
       return(
           <div className="col-xs-8">
-            <span className='label label-default pull-right'>{this.props.group}</span>
+            <span className='label label-default pull-right'>{this.props.password_group}</span>
             <a target="_blank" href={password.URL}>
               <span className="password-data" id={"password-data-title-" + password.id } > <b>{ this.toTitleCase(password.title) }</b> </span>
             </a>

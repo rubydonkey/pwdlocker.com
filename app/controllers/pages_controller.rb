@@ -1,10 +1,10 @@
 class PagesController < ApplicationController
 
   def index
-    @passwords = Password.all
-    @password_groups = Array.new()
-    @favicon_URIs = Array.new()
-    @timestamps = Array.new()
+    @passwords        = Password.all.includes(:favicon, :password_group)
+    @password_groups  = Array.new()
+    @favicon_URIs     = Array.new()
+    @timestamps       = Array.new()
 
     @passwords.each do |pwd|
       @password_groups.push(pwd.password_group.try(:name))
@@ -16,7 +16,6 @@ class PagesController < ApplicationController
         @timestamps.push(pwd.created_at.strftime("%b %d, %Y %H:%M:%S GMT"))
       end
     end
-
   end
 
 end
