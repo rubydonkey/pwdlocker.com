@@ -19,13 +19,14 @@ class Password extends React.Component
     renderColumnFavicon()
     {
       const password = this.props.password;
+      const favicon_URI = password.favicon && password.favicon.data;
 
-      if( this.props.favicon_URI != null)
+      if(favicon_URI)
       {
         return(
                 <div className="col-xs-2">
                   <a target="_blank" href= {password.URL} >
-                    <img className="favicon password-block-favicon" src={"data:image/gif;base64," + this.props.favicon_URI} alt="pwdlocker"/>
+                    <img className="favicon password-block-favicon" src={"data:image/gif;base64," + favicon_URI} alt="pwdlocker"/>
                   </a>
                 </div>
         );
@@ -51,7 +52,7 @@ class Password extends React.Component
 
       return(
           <div className="col-xs-8">
-            <span className='label label-default pull-right'>{this.props.password_group}</span>
+            <span className='label label-default pull-right'>{group_name}</span>
             <a target="_blank" href={password.URL}>
               <span className="password-data" id={"password-data-title-" + password.id } > <b>{ this.toTitleCase(password.title) }</b> </span>
             </a>
@@ -60,7 +61,7 @@ class Password extends React.Component
             <br />
             <span className="password-data password-block-password-data" id={ "password-data-password-" + password.id }>  <b>Password:</b> { password.password } </span>
             <br />
-            <span className="password-data password-block-password-data" id={ "password-data-password-changed-" + password.id }>  Last time changed  {this.time_ago_in_words_with_parsing(this.props.timestamp)}. </span>
+            <span className="password-data password-block-password-data" id={ "password-data-password-changed-" + password.id }>  Last time changed  {this.time_ago_in_words_with_parsing(this.props.password.timestamp)}. </span>
           </div>
       );
     }

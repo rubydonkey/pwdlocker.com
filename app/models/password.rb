@@ -22,6 +22,18 @@ class Password < ApplicationRecord
     favicon.try(:data)
   end
 
+  def timestamp
+    if(password_last_changed_at.present?)
+      password_last_changed_at.strftime("%b %d, %Y %H:%M:%S GMT")
+    else
+      created_at.strftime("%b %d, %Y %H:%M:%S GMT")
+    end
+  end
+
+  def to_json(options={})
+    super(options.merge(methods: :timestamp))
+  end
+
   private
 
   def update_password_last_changed
