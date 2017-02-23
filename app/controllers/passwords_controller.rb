@@ -19,25 +19,30 @@ class PasswordsController < ApplicationController
   def create
     check_password_url!
 
-    @password = Password.create(password_params)
-
+    @password = Password.new(password_params)
     if favico = get_favicon
       @password.favicon = favico
-      @password.save
+    end
+    if @password.save
+      render @password
     end
 
     respond_to do |format|
-      format.js
+      format.json do
+        if @password.save
+          render :json => @password
+        else
+          render :json => { :errors => @password.errors.messages }, :status => 422
+        end
+      end
     end
   end
 
   def edit
     @password = Password.find(params[:id])
-
     respond_to do |format|
       format.js
     end
-
   end
 
   def update

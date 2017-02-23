@@ -1,22 +1,2 @@
 <% provide(:title, "My Passwords") %>
-
-<div class="container">
-  <div class="row">
-    <div class='col-md-3'>
-      <div class='well'>
-        <%= link_to new_password_path, remote: true, id: "new_password_link" do %>
-            <button class="btn btn-success" data-disable-with='Wait...'>Add</button>
-        <% end %>
-        <div class="form-pwd" id="password_form" style="display:none;"></div>
-        <div id="password_group_form" > </div>
-      </div>
-    </div>
-
-    <div class='col-md-9 passwords'>
-      <div class='row' id='passwords'>
-        <%= react_component( 'Passwords', {passwords: @passwords.as_json(include: [:favicon, :password_group], methods: [:timestamp])} ) %>
-      </div>
-    </div>
-
-  </div>
-</div>
+<%= react_component( 'Passwords', {passwords: @passwords.as_json(include: [:favicon, :password_group], methods: [:timestamp])} ) %>

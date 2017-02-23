@@ -69,6 +69,7 @@ class Password extends React.Component
     renderColumnControls()
     {
       const password = this.props.password;
+
       return(
           <div className="col-xs-2">
             <a data-remote="true" data-method="delete" href={"/passwords/" + password.id}>
@@ -81,21 +82,22 @@ class Password extends React.Component
       );
     }
 
-      time_ago_in_words_with_parsing(from)
-      {
+    time_ago_in_words_with_parsing(from)
+    {
         var date = new Date;
         date.setTime(Date.parse(from));
         return this.time_ago_in_words(date);
-      }
-      // Takes a timestamp and converts it to a relative time
-      // DateHelper.time_ago_in_words(1331079503000)
-      time_ago_in_words(from)
-      {
-        return this.distance_of_time_in_words(new Date, from);
-      }
+    }
 
-      distance_of_time_in_words(to, from)
-      {
+    // Takes a timestamp and converts it to a relative time
+    // DateHelper.time_ago_in_words(1331079503000)
+    time_ago_in_words(from)
+    {
+        return this.distance_of_time_in_words(new Date, from);
+    }
+
+    distance_of_time_in_words(to, from)
+    {
         var distance_in_seconds = ((to - from) / 1000);
         var distance_in_minutes = Math.floor(distance_in_seconds / 60);
         var tense = distance_in_seconds < 0 ? " from now" : " ago";
@@ -112,10 +114,10 @@ class Password extends React.Component
         if (distance_in_minutes < 1051199) { return 'about a year'+tense; }
 
         return 'over ' + Math.floor(distance_in_minutes / 525960) + ' years';
-      }
+    }
 
-      toTitleCase(str)
-      {
+    toTitleCase(str)
+    {
         return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-      }
+    }
 }
