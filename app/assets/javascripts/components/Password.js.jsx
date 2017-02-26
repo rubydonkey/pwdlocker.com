@@ -1,5 +1,15 @@
 class Password extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            password: this.props.password,
+            editMode: false,
+            errors: {}
+        };
+    }
+
     render()
     {
       const password = this.props.password;
@@ -16,71 +26,168 @@ class Password extends React.Component
       );
     }
 
+    handleTitleChange(e)
+    {
+        let newPassword = this.state.password;
+        newPassword.title = e.target.value;
+        this.setState({password: newPassword})
+    }
+
+    handleURLChange(e)
+    {
+        let newPassword = this.state.password;
+        newPassword.URL = e.target.value;
+        this.setState({password: newPassword})
+    }
+
+    handleUsernameChange(e)
+    {
+        let newPassword = this.state.password;
+        newPassword.username = e.target.value;
+        this.setState({password: newPassword})
+    }
+
+    handlePasswordChange(e)
+    {
+        let newPassword = this.state.password;
+        newPassword.password = e.target.value;
+        this.setState({password: newPassword})
+    }
+
+    handlePasswordUpdate()
+    {
+        var that = this;
+        $.ajax({
+            method: 'PUT',
+            data: {
+                password: that.state.password,
+            },
+            url: '/passwords/' + that.state.password.id + '.json',
+            success: function(res) {
+                that.setState({
+                    errors: {},
+                    password: res,
+                    editMode: false
+                });
+            },
+            error: function(res) {
+                that.setState({errors: res.responseJSON.errors});
+            }
+        });
+    }
+
+    toggleEditMode()
+    {
+        if(this.state.editMode)
+            this.handlePasswordUpdate();
+        else
+            this.setState({editMode: true })
+    }
+
+    handlePasswordDelete()
+    {
+        var that = this;
+        $.ajax({
+            method: 'DELETE',
+            url: '/passwords/' + that.state.password.id + '.json',
+            success: function(res) {
+                that.props.onDeletePassword(that.state.password);
+            }
+        })
+    }
+
     renderColumnFavicon()
     {
-      const password = this.props.password;
-      const favicon_URI = password.favicon && password.favicon.data;
+        const password = this.state.password;
+        const favicon_URI = password.favicon && password.favicon.data;
 
-      if(favicon_URI)
-      {
-        return(
+        if(favicon_URI)
+        {
+            return(
                 <div className="col-xs-2">
-                  <a target="_blank" href= {password.URL} >
-                    <img className="favicon password-block-favicon" src={"data:image/gif;base64," + favicon_URI} alt="pwdlocker"/>
-                  </a>
+                    <a target="_blank" href= {password.URL} >
+                        <img className="favicon password-block-favicon" src={"data:image/gif;base64," + favicon_URI} alt="pwdlocker"/>
+                    </a>
                 </div>
-        );
-      }
-      else
-      {
-        return(
+            );
+        }
+        else
+        {
+            return(
                 <div className="col-xs-2">
-                  <a target="_blank" href= {password.URL} >
-                    <img className="favicon password-block-favicon" src="assets/favicon.ico" alt="pwdlocker"/>
-                  </a>
+                    <a target="_blank" href= {password.URL} >
+                        <img className="favicon password-block-favicon" src="assets/favicon.ico" alt="pwdlocker"/>
+                    </a>
                 </div>
-        );
-      }
+            );
+        }
     }
 
     renderColumnData()
     {
-      const password = this.props.password;
+      const password = this.state.password;
         let group_name = null;
+
         if(password.password_group)
             group_name = password.password_group.name;
 
-      return(
-          <div className="col-xs-8">
-            <span className='label label-default pull-right'>{group_name}</span>
-            <a target="_blank" href={password.URL}>
-              <span className="password-data" id={"password-data-title-" + password.id } > <b>{ this.toTitleCase(password.title) }</b> </span>
-            </a>
-            <br />
-            <span className="password-block-password-data" id={"password-data-username-" + password.id }>  <b>Username:</b> { password.username } </span>
-            <br />
-            <span className="password-data password-block-password-data" id={ "password-data-password-" + password.id }>  <b>Password:</b> { password.password } </span>
-            <br />
-            <span className="password-data password-block-password-data" id={ "password-data-password-changed-" + password.id }>  Last time changed  {this.time_ago_in_words_with_parsing(this.props.password.timestamp)}. </span>
-          </div>
-      );
+        if ( this.state.editMode )
+        {
+            markup = (
+                <div className="col-xs-8">
+                    <span className='label label-default pull-right'>{group_name}</span>
+
+                    <input type="text" className="form-control" value={this.state.password.title}            onChange={ (e) => this.handleTitleChange(e) } />
+                    <br />
+
+                    <input type="text" className="form-control" value={this.state.password.URL}              onChange={ (e) => this.handleURLChange(e) } />
+                    <br />
+
+                    <input type="text" className="form-control" value={this.state.password.username}         onChange={ (e) => this.handleUsernameChange(e) } />
+                    <br />
+
+                    <textarea type="text" className="form-control" value={this.state.password.password}         onChange={ (e) => this.handlePasswordChange(e) } />
+                    <br />
+                </div>
+            );
+        }
+        else
+        {
+            markup = (
+                <div className="col-xs-8">
+                    <span className='label label-default pull-right'>{group_name}</span>
+                    <a target="_blank" href={password.URL}>
+                        <span className="password-data" id={"password-data-title-" + password.id } > <b>{ this.toTitleCase(password.title) }</b> </span>
+                    </a>
+                    <br />
+
+                    <span className="password-block-password-data" id={"password-data-username-" + password.id }>  <b>Username:</b> { password.username } </span>
+                    <br />
+
+                    <span className="password-data password-block-password-data" id={ "password-data-password-" + password.id }>  <b>Password:</b> { password.password } </span>
+                    <br />
+
+                    <span className="password-data password-block-password-data" id={ "password-data-password-changed-" + password.id }>  Last time changed  {this.time_ago_in_words_with_parsing(this.props.password.timestamp)}. </span>
+                </div>
+            );
+        }
+
+        return markup;
+
     }
 
     renderColumnControls()
     {
-      const password = this.props.password;
+      const password = this.state.password;
 
       return(
           <div className="col-xs-2">
-            <a data-remote="true" data-method="delete" href={"/passwords/" + password.id}>
-              <span className="glyphicon glyphicon-remove"></span>
-            </a>
-            <a data-remote="true" href={"/passwords/" + password.id + "/edit"}>
-              <span className="glyphicon glyphicon-pencil"></span>
-            </a>
+              <span className="glyphicon glyphicon-remove" onClick={ () => this.handlePasswordDelete() } />
+              <span className="glyphicon glyphicon-pencil" onClick={ () => this.toggleEditMode() }/>
           </div>
       );
     }
+
 
     time_ago_in_words_with_parsing(from)
     {
@@ -88,7 +195,6 @@ class Password extends React.Component
         date.setTime(Date.parse(from));
         return this.time_ago_in_words(date);
     }
-
     // Takes a timestamp and converts it to a relative time
     // DateHelper.time_ago_in_words(1331079503000)
     time_ago_in_words(from)
@@ -120,4 +226,5 @@ class Password extends React.Component
     {
         return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     }
+
 }

@@ -23,14 +23,11 @@ class PasswordsController < ApplicationController
     if favico = get_favicon
       @password.favicon = favico
     end
-    if @password.save
-      render @password
-    end
 
     respond_to do |format|
       format.json do
         if @password.save
-          render :json => @password
+          render :json => @password.as_json(include: [:favicon, :password_group], methods: [:timestamp])
         else
           render :json => { :errors => @password.errors.messages }, :status => 422
         end
@@ -50,14 +47,19 @@ class PasswordsController < ApplicationController
 
     @password = Password.find(params[:id])
     @password.update_attributes(password_params)
-
     if favico = get_favicon
       @password.favicon = favico
-      @password.save
     end
 
     respond_to do |format|
-      format.js
+      format.json do
+        if
+          @password.save
+          render :json => @password.as_json(include: [:favicon, :password_group], methods: [:timestamp])
+        else
+          render :json => { :errors => @password.errors.messages }, :status => 422
+        end
+      end
     end
   end
 
@@ -66,7 +68,7 @@ class PasswordsController < ApplicationController
     @password.destroy
 
     respond_to do |format|
-      format.js
+      format.json { render :json => {}, :status => :no_content }
     end
   end
 
@@ -91,7 +93,12 @@ class PasswordsController < ApplicationController
           ico = get_favicon_from_html_tag
         end
 
-        favico.data = ico
+        if ico
+          favico.data = ico
+        else
+          favico.data = nil
+        end
+
         favico.save
         favico
       end

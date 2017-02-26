@@ -1,8 +1,8 @@
 class Passwords extends React.Component
 {
-    constructor(props, context)
+    constructor(props)
     {
-        super(props, context);
+        super(props);
         this.state = {
             passwords: props.passwords,
             password: {
@@ -33,14 +33,18 @@ class Passwords extends React.Component
             <div className='col-md-3'>
                 <div className='well'>
                     <label>Title</label>
-                    <input      className="form-control" type="text"    onChange={ this.handleTitleChange }/>
+                    <input      className="form-control" type="text" value={this.state.password.title}    onChange={ (e) => this.handleTitleChange(e) }/>
+                    <br />
                     <label>Url</label>
-                    <input      className="form-control" type="text"    onChange={ this.handleURLChange } />
+                    <input      className="form-control" type="text" value={this.state.password.URL}    onChange={ (e) =>  this.handleURLChange(e)  } />
+                    <br />
                     <label>Username</label>
-                    <input      className="form-control" type="text"    onChange={ this.handleUsernameChange } />
+                    <input      className="form-control" type="text" value={this.state.password.username}    onChange={ (e) =>  this.handleUsernameChange(e)  } />
+                    <br />
                     <label>Password</label>
-                    <textarea   className="form-control"                onChange={ this.handlePasswordChange } />
-                    <input      className="btn btn-success" type="submit"            onClick={ this.handleCreatePassword } />
+                    <textarea   className="form-control" value={this.state.password.password}               onChange={ (e) =>  this.handlePasswordChange(e)  } />
+                    <br />
+                    <input      className="btn btn-success" type="submit"            onClick={ () => this.handlePasswordCreate() } />
                 </div>
             </div>
         );
@@ -51,7 +55,7 @@ class Passwords extends React.Component
         var that = this;
         const passwords  = this.state.passwords.map(function(password)
         {
-            return <Password password={password} key={password.id} />;
+            return <Password password={password} key={password.id} onDeletePassword={ (password) => that.handlePasswordDelete(password) } />;
         });
 
         return( <div className='col-md-9'> {passwords} </div> );
@@ -82,13 +86,14 @@ class Passwords extends React.Component
         this.setState({password: newPassword});
     }
 
-    handleCreatePassword(e)
+    handlePasswordCreate(e)
     {
         var that = this;
+        const password = that.state.password;
         $.ajax({
             method: 'POST',
             data: {
-                password: that.state.password,
+                password: password,
             },
             url: '/passwords.json',
             success: function(res) {
@@ -111,5 +116,11 @@ class Passwords extends React.Component
         });
     }
 
-
+    handlePasswordDelete(password)
+    {
+        var passwords = this.state.passwords.filter(function(pwd) {
+            return password.id !== pwd.id;
+        });
+        this.setState({passwords: passwords});
+    }
 }
