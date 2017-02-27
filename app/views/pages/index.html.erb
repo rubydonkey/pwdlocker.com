@@ -14,7 +14,7 @@
 
     <div class='col-md-9 passwords'>
       <div class='row' id='passwords'>
-        <%= react_component( 'Passwords', {passwords: @passwords.as_json(include: [:favicon, :password_group], methods: [:timestamp])} ) %>
+        <%= react_component( 'Passwords', {passwords: @passwords} ) %>
       </div>
     </div>
 
