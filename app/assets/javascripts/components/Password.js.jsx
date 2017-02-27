@@ -67,16 +67,20 @@ class Password extends React.Component
                 <div className="col-xs-8">
                     <span className='label label-default pull-right'>{group_name}</span>
 
-                    <input type="text" className="form-control" value={this.state.password.title}            onChange={ (e) => this.handleTitleChange(e) } />
+                    <input type="text" className="form-control" value={this.state.password.title}       onChange={ (e) => this.handleTitleChange(e) } />
+                    <span style={{color: 'red'}}>{this.state.errors.title}</span>
                     <br />
 
-                    <input type="text" className="form-control" value={this.state.password.URL}              onChange={ (e) => this.handleURLChange(e) } />
+                    <input type="text" className="form-control" value={this.state.password.URL}         onChange={ (e) => this.handleURLChange(e) } />
+                    <span style={{color: 'red'}}>{this.state.errors.URL}</span>
                     <br />
 
-                    <input type="text" className="form-control" value={this.state.password.username}         onChange={ (e) => this.handleUsernameChange(e) } />
+                    <input type="text" className="form-control" value={this.state.password.username}    onChange={ (e) => this.handleUsernameChange(e) } />
+                    <span style={{color: 'red'}}>{this.state.errors.username}</span>
                     <br />
 
-                    <textarea type="text" className="form-control" value={this.state.password.password}         onChange={ (e) => this.handlePasswordChange(e) } />
+                    <textarea type="text" className="form-control" value={this.state.password.password} onChange={ (e) => this.handlePasswordChange(e) } />
+                    <span style={{color: 'red'}}>{this.state.errors.password}</span>
                     <br />
                 </div>
             );
@@ -103,7 +107,6 @@ class Password extends React.Component
         }
 
         return markup;
-
     }
 
     renderColumnControls()

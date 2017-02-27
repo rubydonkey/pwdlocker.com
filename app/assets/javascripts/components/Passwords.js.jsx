@@ -34,16 +34,25 @@ class Passwords extends React.Component
                 <div className='well'>
                     <label>Title</label>
                     <input      className="form-control" type="text" value={this.state.password.title}    onChange={ (e) => this.handleTitleChange(e) }/>
+                    <span style={{color: 'red'}}>{this.state.errors.title}</span>
                     <br />
+
                     <label>Url</label>
                     <input      className="form-control" type="text" value={this.state.password.URL}    onChange={ (e) =>  this.handleURLChange(e)  } />
+                    <span style={{color: 'red'}}>{this.state.errors.URL}</span>
                     <br />
+
                     <label>Username</label>
                     <input      className="form-control" type="text" value={this.state.password.username}    onChange={ (e) =>  this.handleUsernameChange(e)  } />
+                    <span style={{color: 'red'}}>{this.state.errors.username}</span>
                     <br />
+
                     <label>Password</label>
                     <textarea   className="form-control" value={this.state.password.password}               onChange={ (e) =>  this.handlePasswordChange(e)  } />
+                    <span style={{color: 'red'}}>{this.state.errors.password}</span>
                     <br />
+                    <br />
+
                     <input      className="btn btn-success" type="submit"            onClick={ () => this.handlePasswordCreate() } />
                 </div>
             </div>
