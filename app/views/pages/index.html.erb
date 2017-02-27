@@ -1,2 +1,2 @@
 <% provide(:title, "My Passwords") %>
-<%= react_component( 'Passwords', {passwords: @passwords.as_json(include: [:favicon, :password_group], methods: [:timestamp])} ) %>
+<%= react_component( 'Passwords', {passwords: @passwords} ) %>

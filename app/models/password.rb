@@ -30,6 +30,10 @@ class Password < ApplicationRecord
     end
   end
 
+  def as_json(options = nil)
+    super({ include: [:favicon, :password_group], methods: [:timestamp] }.merge(options || {}))
+  end
+
   def to_json(options={})
     super(options.merge(methods: :timestamp))
   end
