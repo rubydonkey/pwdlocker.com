@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
 
   def index
-    @passwords = Password.all    
+    @passwords        = Password.includes(:favicon, :password_group)
   end
 
 end
