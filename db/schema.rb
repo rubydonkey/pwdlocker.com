@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215134022) do
 
+ActiveRecord::Schema.define(version: 20170112223043) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,10 @@ ActiveRecord::Schema.define(version: 20161215134022) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+<<<<<<< HEAD
+=======
+    t.index ["name"], name: "index_password_groups_on_name", unique: true, using: :btree
+>>>>>>> ca001583b7aa6aae0a7bc431fe9ee43af3d476cb
   end
 
   create_table "passwords", force: :cascade do |t|
@@ -33,10 +37,18 @@ ActiveRecord::Schema.define(version: 20161215134022) do
     t.string   "URL"
     t.string   "username"
     t.text     "password"
+<<<<<<< HEAD
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "password_group_id"
     t.integer  "favicon_id"
+=======
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "favicon_id"
+    t.integer  "password_group_id"
+    t.datetime "password_last_changed_at"
+>>>>>>> ca001583b7aa6aae0a7bc431fe9ee43af3d476cb
     t.index ["favicon_id"], name: "index_passwords_on_favicon_id", using: :btree
   end
 

@@ -84,6 +84,12 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+<<<<<<< HEAD
   config.react.variant = :production
    config.react.addons = true # defaults to false
+=======
+  # config/environments/production.rb
+  config.react.variant = :production
+  config.react.addons = true # defaults to false
+>>>>>>> ca001583b7aa6aae0a7bc431fe9ee43af3d476cb
 end

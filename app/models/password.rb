@@ -10,6 +10,8 @@ class Password < ApplicationRecord
 
   belongs_to :favicon, optional: true
 
+  before_update :update_password_last_changed, if: :password_changed?
+
   # validates :URL, presence: true, format: { with: URI::DEFAULT_PARSER.regexp[:ABS_URI] }
 
   def favicon_URI
@@ -35,4 +37,14 @@ class Password < ApplicationRecord
   def to_json(options={})
     super(options.merge(methods: :timestamp))
   end
+<<<<<<< HEAD
+=======
+
+  private
+
+  def update_password_last_changed
+    write_attribute(:password_last_changed_at, Time.now.utc.localtime)
+  end
+
+>>>>>>> ca001583b7aa6aae0a7bc431fe9ee43af3d476cb
 end

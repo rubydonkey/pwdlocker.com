@@ -9,8 +9,8 @@ gem 'faker', '1.6.3'
 
 gem 'nokogiri'
 gem 'rest-client'
-
 gem 'pg'
+gem 'react-rails'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.0'

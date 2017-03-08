@@ -4,6 +4,7 @@ require 'digest/sha2'
 
 
 class PhoneNumber < ApplicationRecord
+
   TWILIO_PHONE_NUMBER = '17032910306'
 
   TOKEN_INVALID = 0
