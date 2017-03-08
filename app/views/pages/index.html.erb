@@ -14,7 +14,7 @@
 
     <div class='col-md-9 passwords'>
       <div class='row' id='passwords'>
-        <%= render @passwords %>
+        <%= react_component('Passwords', {passwords: @passwords}) %>
       </div>
     </div>
   </div>

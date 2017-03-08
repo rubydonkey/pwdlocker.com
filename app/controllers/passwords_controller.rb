@@ -7,7 +7,8 @@ class PasswordsController < ApplicationController
   FAVICON_DEFAULT_PATH = '/favicon.ico'
 
   before_action :get_all_passwords, only: [:create, :update, :destroy]
-
+  
+  
   def new
     @password = Password.new
     
