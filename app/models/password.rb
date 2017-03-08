@@ -37,8 +37,6 @@ class Password < ApplicationRecord
   def to_json(options={})
     super(options.merge(methods: :timestamp))
   end
-<<<<<<< HEAD
-=======
 
   private
 
@@ -46,5 +44,5 @@ class Password < ApplicationRecord
     write_attribute(:password_last_changed_at, Time.now.utc.localtime)
   end
 
->>>>>>> ca001583b7aa6aae0a7bc431fe9ee43af3d476cb
+
 end
