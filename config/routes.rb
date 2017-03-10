@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   
   resources :passwords
   resources :password_groups
-  # root to: "signin#new"
   resources :signins do
     collection do
       post 'resend_token'

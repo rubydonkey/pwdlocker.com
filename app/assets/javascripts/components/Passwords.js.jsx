@@ -1,5 +1,8 @@
 class Passwords extends React.Component
 {
+
+  
+  
   render()
   {
     window.passwords = this.props.passwords;
@@ -9,6 +12,8 @@ class Passwords extends React.Component
                                 return <Password password={password} key={password.id} />;
                               });
 
-    return( <div> {passwords} </div> );
+    return( <div> 
+             {passwords} 
+            </div> );
   }
 }
