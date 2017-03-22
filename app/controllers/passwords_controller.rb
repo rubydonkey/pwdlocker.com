@@ -28,7 +28,7 @@ class PasswordsController < ApplicationController
     end
 
     respond_to do |format|
-      format.js  {render inline: "location.reload();" }
+      format.js  
     end
   end
 

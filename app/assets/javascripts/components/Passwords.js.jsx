@@ -10,7 +10,7 @@ class Passwords extends React.Component
                               });
 
     return( <div> 
-             {passwords} 
+                <SearchForm passwords={this.props.passwords}/>
             </div> );
   }
 }
