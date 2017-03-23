@@ -1,33 +1,21 @@
 class SearchForm extends React.Component
-{   
+{ 
 	constructor(props) {
-      super(props);
-      this.state = {searchString: ''};   
-   }
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-  updateSearch(event) {
-    this.setState({searchString: event.target.value.substr(0,20)});
+  handleChange(e) {
+    this.props.onSearchStringChange(e.target.value);
   }
 
   render() {
-      let filteredPasswords = this.props.passwords.filter(
-      		(password) => {
-      			return password.title.toLowerCase().indexOf(this.state.searchString.toLowerCase()) !==-1;
-      		}
-      	);   
+    const searchString = this.props.searchString;
     return (
-             <div>
-               <form>
-                <input type="text" value={this.state.searchString} onChange={this.updateSearch.bind(this)} placeholder="Search..." />	
-               </form>
-                <div className='row' id='passwords'>
-                    {filteredPasswords.map((password)=> {
-                            return <Password password={password} key={password.id}/>;
-                        })
-                    }
-                </div>
-             </div>
-            );
-    }
+      <div>
+        <input value={searchString} onChange={this.handleChange} placeholder="Search..." />
+      </div>
+    );
+  }
 
 }
