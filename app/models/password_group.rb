@@ -7,4 +7,8 @@ class PasswordGroup < ApplicationRecord
     super({ only: [:name]}.merge(options || {}))
   end
   
+ def as_json(options = nil)
+    super({ only: [:name]}.merge(options || {}))
+ end
+
 end

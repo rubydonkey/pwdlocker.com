@@ -52,8 +52,6 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # config/environments/development.rb
-   config.react.variant = :development
-   config.react.addons = true # defaults to false
-
+  config.react.variant = :development
+  config.react.addons = true # defaults to false
 end
