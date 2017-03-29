@@ -43,6 +43,4 @@ class Password < ApplicationRecord
   def update_password_last_changed
     write_attribute(:password_last_changed_at, Time.now.utc.localtime)
   end
-
-
 end

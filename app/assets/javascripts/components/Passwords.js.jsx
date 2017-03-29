@@ -22,7 +22,7 @@ class Passwords extends React.Component
 
     let filteredPasswords = this.props.passwords.filter(
       		(password) => {
-      			return password.title.toLowerCase().indexOf(this.state.searchString.toLowerCase()) !==-1;
+      			return password.title.toLowerCase().indexOf(searchString.toLowerCase()) !==-1;
       		}
       	);   
 

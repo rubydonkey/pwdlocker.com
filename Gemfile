@@ -62,5 +62,3 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'twilio-ruby', '4.13.0'
-
-gem 'react-rails'
