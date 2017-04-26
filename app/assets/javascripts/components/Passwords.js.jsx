@@ -26,6 +26,7 @@ class Passwords extends React.Component
       		}
       	);   
 
+    
     return( <div> 
                <SearchForm searchString={searchString} onSearchStringChange={this.handleSearchStringChange} />
                 <div className='row' id='passwords'>

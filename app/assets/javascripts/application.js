@@ -20,3 +20,4 @@
 //= require components
 //= require_tree .
 
+//= require fuse.min.js

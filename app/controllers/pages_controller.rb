@@ -4,4 +4,7 @@ class PagesController < ApplicationController
     @passwords        = Password.includes(:favicon, :password_group)
   end
 
+  def fuseSearch
+  	 @passwords        = Password.all 
+  end
 end
