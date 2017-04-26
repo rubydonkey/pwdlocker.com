@@ -5,6 +5,6 @@ class PagesController < ApplicationController
   end
 
   def fuseSearch
-  	 @passwords        = Password.all 
+  	 @passwords       = Password.all 
   end
 end
