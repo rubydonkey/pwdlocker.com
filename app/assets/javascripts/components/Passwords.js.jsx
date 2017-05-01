@@ -12,9 +12,9 @@ class Passwords extends React.Component
 
   render()
   {
-    const passwords = this.props.passwords;
+    const passwords    = this.props.passwords;
     const searchString = this.state.searchString;
-    var options = {
+    var   options      = {
       shouldSort: true,
       threshold: 0.6,
       location: 0,
@@ -27,13 +27,11 @@ class Passwords extends React.Component
       };
             
     var fuse = new Fuse(passwords, options);
-   
     let filteredPasswords;
     if(searchString!="")
       filteredPasswords = fuse.search(searchString);
     else filteredPasswords = passwords;
    
-
     return( <div> 
                <SearchForm searchString={searchString} onSearchStringChange={this.handleSearchStringChange} />
                 <div className='row' id='passwords'>
