@@ -22,7 +22,8 @@ class Passwords extends React.Component
       maxPatternLength: 32,
       minMatchCharLength: 1,
       keys: [
-              "title"
+              "title",
+              "URL"
             ]
       };
             
