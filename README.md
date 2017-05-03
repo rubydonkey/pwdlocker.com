@@ -8,4 +8,6 @@
 
 [![Test Coverage](https://codeclimate.com/github/rubydonkey/pwdlocker.com/badges/coverage.svg)](https://codeclimate.com/github/rubydonkey/pwdlocker.com/coverage)
 
+[![Dependency Status](https://gemnasium.com/badges/github.com/rubydonkey/pwdlocker.com.svg)](https://gemnasium.com/github.com/rubydonkey/pwdlocker.com)
+
 No more passwords to remember !
