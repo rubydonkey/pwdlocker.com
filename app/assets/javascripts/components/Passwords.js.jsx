@@ -12,20 +12,27 @@ class Passwords extends React.Component
 
   render()
   {
-    window.passwords = this.props.passwords;
-
-    const searchString      = this.state.searchString;
-    const passwords         = this.props.passwords.map(function(password, index)
-                              {
-                                return <Password password={password} key={password.id} />;
-                              });
-
-    let filteredPasswords = this.props.passwords.filter(
-      		(password) => {
-      			return password.title.toLowerCase().indexOf(searchString.toLowerCase()) !==-1;
-      		}
-      	);   
-
+    const passwords    = this.props.passwords;
+    const searchString = this.state.searchString;
+    var   options      = {
+      shouldSort: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 1,
+      keys: [
+              "title",
+              "URL"
+            ]
+      };
+            
+    var fuse = new Fuse(passwords, options);
+    let filteredPasswords;
+    if(searchString!="")
+      filteredPasswords = fuse.search(searchString);
+    else filteredPasswords = passwords;
+   
     return( <div> 
                <SearchForm searchString={searchString} onSearchStringChange={this.handleSearchStringChange} />
                 <div className='row' id='passwords'>

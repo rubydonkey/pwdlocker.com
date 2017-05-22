@@ -13,7 +13,7 @@ class SearchForm extends React.Component
     const searchString = this.props.searchString;
     return (
       <div>
-        <input value={searchString} onChange={this.handleChange} placeholder="Search..." />
+        <input id="search" value={searchString} onChange={this.handleChange} placeholder="Search..." />
       </div>
     );
   }
