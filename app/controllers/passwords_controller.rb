@@ -7,8 +7,7 @@ class PasswordsController < ApplicationController
   FAVICON_DEFAULT_PATH = '/favicon.ico'
 
   before_action :get_all_passwords, only: [:create, :update, :destroy]
-  
-  
+
   def new
     @password = Password.new
     
@@ -24,12 +23,18 @@ class PasswordsController < ApplicationController
 
     if favico = get_favicon
       @password.favicon = favico
-      @password.save
     end
 
     respond_to do |format|
-      format.js  
+      format.json do
+        if @password.save
+          render :json => @password.as_json(include: [:favicon, :password_group], methods: [:timestamp])
+        else
+          render :json => { :errors => @password.errors.messages }, :status => 422
+        end
+      end
     end
+
   end
 
   def edit

@@ -6,16 +6,19 @@ class SearchForm extends React.Component
   }
 
   handleChange(e) {
-    this.props.onSearchStringChange(e.target.value);
+      let action = {
+          type: "ON_SEARCH_STRING_CHANGE",
+          value: e.target.value
+      }
+      this.props.handleAction(action);
   }
 
   render() {
     const searchString = this.props.searchString;
     return (
       <div>
-        <input value={searchString} onChange={this.handleChange} placeholder="Search..." />
+        <input onChange={this.handleChange} placeholder="Search..." />
       </div>
     );
   }
-
 }
