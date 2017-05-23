@@ -1,5 +1,9 @@
 class Password extends React.Component
 {
+    constructor(props){
+        super(props);
+    };
+
     render()
     {
       const password = this.props.password;
@@ -69,17 +73,42 @@ class Password extends React.Component
     renderColumnControls()
     {
       const password = this.props.password;
+        const actionEdit = {
+            type: 'ON_START_EDIT_PASSWORD',
+            value: this.props.password
+
+        };
+        const actionDelete = {
+            type: 'ON_DELETE_PASSWORD',
+            value: this.props.password
+        };
+
       return(
           <div className="col-xs-2">
-            <a data-remote="true" data-method="delete" href={"/passwords/" + password.id}>
-              <span className="glyphicon glyphicon-remove"></span>
-            </a>
-            <a data-remote="true" href={"/passwords/" + password.id + "/edit"}>
-              <span className="glyphicon glyphicon-pencil"></span>
-            </a>
+              <span className="glyphicon glyphicon-remove" onClick={() => this.props.handleAction(actionDelete)}></span>
+              <span className="glyphicon glyphicon-pencil" onClick={() => this.props.handleAction(actionEdit)}></span>
           </div>
       );
     }
+
+    handleRemove(){
+        var action = {
+            type: 'ON_DELETE_PASSWORD',
+            value: this.props.password.id,
+        }
+    }
+
+    handleEdit(){
+        var action = {
+            type: 'ON_START_EDIT_PASSWORD',
+            value: this.props.password.id,
+        }
+
+        var handleAction = (action) => this.props.handleAction(action);
+        handleAction(action);
+    }
+
+
 
       time_ago_in_words_with_parsing(from)
       {

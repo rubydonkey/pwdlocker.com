@@ -2,18 +2,20 @@ class PasswordForm extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = this.getInitState();
+        this.state = {
+            password: this.props.password,
+            errors: {}
+        };
         this.handlePasswordCreate = this.handlePasswordChange.bind(this);
     }
 
-    getInitState() {
-        return {
-            password: props.formData,
-            errors: {}
-        }
-    }
-
     render(){
+
+        if(this.isEmpty(this.state.password))
+        {
+
+        }
+
         return(
            <div className="col-md-3">
                <div className="well">
@@ -28,7 +30,6 @@ class PasswordForm extends React.Component {
                        type="submit"
                        onClick={ () => this.handlePasswordCreate() }
                    />
-
                </div>
            </div>
 
@@ -81,6 +82,7 @@ class PasswordForm extends React.Component {
     renderPassword(){
         const password = this.state.password.password;
         const error = this.state.errors.password;
+
 
         return(
                 <div>
@@ -139,13 +141,20 @@ class PasswordForm extends React.Component {
                     value: password
                 }
                 this.props.handleAction(action);
-                this.setState(this.getInitState());
             },
 
             error: function(res) {
                 this.setState({errors: res.responseJSON.errors})
             }
         });
+    }
+
+    isEmpty(obj){
+        for(var key in obj){
+            if(obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
     }
 
 }

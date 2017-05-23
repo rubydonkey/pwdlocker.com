@@ -6,7 +6,7 @@ class SearchForm extends React.Component
   }
 
   handleChange(e) {
-      let action = {
+      var action = {
           type: "ON_SEARCH_STRING_CHANGE",
           value: e.target.value
       }
