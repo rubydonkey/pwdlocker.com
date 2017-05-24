@@ -10,6 +10,8 @@ class PWDLocker extends React.Component {
     }
 
     handleAction(action){
+        console.log('in handleAction <-')
+        console.log(action)
         switch (action.type){
             case 'ON_SEARCH_STRING_CHANGE':
             {

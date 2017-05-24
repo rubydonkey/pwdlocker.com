@@ -20,7 +20,7 @@ class Passwords extends React.Component
           key={password.id}
           handleAction={(action) => this.props.handleAction(action)}
       />;
-    });
+    }.bind(this));
 
     return( <div className='col-md-9'> {passwords} </div> );
   }
