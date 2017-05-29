@@ -2,6 +2,9 @@ class Password extends React.Component
 {
     constructor(props){
         super(props);
+
+        this.handleEdit = this.handleEdit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     };
 
     render()
@@ -76,7 +79,6 @@ class Password extends React.Component
         const actionEdit = {
             type: 'ON_START_EDIT_PASSWORD',
             value: this.props.password
-
         };
         const actionDelete = {
             type: 'ON_DELETE_PASSWORD',
@@ -85,27 +87,33 @@ class Password extends React.Component
 
       return(
           <div className="col-xs-2">
-              <span className="glyphicon glyphicon-remove" onClick={() => this.props.handleAction(actionDelete)}></span>
-              <span className="glyphicon glyphicon-pencil" onClick={() => this.props.handleAction(actionEdit)}></span>
+              <span className="glyphicon glyphicon-remove" onClick={this.handleDelete}></span>
+              <span className="glyphicon glyphicon-pencil" onClick={this.handleEdit}></span>
           </div>
       );
-    }
-
-    handleRemove(){
-        var action = {
-            type: 'ON_DELETE_PASSWORD',
-            value: this.props.password.id,
-        }
     }
 
     handleEdit(){
         var action = {
             type: 'ON_START_EDIT_PASSWORD',
-            value: this.props.password.id,
+            value: this.props.password,
+        }
+        this.props.handleAction(action);
+    }
+
+    handleDelete(){
+        var action = {
+            type: 'ON_DELETE_PASSWORD',
+            value: this.props.password,
         }
 
-        var handleAction = (action) => this.props.handleAction(action);
-        handleAction(action);
+        $.ajax({
+            method: 'DELETE',
+            url: '/passwords/' + this.props.password.id + '.json',
+            success: function(res) {
+                this.props.handleAction(action);
+            }.bind(this)
+        })
     }
 
 

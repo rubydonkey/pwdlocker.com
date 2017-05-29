@@ -10,8 +10,7 @@ class PWDLocker extends React.Component {
     }
 
     handleAction(action){
-        console.log('in handleAction <-')
-        console.log(action)
+
         switch (action.type){
             case 'ON_SEARCH_STRING_CHANGE':
             {
@@ -27,17 +26,28 @@ class PWDLocker extends React.Component {
             }
             break;
             case 'ON_START_EDIT_PASSWORD':
-            {
-                const idPassword = action.value;
-                const password = this.props.passwords[idPassword];
-                this.setState({formPassword: password});
-            }
+                this.setState({formPassword: action.value});
             break;
             case 'ON_UPDATE_PASSWORD':
             {
                 const password = action.value;
                 const passwords = this.state.passwords.slice();
                 passwords[password.id] = password;
+                this.setState({
+                    passwords: passwords,
+                    formPassword: {}
+                });
+            }
+            break;
+            case 'ON_DELETE_PASSWORD':
+            {
+                const password = action.value;
+                const passwords = this.state.passwords.slice();
+                const index = passwords.indexOf(password);
+
+                console.log(index);
+                passwords.splice(index, 1);
+
                 this.setState({
                     passwords: passwords,
                     formPassword: {}
@@ -57,16 +67,16 @@ class PWDLocker extends React.Component {
                     <div className="row">
 
                         <SearchForm
-                            handleAction={(action) => this.handleAction(action)}
+                            handleAction={this.handleAction}
                         />
 
                         <PasswordForm
-                            handleAction={(action) => this.handleAction(action)}
+                            handleAction={this.handleAction}
                             password={formData}
                         />
 
                         <Passwords
-                            handleAction={(action) => this.handleAction(action)}
+                            handleAction={this.handleAction}
                             searchString={searchString}
                             passwords={passwords}
                         />

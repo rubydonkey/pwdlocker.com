@@ -67,8 +67,9 @@ class PasswordsController < ApplicationController
     @password.destroy
 
     respond_to do |format|
-      format.js
+      format.json { render :json => {}, :status => :no_content }
     end
+
   end
 
   private

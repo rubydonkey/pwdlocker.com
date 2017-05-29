@@ -3,36 +3,32 @@ class PasswordForm extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            password: this.props.password,
+            password: props.password,
             errors: {}
         };
-        this.handlePasswordCreate = this.handlePasswordChange.bind(this);
+
+        this.handlePasswordCreate = this.handlePasswordCreate.bind(this);
+        this.handlePasswordUpdate = this.handlePasswordUpdate.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(this.props != nextProps)
+            this.setState({password: nextProps.password});
     }
 
     render(){
-
-        if(this.isEmpty(this.state.password))
-        {
-
-        }
+        var button = null;
 
         return(
            <div className="col-md-3">
                <div className="well">
-
                    {this.renderTitle()}
                    {this.renderURL()}
                    {this.renderUsername()}
                    {this.renderPassword()}
-
-                   <input
-                       className="btn btn-success"
-                       type="submit"
-                       onClick={ () => this.handlePasswordCreate() }
-                   />
+                   {this.renderSubmitButton()}
                </div>
            </div>
-
         );
     }
 
@@ -83,7 +79,6 @@ class PasswordForm extends React.Component {
         const password = this.state.password.password;
         const error = this.state.errors.password;
 
-
         return(
                 <div>
                     <label>Password</label>
@@ -125,7 +120,7 @@ class PasswordForm extends React.Component {
 
     handlePasswordCreate()
     {
-        const password = that.state.password;
+        const password = this.state.password;
         $.ajax({
             method: 'POST',
             data: {
@@ -149,6 +144,50 @@ class PasswordForm extends React.Component {
         });
     }
 
+    handlePasswordUpdate()
+    {
+        $.ajax({
+            method: 'PUT',
+            data: {
+                password: this.state.password,
+            },
+            url: '/passwords/' + this.state.password.id + '.json',
+            success: function(res) {
+                this.setState({
+                    errors: {},
+                    password: {},
+                });
+
+                action = {
+                    type: 'ON_UPDATE_PASSWORD',
+                    value: this.state.password
+                };
+                this.props.handleAction(action);
+            },
+            error: function(res) {
+                this.setState({errors: res.responseJSON.errors});
+            }
+        });
+        const password = this.state.password;
+    }
+
+    renderSubmitButton(){
+        if(this.isEmpty(this.state.password))
+        {
+            return( <input
+                className="btn btn-success"
+                type="submit"
+                onClick={ () => this.handlePasswordCreate() } />);
+        }
+        else
+        {
+            return( <input
+                className="btn btn-success"
+                type="submit"
+                onClick={ () => this.handlePasswordUpdate() } />);
+        }
+    }
+
     isEmpty(obj){
         for(var key in obj){
             if(obj.hasOwnProperty(key))
@@ -156,5 +195,4 @@ class PasswordForm extends React.Component {
         }
         return true;
     }
-
 }

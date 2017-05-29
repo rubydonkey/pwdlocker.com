@@ -18,7 +18,7 @@ class Passwords extends React.Component
       return <Password
           password={password}
           key={password.id}
-          handleAction={(action) => this.props.handleAction(action)}
+          handleAction={this.props.handleAction}
       />;
     }.bind(this));
 
