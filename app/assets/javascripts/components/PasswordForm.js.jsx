@@ -90,6 +90,23 @@ class PasswordForm extends React.Component {
             );
     }
 
+    renderSubmitButton(){
+        if(this.isEmpty(this.state.password))
+        {
+            return( <input
+                className="btn btn-success"
+                type="submit"
+                onClick={ () => this.handlePasswordCreate() } />);
+        }
+        else
+        {
+            return( <input
+                className="btn btn-success"
+                type="submit"
+                onClick={ () => this.handlePasswordUpdate() } />);
+        }
+    }
+
     handleTitleChange(e)
     {
         var password = this.state.password;
@@ -171,22 +188,7 @@ class PasswordForm extends React.Component {
         const password = this.state.password;
     }
 
-    renderSubmitButton(){
-        if(this.isEmpty(this.state.password))
-        {
-            return( <input
-                className="btn btn-success"
-                type="submit"
-                onClick={ () => this.handlePasswordCreate() } />);
-        }
-        else
-        {
-            return( <input
-                className="btn btn-success"
-                type="submit"
-                onClick={ () => this.handlePasswordUpdate() } />);
-        }
-    }
+
 
     isEmpty(obj){
         for(var key in obj){
