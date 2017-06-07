@@ -3,8 +3,9 @@ class PasswordForm extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            password: props.password,
-            errors: {}
+            password: {},
+            edit_mode: false,
+            errors: {},
         };
 
         this.handlePasswordCreate = this.handlePasswordCreate.bind(this);
@@ -13,7 +14,14 @@ class PasswordForm extends React.Component {
 
     componentWillReceiveProps(nextProps){
         if(this.props != nextProps)
-            this.setState({password: nextProps.password});
+        {
+            const edit_password = nextProps.edit_password;
+            if(!this.isEmpty(edit_password))
+            {
+                this.setState({ password: edit_password,
+                                edit_mode: true});
+            }
+        }
     }
 
     render(){
@@ -33,8 +41,12 @@ class PasswordForm extends React.Component {
     }
 
     renderTitle(){
-        const title = this.state.password.title;
+        var title = this.state.password.title;
+        if(this.isEmpty(title))
+            title = "";
+
         const error = this.state.errors.title;
+
 
         return (
             <div>
@@ -47,7 +59,10 @@ class PasswordForm extends React.Component {
     }
 
     renderURL(){
-        const URL = this.state.password.URL;
+        var URL = this.state.password.URL;
+        if(this.isEmpty(URL))
+            URL = "";
+
         const error = this.state.errors.URL;
 
         return(
@@ -61,7 +76,10 @@ class PasswordForm extends React.Component {
     }
 
     renderUsername(){
-        const username = this.state.password.username;
+        var username = this.state.password.username;
+        if(this.isEmpty(username))
+            username = "";
+
         const error = this.state.errors.username;
 
         return(
@@ -76,7 +94,10 @@ class PasswordForm extends React.Component {
     }
 
     renderPassword(){
-        const password = this.state.password.password;
+        var password = this.state.password.password;
+        if(this.isEmpty(password))
+            password = "";
+
         const error = this.state.errors.password;
 
         return(
@@ -91,20 +112,39 @@ class PasswordForm extends React.Component {
     }
 
     renderSubmitButton(){
-        if(this.isEmpty(this.state.password))
+        if(this.state.edit_mode === true)
         {
             return( <input
                 className="btn btn-success"
                 type="submit"
-                onClick={ () => this.handlePasswordCreate() } />);
+                value="Update"
+                onClick={ () => this.handlePasswordUpdate() } />);
         }
         else
         {
             return( <input
                 className="btn btn-success"
                 type="submit"
-                onClick={ () => this.handlePasswordUpdate() } />);
+                value="Create"
+                onClick={ () => this.handlePasswordCreate() } />);
         }
+    }
+
+    renderGroupForm() {
+        const groups = this.state.password_groups;
+
+        const password_groups = groups.map(function(group){
+            return<option key={group.id} value={group.id}>
+                {group.name}
+            </option>
+        });
+
+        return(
+            <select className="form-control" onChange={(e) => this.handlePasswordGroupChange(e)}>
+                <option value>Select group</option>
+                {password_groups}
+            </select>
+        );
     }
 
     handleTitleChange(e)
@@ -135,6 +175,13 @@ class PasswordForm extends React.Component {
         this.setState({password: password});
     }
 
+    handlePasswordGroupChange(e)
+    {
+        var password = this.state.password;
+        password.password = e.target.value;
+        this.setState({password: password});
+    }
+
     handlePasswordCreate()
     {
         const password = this.state.password;
@@ -153,11 +200,11 @@ class PasswordForm extends React.Component {
                     value: password
                 }
                 this.props.handleAction(action);
-            },
+            }.bind(this),
 
             error: function(res) {
                 this.setState({errors: res.responseJSON.errors})
-            }
+            }.bind(this)
         });
     }
 
@@ -173,22 +220,20 @@ class PasswordForm extends React.Component {
                 this.setState({
                     errors: {},
                     password: {},
+                    edit_mode: false,
                 });
 
-                action = {
+                const action = {
                     type: 'ON_UPDATE_PASSWORD',
-                    value: this.state.password
+                    value: res
                 };
                 this.props.handleAction(action);
-            },
+            }.bind(this),
             error: function(res) {
                 this.setState({errors: res.responseJSON.errors});
-            }
+            }.bind(this)
         });
-        const password = this.state.password;
     }
-
-
 
     isEmpty(obj){
         for(var key in obj){

@@ -3,8 +3,9 @@ class PWDLocker extends React.Component {
         super(props);
         this.state = {
             passwords: props.passwords,
+            password_groups: props.password_groups,
             searchString: '',
-            formPassword: {},
+            formEditPassword: {},
         };
         this.handleAction = this.handleAction.bind(this);
     }
@@ -26,16 +27,16 @@ class PWDLocker extends React.Component {
             }
             break;
             case 'ON_START_EDIT_PASSWORD':
-                this.setState({formPassword: action.value});
+                this.setState({formEditPassword: action.value});
             break;
             case 'ON_UPDATE_PASSWORD':
             {
                 const password = action.value;
                 const passwords = this.state.passwords.slice();
-                passwords[password.id] = password;
+                passwords[password.id - 1] = password;
                 this.setState({
                     passwords: passwords,
-                    formPassword: {}
+                    formEditPassword: {}
                 });
             }
             break;
@@ -45,7 +46,6 @@ class PWDLocker extends React.Component {
                 const passwords = this.state.passwords.slice();
                 const index = passwords.indexOf(password);
 
-                console.log(index);
                 passwords.splice(index, 1);
 
                 this.setState({
@@ -58,9 +58,10 @@ class PWDLocker extends React.Component {
     }
 
     render(){
-        const passwords = this.state.passwords;
-        const searchString = this.state.searchString;
-        const formData = this.state.formPassword;
+        const passwords         = this.state.passwords;
+        const password_groups   = this.state.password_groups;
+        const searchString      = this.state.searchString;
+        const formEditPassword  = this.state.formEditPassword;
 
         return(
                 <div className="container">
@@ -72,7 +73,7 @@ class PWDLocker extends React.Component {
 
                         <PasswordForm
                             handleAction={this.handleAction}
-                            password={formData}
+                            edit_password = {formEditPassword}
                         />
 
                         <Passwords

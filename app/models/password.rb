@@ -34,10 +34,6 @@ class Password < ApplicationRecord
     super({ include: [:favicon, :password_group], methods: [:timestamp] }.merge(options || {}))
   end
 
-  def to_json(options={})
-    super(options.merge(methods: :timestamp))
-  end
-
   private
 
   def update_password_last_changed

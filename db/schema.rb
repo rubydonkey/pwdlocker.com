@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 20170112223043) do
   end
 
   create_table "password_groups", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       default: "empty"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.index ["name"], name: "index_password_groups_on_name", unique: true, using: :btree
   end
 
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20170112223043) do
     t.integer  "favicon_id"
     t.datetime "password_last_changed_at"
     t.index ["favicon_id"], name: "index_passwords_on_favicon_id", using: :btree
+    t.index ["password_group_id"], name: "index_passwords_on_password_group_id", using: :btree
   end
 
   create_table "phone_numbers", force: :cascade do |t|

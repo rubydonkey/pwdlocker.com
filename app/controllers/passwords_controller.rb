@@ -52,13 +52,20 @@ class PasswordsController < ApplicationController
     @password = Password.find(params[:id])
     @password.update_attributes(password_params)
 
-    if favico = get_favicon
-      @password.favicon = favico
+    if favicon = get_favicon
+      @password.favicon = favicon
       @password.save
     end
 
     respond_to do |format|
-      format.js
+      format.json do
+        if
+        @password.save
+          render :json => @password.as_json(include: [:favicon, :password_group], methods: [:timestamp])
+        else
+          render :json => { :errors => @password.errors.messages }, :status => 422
+        end
+      end
     end
   end
 

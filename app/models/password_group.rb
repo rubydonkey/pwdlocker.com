@@ -4,11 +4,7 @@ class PasswordGroup < ApplicationRecord
   validates_uniqueness_of :name, :message => " has already been taken!"
   
   def as_json(options = nil)
-    super({ only: [:name]}.merge(options || {}))
+    super({ only: [:id, :name]}.merge(options || {}))
   end
-  
- def as_json(options = nil)
-    super({ only: [:name]}.merge(options || {}))
- end
 
 end

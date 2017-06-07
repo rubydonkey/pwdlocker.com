@@ -4,24 +4,25 @@ class Passwords extends React.Component
     {
         super(props);
     }
-  render()
-  {
-    const searchString = this.props.searchString;
 
-    let filteredPasswords = this.props.passwords.filter(
-            (password) => {
-                return password.title.toLowerCase().indexOf(searchString.toLowerCase()) !==-1;
-            }
-        );
+      render()
+      {
+        const searchString = this.props.searchString;
 
-    const passwords = filteredPasswords.map(function(password){
-      return <Password
-          password={password}
-          key={password.id}
-          handleAction={this.props.handleAction}
-      />;
-    }.bind(this));
+        let filteredPasswords = this.props.passwords.filter(
+                (password) => {
+                    return password.title.toLowerCase().indexOf(searchString.toLowerCase()) !==-1;
+                }
+            );
 
-    return( <div className='col-md-9'> {passwords} </div> );
-  }
+        const passwords = filteredPasswords.map(function(password){
+          return <Password
+              password={password}
+              key={password.id}
+              handleAction={this.props.handleAction}
+          />;
+        }.bind(this));
+
+        return( <div className='col-md-9'> {passwords} </div> );
+      }
 }
