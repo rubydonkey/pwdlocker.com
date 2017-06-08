@@ -34,7 +34,6 @@ class PasswordsController < ApplicationController
         end
       end
     end
-
   end
 
   def edit

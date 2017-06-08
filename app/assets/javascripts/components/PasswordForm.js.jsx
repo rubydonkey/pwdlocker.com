@@ -4,8 +4,10 @@ class PasswordForm extends React.Component {
         super(props);
         this.state = {
             password: {},
-            edit_mode: false,
             errors: {},
+            password_group_name:"",
+            edit_mode: false,
+            render_group_form: false,
         };
 
         this.handlePasswordCreate = this.handlePasswordCreate.bind(this);
@@ -35,6 +37,7 @@ class PasswordForm extends React.Component {
                    {this.renderUsername()}
                    {this.renderPassword()}
                    {this.renderSubmitButton()}
+                   {this.renderGroupForm()}
                </div>
            </div>
         );
@@ -131,7 +134,7 @@ class PasswordForm extends React.Component {
     }
 
     renderGroupForm() {
-        const groups = this.state.password_groups;
+        const groups = this.props.password_groups;
 
         const password_groups = groups.map(function(group){
             return<option key={group.id} value={group.id}>
@@ -139,12 +142,56 @@ class PasswordForm extends React.Component {
             </option>
         });
 
-        return(
-            <select className="form-control" onChange={(e) => this.handlePasswordGroupChange(e)}>
-                <option value>Select group</option>
-                {password_groups}
+        const password_groups_select =
+            <select
+                className="form-control"
+                onChange={(e) => this.handlePasswordGroupChange(e)}>
+                    <option value>Select group</option>
+                    {password_groups}
             </select>
-        );
+
+        const password_group_add_link =
+            <a className="btn btn-link pull-right"
+                onClick={() => {this.setState( {render_group_form: !this.state.render_group_form} )}} >
+                Add group
+            </a>
+
+            password_group_form = <div>
+                <input
+                    className="form-control"
+                    value = {this.state.password_group_name}
+                    autoComplete="off"
+                    onChange={(e) => this.handlePasswordGroupNameChange(e)}
+                />
+                <span style={{color: 'red'}}>{this.state.errors.name}</span>
+                <br/>
+                <input
+                    className="btn btn-primary"
+                    type="submit"
+                    name="commit"
+                    value="Create password group"
+                    onClick={() => this.handlePasswordGroupCreate() }
+                />
+            </div>
+
+        if(this.state.render_group_form)
+        {
+            return(
+                <div>
+                    {password_groups_select}
+                    {password_group_form}
+                </div>
+            );
+        }
+        else
+        {
+            return(
+                <div>
+                    {password_groups_select}
+                    {password_group_add_link}
+                </div>
+            );
+        }
     }
 
     handleTitleChange(e)
@@ -178,8 +225,12 @@ class PasswordForm extends React.Component {
     handlePasswordGroupChange(e)
     {
         var password = this.state.password;
-        password.password = e.target.value;
+        password.password_group_id = e.target.value;
         this.setState({password: password});
+    }
+    handlePasswordGroupNameChange(e)
+    {
+        this.setState({password_group_name: e.target.value});
     }
 
     handlePasswordCreate()
@@ -217,11 +268,9 @@ class PasswordForm extends React.Component {
             },
             url: '/passwords/' + this.state.password.id + '.json',
             success: function(res) {
-                this.setState({
-                    errors: {},
-                    password: {},
-                    edit_mode: false,
-                });
+                this.setState({ errors: {},
+                                password: {},
+                                edit_mode: false });
 
                 const action = {
                     type: 'ON_UPDATE_PASSWORD',
@@ -231,6 +280,33 @@ class PasswordForm extends React.Component {
             }.bind(this),
             error: function(res) {
                 this.setState({errors: res.responseJSON.errors});
+            }.bind(this)
+        });
+    }
+
+    handlePasswordGroupCreate(){
+        const name = this.state.password_group_name;
+        $.ajax({
+            method: 'POST',
+            data: {
+                password_group: {name: name},
+            },
+            url: '/password_groups.json',
+
+            success: function(res) {
+
+                const password_group_name = res;
+                const action = {
+                    type: 'ON_ADD_NEW_GROUP',
+                    value: password_group_name
+                }
+                this.props.handleAction(action);
+                this.setState({ password_group_name: "",
+                                render_group_form: false });
+            }.bind(this),
+
+            error: function(res) {
+                this.setState({errors: res.responseJSON.errors})
             }.bind(this)
         });
     }

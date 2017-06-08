@@ -19,7 +19,13 @@ class PasswordGroupsController < ApplicationController
     @password_group = PasswordGroup.create(password_group_params)
 
     respond_to do |format|
-      format.js
+      format.json do
+        if @password_group.save
+          render :json => @password_group.as_json({only: [:id, :name]});
+        else
+          render :json => { :errors => @password_group.errors.messages }, :status => 422
+        end
+      end
     end
   end
 

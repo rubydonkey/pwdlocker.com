@@ -21,7 +21,7 @@ class PWDLocker extends React.Component {
             break;
             case 'ON_ADD_NEW_PASSWORD':
             {
-                var passwords = this.state.passwords;
+                var passwords = this.state.passwords.slice();
                 passwords.push(action.value);
                 this.setState({ passwords: passwords });
             }
@@ -54,6 +54,13 @@ class PWDLocker extends React.Component {
                 });
             }
             break;
+            case 'ON_ADD_NEW_GROUP':
+            {
+                var password_groups = this.state.password_groups.slice();
+                password_groups.push(action.value);
+                this.setState({ password_groups: password_groups });
+            }
+                break;
         }
     }
 
@@ -74,6 +81,7 @@ class PWDLocker extends React.Component {
                         <PasswordForm
                             handleAction={this.handleAction}
                             edit_password = {formEditPassword}
+                            password_groups={password_groups}
                         />
 
                         <Passwords
