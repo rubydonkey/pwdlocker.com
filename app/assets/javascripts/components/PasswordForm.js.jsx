@@ -54,7 +54,12 @@ class PasswordForm extends React.Component {
         return (
             <div>
                 <label>Title</label>
-                <input className="form-control" type="text" value={title} onChange={ (e) => this.handleTitleChange(e) }/>
+                <input className="form-control"
+                       type="text"
+                       value={title}
+                       onChange={ (e) => this.handleTitleChange(e) }
+                       name="password[title]"/>
+
                 <span style={{color: 'red'}}>{error}</span>
                 <br />
             </div>
@@ -71,7 +76,12 @@ class PasswordForm extends React.Component {
         return(
                 <div>
                     <label>Url</label>
-                    <input className="form-control" type="text" value={URL} onChange={ (e) =>  this.handleURLChange(e)  } />
+                    <input className="form-control"
+                           type="text"
+                           value={URL}
+                           onChange={ (e) =>  this.handleURLChange(e)  }
+                           name="password[URL]"/>
+
                     <span style={{color: 'red'}}>{error}</span>
                     <br />
                 </div>
@@ -88,7 +98,12 @@ class PasswordForm extends React.Component {
         return(
             <div>
                 <label>Username</label>
-                <input className="form-control" type="text" value={username} onChange={ (e) =>  this.handleUsernameChange(e)  } />
+                <input className="form-control"
+                       type="text"
+                       value={username}
+                       onChange={ (e) =>  this.handleUsernameChange(e)  }
+                       name="password[username]"/>
+
                 <span style={{color: 'red'}}>{error}</span>
                 <br />
             </div>
@@ -106,7 +121,11 @@ class PasswordForm extends React.Component {
         return(
                 <div>
                     <label>Password</label>
-                    <textarea className="form-control" value={password}  onChange={ (e) =>  this.handlePasswordChange(e)  } />
+                    <textarea className="form-control"
+                              value={password}
+                              onChange={ (e) =>  this.handlePasswordChange(e)  }
+                              name="password[password]"/>
+
                     <span style={{color: 'red'}}>{error}</span>
                     <br />
                     <br />
@@ -117,19 +136,20 @@ class PasswordForm extends React.Component {
     renderSubmitButton(){
         if(this.state.edit_mode === true)
         {
-            return( <input
-                className="btn btn-success"
-                type="submit"
-                value="Update"
-                onClick={ () => this.handlePasswordUpdate() } />);
+            return( <button className="btn btn-success"
+                            type="submit"
+                            onClick={ () => this.handlePasswordUpdate() }>
+                Update
+                </button>);
         }
         else
         {
-            return( <input
-                className="btn btn-success"
-                type="submit"
-                value="Create"
-                onClick={ () => this.handlePasswordCreate() } />);
+            return( <button className="btn btn-success"
+                            type="submit"
+                            value="Create"
+                            onClick={ () => this.handlePasswordCreate() }>
+                Create
+                </button>);
         }
     }
 

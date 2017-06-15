@@ -6,28 +6,30 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
 
   include WaitForAjax
 
-  test 'page layout' do
+  test 'passwords list layout' do
     # test page layout
     visit(root_path)
 
-    assert(page.has_button?('Add'))
-    assert(page.has_link?(href: new_password_path))
 
     # test cards
-    assert(page.has_css?('div.passwords'))
-    assert_equal(page.all('div.password-block').size, Password.count)
+    assert_equal(page.all('div.js-password-block-show-hidden').size, Password.count)
+    assert_equal(page.all('img.password-block-favicon').size, Password.count)
+    assert_equal(page.all('span.glyphicon-pencil').size, Password.count)
+    assert_equal(page.all('span.glyphicon-remove').size, Password.count)
+
     Password.all.each_with_index do |password, rowID|
       assert(page.has_css?("div#password-block-#{password.id}"))
 
-      #assert(page.has_text?(password.title.to_s.downcase.capitalize))
-
-      assert(page.has_css?("#password-data-username-#{password.id}", :visible => false, text: password.username.to_s))
-      assert(page.has_css?("#password-data-password-#{password.id}", :visible => false, text: password.password.to_s))
-
       assert(page.has_link?(href: password.URL))
-      assert(page.has_link?(href: edit_password_path(password)))
-      # delete link
-      assert(page.has_link?(href: password_path(password)))
+      assert(page.has_css?("#password-data-title-#{password.id}",               :visible => true,   text: password.title.to_s.titleize))
+      assert(page.has_css?("#password-data-username-#{password.id}",            :visible => false,  text: password.username.to_s))
+      assert(page.has_css?("#password-data-password-#{password.id}",            :visible => false,  text: password.password.to_s))
+
+      if(password.password_group.try(:name))
+        assert(page.has_css?("#password-data-group-#{password.id}",               :visible => false,  text: password.password.password_group))
+      end
+
+      assert(page.has_css?("#password-data-password-changed-#{password.id}",   :visible => false,  text: time_ago_in_words(password.timestamp)))
     end
   end
 
@@ -36,37 +38,35 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     # test page layout
     visit(root_path)
 
-    # create password
-    click_button('Add')
-    assert(has_button?('Add', :visible => false))
-
     # test form layout
-    assert(page.has_css?('form'), :count => 1)
-    for i in 1..4
-      assert(page.has_css?("label[for=password_#{Password.attribute_names[i]}]", :count => 1))
-      assert(page.has_field?(Password.attribute_names[i].to_s.downcase.capitalize))
-    end
-    assert(has_button?('Create Password'))
+    assert(page.has_button?('Create'))
 
+    assert(page.has_css?('input[name="password[title]"]'))
+    assert(page.has_css?('input[name="password[URL]"]'))
+    assert(page.has_css?('input[name="password[username]"]'))
+    assert(page.has_css?('textarea[name="password[password]"]'))
+
+    for i in 1..4
+      assert(page.has_css?('label', text: Password.attribute_names[i].to_s.downcase.capitalize))
+    end
   end
 
   test 'create valid passwords' do
 
     visit(root_path)
-    click_button('Add')
 
     data = get_random_password_data
 
-    page.fill_in('Title',    :with => data[:title])
-    page.fill_in('Url',      :with => data[:URL])
-    page.fill_in('Username', :with => data[:username])
-    page.fill_in('Password', :with => data[:password])
+    page.fill_in('password[title]',    :with => data[:title])
+    page.fill_in('password[URL]',      :with => data[:URL])
+    page.fill_in('password[username]', :with => data[:username])
+    page.fill_in('password[password]', :with => data[:password])
 
-    click_button('Create Password')
-    assert(page.has_no_css?('form', wait: 30))
-    assert(has_button?('Add', :visible => true))
+    click_button('Create')
 
-    assert(page.has_text?(data[:title].to_s.downcase.capitalize))
+    wait_for_ajax
+
+    assert(page.has_text?(data[:title].to_s.downcase.titleize, wait: 10))
 
     assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:username].to_s))
     assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:password].to_s))
@@ -79,22 +79,20 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
 
     visit(root_path)
 
-    click_button('Add')
-    assert(page.has_css?('form', :count => 1))
-
     password = Password.create()
 
-    for i in 1..4 do
-      name = password.attribute_names[i]
-      page.fill_in(name.downcase.capitalize, :with => password.attributes[name])
-    end
+    page.fill_in('password[title]',    :with => '')
+    page.fill_in('password[URL]',      :with => '')
+    page.fill_in('password[username]', :with => '')
+    page.fill_in('password[password]', :with => '')
 
-    click_button('Create Password')
-    assert(page.has_css?('form', :count => 1))
-    assert(page.has_css?('#error_explanation'))
+    click_button('Create')
+    wait_for_ajax
+
+    save_and_open_page
 
     password.errors.count.times do |i|
-      assert(page.has_css?("li:nth-child(#{i + 1})", :text => password.errors.full_messages[i]))
+      assert(page.has_text?(password.errors.full_messages[i]))
     end
 
   end

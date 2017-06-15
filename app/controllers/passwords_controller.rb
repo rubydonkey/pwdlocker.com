@@ -8,21 +8,13 @@ class PasswordsController < ApplicationController
 
   before_action :get_all_passwords, only: [:create, :update, :destroy]
 
-  def new
-    @password = Password.new
-    
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def create
     check_password_url!
 
     @password = Password.create(password_params)
 
-    if favico = get_favicon
-      @password.favicon = favico
+    if favicon = get_favicon
+      @password.favicon = favicon
     end
 
     respond_to do |format|

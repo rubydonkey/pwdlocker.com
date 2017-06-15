@@ -59,9 +59,9 @@ class Password extends React.Component
 
       return(
           <div className="col-xs-8">
-            <span className='label label-default pull-right'>{group_name}</span>
+            <span className='label label-default pull-right' id={"password-data-group-" + password.id }>{group_name}</span>
             <a target="_blank" href={password.URL}>
-              <span className="password-data" id={"password-data-title-" + password.id } > <b>{ this.toTitleCase(password.title) }</b> </span>
+              <span className="password-data" id={"password-data-title-" + password.id } > { this.toTitleCase(password.title) } </span>
             </a>
             <br />
             <span className="password-block-password-data" id={"password-data-username-" + password.id }>  <b>Username:</b> { password.username } </span>
