@@ -168,43 +168,47 @@ class PasswordForm extends React.Component {
             </option>
         });
 
-        const password_groups_select =
+        const password_group_select =
             <select
                 className="form-control"
+                name="password_group_select"
                 onChange={(e) => this.handlePasswordGroupChange(e)}>
                     <option value>Select group</option>
                     {password_groups}
             </select>
 
-        const password_group_add_link =
-            <a className="btn btn-link pull-right"
-                onClick={() => {this.setState( {render_group_form: !this.state.render_group_form} )}} >
+        const password_group_button_add =
+            <button className="btn btn-link pull-right"
+                    name="password_group_add"
+                    type="submit"
+                    onClick={() => {this.setState( {render_group_form: !this.state.render_group_form} )}} >
                 Add group
-            </a>
+            </button>
 
-            password_group_form = <div>
+        const password_group_form = <div>
                 <input
                     className="form-control"
+                    name="password_group[name]"
                     value = {this.state.password_group_name}
                     autoComplete="off"
                     onChange={(e) => this.handlePasswordGroupNameChange(e)}
                 />
                 <span style={{color: 'red'}}>{this.state.errors.name}</span>
                 <br/>
-                <input
+                <button
                     className="btn btn-primary"
                     type="submit"
-                    name="commit"
-                    value="Create password group"
-                    onClick={() => this.handlePasswordGroupCreate() }
-                />
+                    name="password_group_create"
+                    onClick={() => this.handlePasswordGroupCreate() }>
+                    Create group
+                </button>
             </div>
 
         if(this.state.render_group_form)
         {
             return(
                 <div>
-                    {password_groups_select}
+                    {password_group_select}
                     {password_group_form}
                 </div>
             );
@@ -213,8 +217,8 @@ class PasswordForm extends React.Component {
         {
             return(
                 <div>
-                    {password_groups_select}
-                    {password_group_add_link}
+                    {password_group_select}
+                    {password_group_button_add}
                 </div>
             );
         }

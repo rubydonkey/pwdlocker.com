@@ -28,15 +28,6 @@ class PasswordsController < ApplicationController
     end
   end
 
-  def edit
-    @password = Password.find(params[:id])
-
-    respond_to do |format|
-      format.js
-    end
-
-  end
-
   def update
     check_password_url!
 

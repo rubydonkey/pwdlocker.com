@@ -1,7 +1,7 @@
 require_relative '../support/wait_for_ajax'
 require 'test_helper'
 
-class PasswordsAddTest < ActionDispatch::IntegrationTest
+class PasswordsTest < ActionDispatch::IntegrationTest
   include ActionView::Helpers::DateHelper
 
   include WaitForAjax
@@ -9,7 +9,6 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
   test 'passwords list layout' do
     # test page layout
     visit(root_path)
-
 
     # test cards
     assert_equal(page.all('div.js-password-block-show-hidden').size, Password.count)
@@ -200,7 +199,7 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
 
     data = get_random_password_data
 
-    page.fill_in('password[title]',    :with => data[:title])
+    page.fill_in('password[password]',    :with => data[:password])
 
     click_button('Update')
     wait_for_ajax
@@ -214,19 +213,17 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     visit(root_path)
 
     password = Password.first
-    click_link(:href => edit_password_path(password))
+    page.find("#password-edit-#{password.id}").click
 
-    page.fill_in('Title', :with => "NewTitle")
+    data = get_random_password_data
 
-    click_button('Update Password')
+    page.fill_in('password[title]',    :with => data[:title])
+
+    click_button('Update')
     wait_for_ajax
 
-    password_block = page.find_by_id("password-block-#{password.id}")
-    assert_not_nil password_block
-    password_block.click
-
     password.reload
-    assert(password_block.text.include?(time_ago_in_words(password.created_at)))
+    assert(page.find_by_id("password-data-password-changed-#{password.id}").text.include?(time_ago_in_words(password.created_at)))
   end
 
 end

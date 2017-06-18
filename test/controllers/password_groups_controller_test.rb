@@ -6,18 +6,12 @@ class PasswordGroupsControllerTest < ActionDispatch::IntegrationTest
     @password_group = password_groups(:password_group_0)
   end
 
-  test 'should get new group path' do
-    get new_password_group_path, xhr: true
-    assert_response :success
-  end
-
   test 'should not create invalid password group' do
 
     assert_no_difference 'PasswordGroup.count' do
       post password_groups_path, xhr: true, params: { password_group: { name:  " "}}
     end
   end
-  
 
   test 'should create valid password group' do
 

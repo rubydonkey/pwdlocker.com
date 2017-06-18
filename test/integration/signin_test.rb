@@ -10,6 +10,8 @@ class SigninTest < ActionDispatch::IntegrationTest
 
   test 'signin with phone number' do
 
+    skip('SID missing - unable to test')
+
     visit(new_signin_path)
 
     assert(page.has_button?('Signin'))

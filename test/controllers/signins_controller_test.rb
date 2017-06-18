@@ -17,6 +17,9 @@ class SigninsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create valid phone number' do
+
+    skip('SID missing - unable to test')
+
     assert_difference 'PhoneNumber.count' do
       post signins_path, xhr: true, params: { phone_number: { number: '+381608449690'} }
     end
@@ -25,18 +28,27 @@ class SigninsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not create invalid phone number' do
+
+    skip('SID missing - unable to test')
+
     assert_no_difference 'PhoneNumber.count' do
       post signins_path, xhr: true, params: { phone_number: { number: '0000' }}
     end
   end
 
   test 'should not create duplicate number' do
+
+    skip('SID missing - unable to test')
+
     assert_no_difference 'PhoneNumber.count' do
       post signins_path, xhr: true, params: { phone_number: { number: phone_numbers(:one).number} }
     end
   end
 
   test 'resend token' do
+
+    skip('SID missing - unable to test')
+
     phone_number = phone_numbers(:one)
 
     post signins_path, xhr: true, params: { phone_number: { number: phone_number.number } }
