@@ -5,13 +5,14 @@ class Password extends React.Component
 
         this.handleEdit = this.handleEdit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.onToggleVisibility = this.onToggleVisibility.bind(this);
     };
 
     render()
     {
       const password = this.props.password;
       return(
-          <div className="js-password-block-show-hidden col-md-4" id={"password-block-" + password.id}>
+          <div className="js-password-block-show-hidden col-md-4" id={"password-block-" + password.id} onClick={() => {this.onToggleVisibility(password.id)}}>
             <div className='well password-block'>
               <div className='row'>
                 {this.renderColumnFavicon()}
@@ -76,6 +77,7 @@ class Password extends React.Component
     renderColumnControls()
     {
       const password = this.props.password;
+
         const actionEdit = {
             type: 'ON_START_EDIT_PASSWORD',
             value: this.props.password
@@ -87,8 +89,8 @@ class Password extends React.Component
 
       return(
           <div className="col-xs-2">
-              <span className="glyphicon glyphicon-remove" onClick={this.handleDelete}></span>
-              <span className="glyphicon glyphicon-pencil" onClick={this.handleEdit}></span>
+              <span className="glyphicon glyphicon-remove" id={"password-remove-" + password.id } onClick={this.handleDelete}></span>
+              <span className="glyphicon glyphicon-pencil" id={"password-edit-" + password.id } onClick={this.handleEdit}></span>
           </div>
       );
     }
@@ -116,7 +118,12 @@ class Password extends React.Component
         })
     }
 
-
+    onToggleVisibility(id){
+        console.log(id);
+        $("#password-data-username-"+id.toString()).toggle();
+        $("#password-data-password-"+id.toString()).toggle();
+        $("#password-data-password-changed-"+id.toString()).toggle();
+    }
 
       time_ago_in_words_with_parsing(from)
       {

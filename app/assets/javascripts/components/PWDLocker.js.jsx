@@ -33,7 +33,17 @@ class PWDLocker extends React.Component {
             {
                 const password = action.value;
                 const passwords = this.state.passwords.slice();
-                passwords[password.id - 1] = password;
+
+                var length = passwords.length;
+                for(var i = 0; i < length; i++)
+                {
+                    if(passwords[i].id === password.id)
+                    {
+                        passwords[i] = password;
+                        break;
+                    }
+                }
+
                 this.setState({
                     passwords: passwords,
                     formEditPassword: {}

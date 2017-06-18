@@ -73,6 +73,12 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
 
     assert(page.has_link?(href: data[:URL]))
 
+    # after creating password input fields should be empty
+    assert(page.has_css?(%{input[name="password[title]"][value=""]}))
+    assert(page.has_css?(%{input[name="password[URL]"][value=""]}))
+    assert(page.has_css?(%{input[name="password[username]"][value=""]}))
+    assert(page.has_css?(%{textarea[name="password[password]"]}, text: ""))
+
   end
 
   test 'create invalid passwords' do
@@ -81,19 +87,12 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
 
     password = Password.create()
 
-    page.fill_in('password[title]',    :with => '')
-    page.fill_in('password[URL]',      :with => '')
-    page.fill_in('password[username]', :with => '')
-    page.fill_in('password[password]', :with => '')
-
     click_button('Create')
     wait_for_ajax
 
-    save_and_open_page
-
-    password.errors.count.times do |i|
-      assert(page.has_text?(password.errors.full_messages[i]))
-    end
+    assert(page.has_text?(password.errors.messages[:title].first))
+    assert(page.has_text?(password.errors.messages[:username].first))
+    assert(page.has_text?(password.errors.messages[:password].first))
 
   end
 
@@ -102,27 +101,34 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     visit(root_path)
 
     password = Password.first
-    click_link(:href => edit_password_path(password))
 
-    assert(page.has_css?('form'))
+    page.find("#password-edit-#{password.id}").click
 
-    for i in 1..4
-      name = password.attribute_names[i]
-      assert(page.has_field?(name.downcase.capitalize), :with => password.attributes[name])
-    end
+    assert(page.has_css?("button", text: "Update"))
+
+    assert(page.has_css?(%{input[name="password[title]"][value="#{password.title}"]}))
+    assert(page.has_css?(%{input[name="password[URL]"][value="#{password.URL}"]}))
+    assert(page.has_css?(%{input[name="password[username]"][value="#{password.username}"]}))
+    assert(page.has_css?(%{textarea[name="password[password]"]}, text: password.password))
 
     data = get_random_password_data
 
-    page.fill_in('Title',    :with => data[:title])
-    page.fill_in('Url',      :with => data[:URL])
-    page.fill_in('Username', :with => data[:username])
-    page.fill_in('Password', :with => data[:password])
+    page.fill_in('password[title]',    :with => data[:title])
+    page.fill_in('password[URL]',      :with => data[:URL])
+    page.fill_in('password[username]', :with => data[:username])
+    page.fill_in('password[password]', :with => data[:password])
 
-    click_button('Update Password')
+    click_button('Update');
 
-    assert(page.has_no_css?('form', wait: 30))
+    assert(page.has_css?("button", text: "Create"))
 
-    assert(page.has_text?(data[:title].to_s.downcase.capitalize))
+    # after updating password input fields should be empty
+    assert(page.has_css?(%{input[name="password[title]"][value=""]}))
+    assert(page.has_css?(%{input[name="password[URL]"][value=""]}))
+    assert(page.has_css?(%{input[name="password[username]"][value=""]}))
+    assert(page.has_css?(%{textarea[name="password[password]"]}, text: ""))
+
+    assert(page.has_text?(data[:title].to_s.downcase.titleize))
     assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:username].to_s))
     assert(page.has_css?('.password-block-password-data', :visible => false, :text => data[:password].to_s))
     assert(page.has_link?(href: data[:URL]))
@@ -132,43 +138,38 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
   test 'invalid edit password' do
 
     visit(root_path)
-    click_link(:href => edit_password_path(Password.first))
+
+    password = Password.first
+    page.find("#password-edit-#{password.id}").click
+
     password = Password.create()
 
-    for i in 1..4 do
-      name = password.attribute_names[i]
-      page.fill_in(name.downcase.capitalize, :with => password.attributes[name])
-    end
+    page.fill_in('password[title]',    :with => "")
+    page.fill_in('password[URL]',      :with => "")
+    page.fill_in('password[username]', :with => "")
+    page.fill_in('password[password]', :with => "")
 
-    click_button('Update Password')
-    assert(page.has_css?('form', :count => 1))
-    assert(page.has_css?('#error_explanation'))
+    click_button('Update')
+    wait_for_ajax
 
-    password.errors.count.times do |i|
-      assert(page.has_css?("li:nth-child(#{i + 1})", :text => password.errors.full_messages[i]))
-    end
+    assert(page.has_text?(password.errors.messages[:title].first))
+    assert(page.has_text?(password.errors.messages[:username].first))
+    assert(page.has_text?(password.errors.messages[:password].first))
+
+    assert(page.has_css?("button", text: "Update"))
+
   end
 
   test 'destroy password' do
 
     visit(root_path)
 
+    password = Password.first
+
     id = Password.first.id
     assert(page.has_css?("#password-block-#{id}"))
-    click_link(:href => password_path(Password.first))
+    page.find("#password-remove-#{password.id}").click
     assert(page.has_no_css?("#password-block-#{id}"))
-
-  end
-
-  test 'form concatenation with multiple edit link click bug' do
-
-    visit(root_path)
-    click_button('Add')
-    click_link(:href => edit_password_path(Password.first))
-    assert(page.has_css?('form', :count => 1))
-
-    click_link(:href => edit_password_path(Password.second))
-    assert(page.has_css?('form', :count => 1))
 
   end
 
@@ -179,6 +180,8 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
     password = Password.first
     assert(page.has_css?("#password-data-username-#{password.id}", :visible => false, :text => password.username.to_s))
     assert(page.has_css?("#password-data-password-#{password.id}", :visible => false, :text => password.password.to_s))
+    assert(page.has_css?("#password-data-password-changed-#{password.id}", :visible => false, :text => time_ago_in_words(password.timestamp)))
+
 
     password_block = page.find_by_id("password-block-#{password.id}")
     assert_not_nil password_block
@@ -186,26 +189,24 @@ class PasswordsAddTest < ActionDispatch::IntegrationTest
 
     assert(page.has_css?("#password-data-username-#{password.id}", :visible => true, :text => password.username.to_s))
     assert(page.has_css?("#password-data-password-#{password.id}", :visible => true, :text => password.password.to_s))
-
+    assert(page.has_css?("#password-data-password-changed-#{password.id}", :visible => true, :text => time_ago_in_words(password.timestamp)))
   end
 
   test 'password last change time stamp shown when password updated' do
     visit(root_path)
 
     password = Password.first
-    click_link(:href => edit_password_path(password))
+    page.find("#password-edit-#{password.id}").click
 
-    page.fill_in('Password', :with => "NewPassword")
+    data = get_random_password_data
 
-    click_button('Update Password')
+    page.fill_in('password[title]',    :with => data[:title])
+
+    click_button('Update')
     wait_for_ajax
 
-    password_block = page.find_by_id("password-block-#{password.id}", wait: 30)
-    assert_not_nil password_block
-    password_block.click
-
     password.reload
-    assert(password_block.text.include?(time_ago_in_words(password.password_last_changed_at)))
+    assert(page.find_by_id("password-data-password-changed-#{password.id}").text.include?(time_ago_in_words(password.password_last_changed_at)))
   end
 
   test 'password last change time stamp not be shown when non password field is updated' do

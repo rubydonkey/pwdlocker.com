@@ -3,7 +3,13 @@ class PasswordForm extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            password: {},
+            password: {
+                title: "",
+                URL: "",
+                username: "",
+                password: "",
+                password_group_id: "",
+            },
             errors: {},
             password_group_name:"",
             edit_mode: false,
@@ -271,6 +277,13 @@ class PasswordForm extends React.Component {
                     value: password
                 }
                 this.props.handleAction(action);
+                this.setState({password: {
+                    title: "",
+                    URL: "",
+                    username: "",
+                    password: "",
+                    password_group_id: "",
+                }})
             }.bind(this),
 
             error: function(res) {
@@ -289,7 +302,11 @@ class PasswordForm extends React.Component {
             url: '/passwords/' + this.state.password.id + '.json',
             success: function(res) {
                 this.setState({ errors: {},
-                                password: {},
+                                password:{  title: "",
+                                            URL: "",
+                                            username: "",
+                                            password: "",
+                                            password_group_id: "", },
                                 edit_mode: false });
 
                 const action = {

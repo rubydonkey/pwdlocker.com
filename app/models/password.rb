@@ -10,7 +10,7 @@ class Password < ApplicationRecord
 
   belongs_to :favicon, optional: true
 
-  before_update :update_password_last_changed, if: :password_changed?
+  before_update :update_password_last_changed
 
   # validates :URL, presence: true, format: { with: URI::DEFAULT_PARSER.regexp[:ABS_URI] }
 
