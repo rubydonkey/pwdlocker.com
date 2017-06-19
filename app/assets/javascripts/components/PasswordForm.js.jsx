@@ -3,13 +3,7 @@ class PasswordForm extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            password: {
-                title: "",
-                URL: "",
-                username: "",
-                password: "",
-                password_group_id: "",
-            },
+            password: this.getInitialPassword(),
             errors: {},
             password_group_name:"",
             edit_mode: false,
@@ -51,11 +45,7 @@ class PasswordForm extends React.Component {
 
     renderTitle(){
         var title = this.state.password.title;
-        if(this.isEmpty(title))
-            title = "";
-
         const error = this.state.errors.title;
-
 
         return (
             <div>
@@ -74,9 +64,6 @@ class PasswordForm extends React.Component {
 
     renderURL(){
         var URL = this.state.password.URL;
-        if(this.isEmpty(URL))
-            URL = "";
-
         const error = this.state.errors.URL;
 
         return(
@@ -96,9 +83,6 @@ class PasswordForm extends React.Component {
 
     renderUsername(){
         var username = this.state.password.username;
-        if(this.isEmpty(username))
-            username = "";
-
         const error = this.state.errors.username;
 
         return(
@@ -119,9 +103,6 @@ class PasswordForm extends React.Component {
 
     renderPassword(){
         var password = this.state.password.password;
-        if(this.isEmpty(password))
-            password = "";
-
         const error = this.state.errors.password;
 
         return(
@@ -140,22 +121,15 @@ class PasswordForm extends React.Component {
     }
 
     renderSubmitButton(){
-        if(this.state.edit_mode === true)
-        {
+        if(this.state.edit_mode === true){
             return( <button className="btn btn-success"
                             type="submit"
-                            onClick={ () => this.handlePasswordUpdate() }>
-                Update
-                </button>);
+                            onClick={ () => this.handlePasswordUpdate() }>Update</button>);
         }
-        else
-        {
+        else{
             return( <button className="btn btn-success"
                             type="submit"
-                            value="Create"
-                            onClick={ () => this.handlePasswordCreate() }>
-                Create
-                </button>);
+                            onClick={ () => this.handlePasswordCreate() }>Create</button>);
         }
     }
 
@@ -163,9 +137,7 @@ class PasswordForm extends React.Component {
         const groups = this.props.password_groups;
 
         const password_groups = groups.map(function(group){
-            return<option key={group.id} value={group.id}>
-                {group.name}
-            </option>
+            return<option key={group.id} value={group.id}>{group.name}</option>
         });
 
         const password_group_select =
@@ -185,23 +157,19 @@ class PasswordForm extends React.Component {
                 Add group
             </button>
 
-        const password_group_form = <div>
-                <input
-                    className="form-control"
-                    name="password_group[name]"
-                    value = {this.state.password_group_name}
-                    autoComplete="off"
-                    onChange={(e) => this.handlePasswordGroupNameChange(e)}
-                />
+        const password_group_form =
+            <div>
+                <input  className="form-control"
+                        name="password_group[name]"
+                        value = {this.state.password_group_name}
+                        autoComplete="off"
+                        onChange={(e) => this.handlePasswordGroupNameChange(e)}/>
                 <span style={{color: 'red'}}>{this.state.errors.name}</span>
                 <br/>
-                <button
-                    className="btn btn-primary"
-                    type="submit"
-                    name="password_group_create"
-                    onClick={() => this.handlePasswordGroupCreate() }>
-                    Create group
-                </button>
+                <button className="btn btn-primary"
+                        type="submit"
+                        name="password_group_create"
+                        onClick={() => this.handlePasswordGroupCreate() }> Create group </button>
             </div>
 
         if(this.state.render_group_form)
@@ -281,13 +249,7 @@ class PasswordForm extends React.Component {
                     value: password
                 }
                 this.props.handleAction(action);
-                this.setState({password: {
-                    title: "",
-                    URL: "",
-                    username: "",
-                    password: "",
-                    password_group_id: "",
-                }})
+                this.setState({password: this.getInitialPassword()})
             }.bind(this),
 
             error: function(res) {
@@ -306,11 +268,7 @@ class PasswordForm extends React.Component {
             url: '/passwords/' + this.state.password.id + '.json',
             success: function(res) {
                 this.setState({ errors: {},
-                                password:{  title: "",
-                                            URL: "",
-                                            username: "",
-                                            password: "",
-                                            password_group_id: "", },
+                                password: this.getInitialPassword(),
                                 edit_mode: false });
 
                 const action = {
@@ -358,5 +316,13 @@ class PasswordForm extends React.Component {
                 return false;
         }
         return true;
+    }
+
+    getInitialPassword(){
+        return({    title: "",
+                    URL: "",
+                    username: "",
+                    password: "",
+                    password_group_id: "", });
     }
 }

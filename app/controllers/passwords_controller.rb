@@ -41,8 +41,7 @@ class PasswordsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        if
-        @password.save
+        if @password.save
           render :json => @password.as_json(include: [:favicon, :password_group], methods: [:timestamp])
         else
           render :json => { :errors => @password.errors.messages }, :status => 422
