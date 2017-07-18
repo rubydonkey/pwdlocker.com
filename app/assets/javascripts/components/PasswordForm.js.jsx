@@ -98,7 +98,6 @@ class PasswordForm extends React.Component {
                 <br />
             </div>
         );
-
     }
 
     renderPassword(){
@@ -221,7 +220,7 @@ class PasswordForm extends React.Component {
     }
 
     handlePasswordGroupChange(e)
-    {
+    {var URL = this.state.password.URL;
         var password = this.state.password;
         password.password_group_id = e.target.value;
         this.setState({password: password});
