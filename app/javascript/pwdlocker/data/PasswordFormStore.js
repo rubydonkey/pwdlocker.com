@@ -9,6 +9,9 @@ import {ReduceStore} from 'flux/utils';
 
 import Dispatcher from './PWDLockerDispatcher';
 import ActionTypes from './PWDLockerActionTypes';
+import Actions from './PWDLockerActions';
+
+import PasswordGroup from './PasswordGroup';
 
 class Password {
     constructor(password = null){
@@ -36,60 +39,79 @@ class PasswordFormStore extends ReduceStore{
 
     getInitialState(){
         return {
-            password: new Password(),
+            password: {
+                title: '',
+                URL: '',
+                username: '',
+                password: '',
+                password_group_id: 0,
+            },
+            groups: Actions.getPasswordGroups(),
+            groupName: '',
+            renderPasswordForm: false,
+            editPassword: false,
             errors: {},
-            isEditMode: false,
         }
     }
 
     reduce(state, action){
         switch (action.type){
-            case ActionTypes.UPDATE_FORM_TITLE: {
+            case ActionTypes.CHANGE_FORM_TITLE: {
                 var copy = Object.assign({}, state);
                 copy.password.title = action.title;
                 return copy;
             }
-
-            case ActionTypes.UPDATE_FORM_PASSWORD: {
+            case ActionTypes.CHANGE_FORM_PASSWORD: {
                 var copy = Object.assign({}, state);
                 copy.password.password = action.password;
                 return copy;
             }
-
-            case ActionTypes.UPDATE_FORM_URL: {
+            case ActionTypes.CHANGE_FORM_URL: {
                 var copy = Object.assign({}, state);
                 copy.password.URL = action.URL;
                 return copy;
             }
-
-            case ActionTypes.UPDATE_FORM_USERNAME: {
+            case ActionTypes.CHANGE_FORM_USERNAME: {
                 var copy = Object.assign({}, state);
                 copy.password.username = action.username;
                 return copy;
             }
-
-            case ActionTypes.UPDATE_FORM_PASSWORD_GROUP:{
+            case ActionTypes.CHANGE_FORM_PASSWORD_GROUP:{
                 var copy = Object.assign({}, state);
                 copy.password_group_id = action.password_group_id;
                 return copy;
             }
-
-            case ActionTypes.ADD_PASSWORD_ERRORS: {
+            case ActionTypes.SET_PASSWORD_FORM_ERRORS: {
                 var copy = Object.assign({}, state);
                 copy.errors = action.errors;
                 return copy;
             }
-
             case ActionTypes.START_EDIT_PASSWORD: {
                 var copy = Object.assign({}, state);
-                copy.isEditMode = true;
+                copy.editPassword = true;
                 return copy;
             }
-
             case ActionTypes.UPDATE_PASSWORD: {
                 return this.getInitialState();
             }
-
+            case ActionTypes.ADD_NEW_GROUP:{
+                var copy = Object.assign({}, state);
+                copy.groups = copy.groups.set(action.group.id, new PasswordGroup({
+                    id: action.group.id,
+                    name: action.group.name,
+                }));
+                return copy;
+            }
+            case ActionTypes.TOGGLE_GROUP_FORM: {
+                var copy = Object.assign({}, state);
+                copy.renderPasswordForm = !state.renderPasswordForm;
+                return copy;
+            }
+            case ActionTypes.CHANGE_GROUP_NAME:{
+                var copy = Object.assign({}, state);
+                copy.groupName = action.groupName;
+                return copy;
+            }
             default:
                 return state;
         }
@@ -99,8 +121,8 @@ class PasswordFormStore extends ReduceStore{
         return ({
             password: password,
             errors: errors,
-            isEditMode: isEditMode,
-            shouldRenderPasswordGroup: shouldRenderPasswordGroup,
+            editPassword: isEditMode,
+            renderPasswordForm: shouldRenderPasswordGroup,
         });
     }
 }

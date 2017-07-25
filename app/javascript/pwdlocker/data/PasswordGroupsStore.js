@@ -19,7 +19,7 @@ class PasswordGroupsStore extends ReduceStore {
 
     getInitialState(){
         return({
-            shouldRenderPasswordGroup: false,
+            renderPasswordForm: false,
             groups: Actions.getPasswordGroups(),
             groupName: '',
             errors: {},
@@ -35,10 +35,10 @@ class PasswordGroupsStore extends ReduceStore {
             }
             case ActionTypes.TOGGLE_GROUP_FORM: {
                 var copy = Object.assign({}, state);
-                copy.shouldRenderPasswordGroup = !state.shouldRenderPasswordGroup;
+                copy.renderPasswordForm = !state.renderPasswordForm;
                 return copy;
             }
-            case ActionTypes.UPDATE_GROUP_NAME:{
+            case ActionTypes.CHANGE_GROUP_NAME:{
                 var copy = Object.assign({}, state);
                 copy.groupName = action.groupName;
                 return copy;

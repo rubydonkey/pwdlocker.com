@@ -15,24 +15,20 @@ function getStores() {
     return [
         PasswordStore,
         PasswordFormStore,
-        PasswordGroupStore,
     ];
 }
 function getState() {
     return{
         passwords: PasswordStore.getState(),
-        passwordForm: PasswordFormStore.getState(),
-        passwordGroups: PasswordGroupStore.getState(),
-
         onAddPassword: Actions.addPassword,
         onUpdatePassword: Actions.updatePassword,
         onDeletePassword: Actions.deletePassword,
 
+        passwordForm: PasswordFormStore.getState(),
         onChangeFormTitle: Actions.changeFormTitle,
         onChangeFormURL: Actions.changeFormURL,
         onChangeFormUsername: Actions.changeFormUsername,
         onChangeFormPassword: Actions.changeFormPassword,
-
         onToggleGroupForm: Actions.toggleGroupForm,
         onAddPasswordGroup: Actions.addPasswordGroup,
         onChangeGroupName: Actions.changeGroupFormGroupName,

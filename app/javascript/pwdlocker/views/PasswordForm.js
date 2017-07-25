@@ -9,15 +9,11 @@ import React from 'react';
 function PasswordForm(props){
     return(
         <div>
-            <div>
-                <TitleBlock {...props}/>
-                <URLBlock {...props}/>
-                <UsernameBlock {...props}/>
-                <PasswordBlock {...props}/>
-            </div>
-            <div>
-                <GroupForm {...props}/>
-            </div>
+            <TitleBlock {...props}/>
+            <URLBlock {...props}/>
+            <UsernameBlock {...props}/>
+            <PasswordBlock {...props}/>
+            <GroupForm {...props}/>
             <SubmitButton {...props}/>
         </div>
     );
@@ -102,7 +98,7 @@ function PasswordBlock(props){
 
 function SubmitButton(props){
     const password = props.passwordForm.password;
-    if(props.passwordForm.isEditMode === true){
+    if(props.passwordForm.editPassword === true){
         return( <button className="btn btn-success"
                         type="submit"
                         onClick={ () => props.onUpdatePassword(password) }>Update</button>);
@@ -115,7 +111,9 @@ function SubmitButton(props){
 }
 
 function GroupForm(props) {
-    const groups = props.passwordGroups.groups;
+    const groups = props.passwordForm.groups;
+    const error = props.passwordForm.errors.name;
+    const groupName = props.passwordForm.groupName;
 
     const passwordGroups = groups.entrySeq().map(([index, group]) => {
         return<option key={group.id} value={group.id}>{group.name}</option>
@@ -142,19 +140,19 @@ function GroupForm(props) {
         <div>
             <input  className="form-control"
                     name="password_group[name]"
-                    value = {props.passwordGroups.groupName}
+                    value = {groupName}
                     autoComplete="off"
                     onChange={(e) => props.onChangeGroupName(e.target.value)}
             />
-            <span style={{color: 'red'}}>{props.passwordGroups.errors.name}</span>
+            <span style={{color: 'red'}}>{error}</span>
             <br/>
             <button className="btn btn-primary"
                     type="submit"
                     name="password_group_create"
-                    onClick={() => props.onAddPasswordGroup(props.passwordGroups.groupName) }> Create group </button>
+                    onClick={() => props.onAddPasswordGroup(groupName) }> Create group </button>
         </div>
 
-    if(props.passwordGroups.shouldRenderPasswordGroup)
+    if(props.passwordForm.renderPasswordForm)
     {
         return(
             <div>

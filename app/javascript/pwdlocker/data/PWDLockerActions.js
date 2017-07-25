@@ -77,7 +77,7 @@ const Actions = {
             },
             error: function(res) {
                 Dispatcher.dispatch({
-                    type: ActionTypes.ADD_PASSWORD_ERRORS,
+                    type: ActionTypes.SET_PASSWORD_FORM_ERRORS,
                     errors: res.responseJSON.errors,
                 });
             }
@@ -100,7 +100,7 @@ const Actions = {
             },
             error: function(res) {
                 Dispatcher.dispatch({
-                    type: ActionTypes.ADD_PASSWORD_ERRORS,
+                    type: ActionTypes.SET_PASSWORD_FORM_ERRORS,
                     errors: res.responseJSON.errors,
                 });
             }
@@ -121,31 +121,31 @@ const Actions = {
     },
     changeFormTitle(title){
         Dispatcher.dispatch({
-            type: ActionTypes.UPDATE_FORM_TITLE,
+            type: ActionTypes.CHANGE_FORM_TITLE,
             title: title,
         });
     },
     changeFormURL(URL){
         Dispatcher.dispatch({
-            type: ActionTypes.UPDATE_FORM_URL,
+            type: ActionTypes.CHANGE_FORM_URL,
             URL: URL,
         });
     },
     changeFormUsername(username){
         Dispatcher.dispatch({
-            type: ActionTypes.UPDATE_FORM_USERNAME,
+            type: ActionTypes.CHANGE_FORM_USERNAME,
             username: username,
         });
     },
     updateFormPasswordGroup(id){
         Dispatcher.dispatch({
-            type: ActionTypes.UPDATE_FORM_PASSWORD_GROUP,
+            type: ActionTypes.CHANGE_FORM_PASSWORD_GROUP,
             password_group_id: id,
         });
     },
     changeFormPassword(password){
         Dispatcher.dispatch({
-            type: ActionTypes.UPDATE_FORM_PASSWORD,
+            type: ActionTypes.CHANGE_FORM_PASSWORD,
             password: password,
         });
     },
@@ -156,7 +156,7 @@ const Actions = {
     },
     changeGroupFormGroupName(name){
         Dispatcher.dispatch({
-            type: ActionTypes.UPDATE_GROUP_NAME,
+            type: ActionTypes.CHANGE_GROUP_NAME,
             groupName: name,
         })
     },
@@ -170,16 +170,14 @@ const Actions = {
             url: '/password_groups.json',
 
             success: function(res) {
-                debugger;
                 Dispatcher.dispatch({
                     type: ActionTypes.ADD_NEW_GROUP,
                     group: res,
                 });
             },
             error: function(res) {
-                debugger;
                 Dispatcher.dispatch({
-                    type: ActionTypes.ADD_PASSWORD_GROUPS_ERRORS,
+                    type: ActionTypes.SET_PASSWORD_FORM_ERRORS,
                     errors: res.responseJSON.errors,
                 });
             }
