@@ -54,4 +54,5 @@ Rails.application.configure do
 
   config.react.variant = :development
   config.react.addons = true # defaults to false
+  config.x.webpacker[:dev_server_host] = "http://127.0.0.1:8080"
 end

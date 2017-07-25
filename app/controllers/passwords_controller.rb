@@ -8,6 +8,11 @@ class PasswordsController < ApplicationController
 
   before_action :get_all_passwords, only: [:create, :update, :destroy]
 
+  def get_all
+    @passwords = Password.all
+    render json: @passwords
+  end
+
   def create
     check_password_url!
 

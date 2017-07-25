@@ -3,8 +3,17 @@ Rails.application.routes.draw do
 
   root to: "pages#index"
   
-  resources :passwords
-  resources :password_groups
+  resources :passwords do
+    collection do
+      get :get_all
+    end
+  end
+  resources :password_groups do
+    collection do
+      get :get_all
+    end
+  end
+
   resources :signins do
     collection do
       post 'resend_token'

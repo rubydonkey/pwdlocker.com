@@ -78,15 +78,6 @@ class Password extends React.Component
     {
       const password = this.props.password;
 
-        const actionEdit = {
-            type: 'ON_START_EDIT_PASSWORD',
-            value: this.props.password
-        };
-        const actionDelete = {
-            type: 'ON_DELETE_PASSWORD',
-            value: this.props.password
-        };
-
       return(
           <div className="col-xs-2">
               <span className="glyphicon glyphicon-remove" id={"password-remove-" + password.id } onClick={this.handleDelete}></span>

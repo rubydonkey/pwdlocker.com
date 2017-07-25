@@ -1,2 +1,4 @@
 <% provide(:title, "My Passwords") %>
-<%= react_component( 'PWDLocker', {passwords:@passwords, password_groups: @password_groups} ) %>
+<section id="pwdlocker"></section>
+<%-# = react_component( 'PWDLocker', {passwords:@passwords, password_groups: @password_groups} ) -%>
+<%= javascript_pack_tag 'pwdlocker' %>

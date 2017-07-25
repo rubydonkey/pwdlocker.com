@@ -24,3 +24,5 @@
 .idea/
 config/database.yml
 .env.local
+/public/packs
+/node_modules
