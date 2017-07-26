@@ -9,13 +9,18 @@ import React from 'react';
 import Password from './Password';
 
 function Passwords(props) {
-    const passwords = props.passwords.entrySeq().map(([index, password]) => {
+
+    const filteredPasswords = props.passwords.filter((password) => {
+        return password.data.title.toLowerCase().indexOf(props.searchString.toLowerCase()) !== -1;
+    });
+
+    const passwords = filteredPasswords.entrySeq().map(([index, password]) => {
         return(
             <Password
                 key = {password.id}
                 password = {password}
                 onDeletePassword={props.onDeletePassword}
-                onUpdatePassword={props.onUpdatePassword}
+                onStartEditPassword={props.onStartEditPassword}
             />
         )});
 

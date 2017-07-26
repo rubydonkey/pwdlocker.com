@@ -9,12 +9,13 @@ import Actions from '../data/PWDLockerActions';
 
 import PasswordStore from '../data/PasswordStore';
 import PasswordFormStore from '../data/PasswordFormStore';
-import PasswordGroupStore from '../data/PasswordGroupsStore';
+import SearchFormStore from '../data/SearchFormStore';
 
 function getStores() {
     return [
         PasswordStore,
         PasswordFormStore,
+        SearchFormStore,
     ];
 }
 function getState() {
@@ -32,7 +33,11 @@ function getState() {
         onToggleGroupForm: Actions.toggleGroupForm,
         onAddPasswordGroup: Actions.addPasswordGroup,
         onChangeGroupName: Actions.changeGroupFormGroupName,
-        onUpdateFormPasswordGroup: Actions.updateFormPasswordGroup,
+        onChangeFormPasswordGroup: Actions.changeFormPasswordGroup,
+        onStartEditPassword: Actions.startEditPassword,
+
+        searchString: SearchFormStore.getState(),
+        onChangeSearchString: Actions.changeSearchString,
     }
 }
 

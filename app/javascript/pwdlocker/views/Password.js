@@ -74,13 +74,12 @@ function ControlsBlock(props) {
     return(
         <div className="col-xs-2">
             <span className="glyphicon glyphicon-remove" id={"password-remove-" + password.id } onClick={() => props.onDeletePassword(password.id)}></span>
-            <span className="glyphicon glyphicon-pencil" id={"password-edit-" + password.id } onClick={() => props.onDeletePassword(password)}></span>
+            <span className="glyphicon glyphicon-pencil" id={"password-edit-" + password.id } onClick={() => props.onStartEditPassword(password)}></span>
         </div>
     );
 }
 
 function onToggleVisibility(id) {
-    console.log(id);
     $("#password-data-username-"+id.toString()).toggle();
     $("#password-data-password-"+id.toString()).toggle();
     $("#password-data-password-changed-"+id.toString()).toggle();

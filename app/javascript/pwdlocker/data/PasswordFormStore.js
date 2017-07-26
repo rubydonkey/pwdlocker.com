@@ -13,25 +13,6 @@ import Actions from './PWDLockerActions';
 
 import PasswordGroup from './PasswordGroup';
 
-class Password {
-    constructor(password = null){
-        if(password === null){
-            this.title = '';
-            this.URL = '';
-            this.username = '';
-            this.password = '';
-            this.password_group_id = 0;
-        }
-        else {
-            this.title = password.title;
-            this.URL = password.URL;
-            this.username = password.username;
-            this.password = password.password;
-            this.password_group_id = password.password_group_id;
-        }
-    }
-}
-
 class PasswordFormStore extends ReduceStore{
     constructor(){
         super(Dispatcher);
@@ -40,6 +21,7 @@ class PasswordFormStore extends ReduceStore{
     getInitialState(){
         return {
             password: {
+                id: 0,
                 title: '',
                 URL: '',
                 username: '',
@@ -78,7 +60,7 @@ class PasswordFormStore extends ReduceStore{
             }
             case ActionTypes.CHANGE_FORM_PASSWORD_GROUP:{
                 var copy = Object.assign({}, state);
-                copy.password_group_id = action.password_group_id;
+                copy.password.password_group_id = action.password_group_id;
                 return copy;
             }
             case ActionTypes.SET_PASSWORD_FORM_ERRORS: {
@@ -87,13 +69,20 @@ class PasswordFormStore extends ReduceStore{
                 return copy;
             }
             case ActionTypes.START_EDIT_PASSWORD: {
+                debugger;
                 var copy = Object.assign({}, state);
                 copy.editPassword = true;
+                for(var property in copy.password){
+                    if(copy.password.hasOwnProperty(property)){
+                        copy.password[property] = action.password[property];
+                    }
+                }
                 return copy;
             }
-            case ActionTypes.UPDATE_PASSWORD: {
+            case ActionTypes.ADD_NEW_PASSWORD:
+            case ActionTypes.UPDATE_PASSWORD:
                 return this.getInitialState();
-            }
+
             case ActionTypes.ADD_NEW_GROUP:{
                 var copy = Object.assign({}, state);
                 copy.groups = copy.groups.set(action.group.id, new PasswordGroup({
@@ -115,15 +104,6 @@ class PasswordFormStore extends ReduceStore{
             default:
                 return state;
         }
-    }
-
-    buildState( password, errors = {}, isEditMode = false){
-        return ({
-            password: password,
-            errors: errors,
-            editPassword: isEditMode,
-            renderPasswordForm: shouldRenderPasswordGroup,
-        });
     }
 }
 

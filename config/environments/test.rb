@@ -39,4 +39,5 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  config.x.webpacker[:dev_server_host] = "http://127.0.0.1:8080"
 end

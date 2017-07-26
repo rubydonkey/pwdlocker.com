@@ -137,7 +137,7 @@ const Actions = {
             username: username,
         });
     },
-    updateFormPasswordGroup(id){
+    changeFormPasswordGroup(id){
         Dispatcher.dispatch({
             type: ActionTypes.CHANGE_FORM_PASSWORD_GROUP,
             password_group_id: id,
@@ -182,6 +182,18 @@ const Actions = {
                 });
             }
         });
+    },
+    startEditPassword(password){
+        Dispatcher.dispatch({
+            type: ActionTypes.START_EDIT_PASSWORD,
+            password: password,
+        })
+    },
+    changeSearchString(value){
+        Dispatcher.dispatch({
+            type: ActionTypes.CHANGE_SEARCH_STRING,
+            value: value,
+        })
     }
 }
 

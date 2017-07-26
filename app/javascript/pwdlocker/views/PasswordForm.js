@@ -26,7 +26,7 @@ function TitleBlock(props){
 
     return (
         <div>
-            <label>Title</label>
+            <label>TITLE</label>
             <input className="form-control"
                    type="text"
                    value={title}
@@ -123,8 +123,9 @@ function GroupForm(props) {
         <select
             className="form-control"
             name="password_group_select"
-            onChange={(e) => props.onUpdateFormPasswordGroup(e.target.value)}>
-            <option value>Select group</option>
+            value={props.passwordForm.password.password_group_id}
+            onChange={(e) => props.onChangeFormPasswordGroup(e.target.value)}>
+            <option value={0}>Select group</option>
             {passwordGroups}
         </select>
 

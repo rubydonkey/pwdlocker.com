@@ -61,6 +61,8 @@ class PasswordsTest < ActionDispatch::IntegrationTest
     page.fill_in('password[username]', :with => data[:username])
     page.fill_in('password[password]', :with => data[:password])
 
+    save_and_open_page
+
     click_button('Create')
 
     wait_for_ajax
@@ -194,12 +196,16 @@ class PasswordsTest < ActionDispatch::IntegrationTest
   test 'password last change time stamp shown when password updated' do
     visit(root_path)
 
+
     password = Password.first
     page.find("#password-edit-#{password.id}").click
+    wait_for_ajax
 
     data = get_random_password_data
 
     page.fill_in('password[password]',    :with => data[:password])
+
+    save_and_open_screenshot;
 
     click_button('Update')
     wait_for_ajax

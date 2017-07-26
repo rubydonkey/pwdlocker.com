@@ -34,16 +34,10 @@ class PasswordStore extends ReduceStore {
             }
             case ActionTypes.UPDATE_PASSWORD:{
                 const password = action.password;
-                var copy = Object.assign({}, state);
-                for(var property in password){
-                    if(password.hasOwnProperty(property)){
-                        copy = copy.setIn([password.id, property.name], property.value);
-                    }
-                }
-                return copy;
+                state = state.setIn([password.id, "id"], password.id);
+                return state.setIn([password.id, "data"], password);
             }
             case ActionTypes.DELETE_PASSWORD:{
-                debugger;
                 return state.delete(action.id);
             }
             default:

@@ -6,12 +6,14 @@
 
 import React from 'react';
 
+import SearchForm from './SearcForm';
 import PasswordForm from './PasswordForm';
 import Passwords from './Passwords';
 
 function AppView(props) {
     return(
         <div>
+            <SearchForm {...props}/>
             <PasswordForm {...props}/>
             <Passwords {...props}/>
         </div>
