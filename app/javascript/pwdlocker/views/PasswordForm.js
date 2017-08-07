@@ -26,7 +26,7 @@ function TitleBlock(props){
 
     return (
         <div>
-            <label>TITLE</label>
+            <label>Title</label>
             <input className="form-control"
                    type="text"
                    value={title}
@@ -133,7 +133,7 @@ function GroupForm(props) {
         <button className="btn btn-link pull-right"
                 name="password_group_add"
                 type="submit"
-                onClick={() => props.onToggleGroupForm()} >
+                onClick={() => props.onRenderGroupForm()} >
             Add group
         </button>
 

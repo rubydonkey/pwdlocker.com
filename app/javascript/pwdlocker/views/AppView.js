@@ -6,7 +6,7 @@
 
 import React from 'react';
 
-import SearchForm from './SearcForm';
+import SearchForm from './SearchForm';
 import PasswordForm from './PasswordForm';
 import Passwords from './Passwords';
 

@@ -5,6 +5,10 @@ require 'test_helper'
 class PasswordGroupTest < ActionDispatch::IntegrationTest
   include WaitForAjax
 
+  def setup
+    Webpacker.compile
+  end
+
   test 'create valid password groups' do
 
     # test page layout

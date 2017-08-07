@@ -30,7 +30,7 @@ function getState() {
         onChangeFormURL: Actions.changeFormURL,
         onChangeFormUsername: Actions.changeFormUsername,
         onChangeFormPassword: Actions.changeFormPassword,
-        onToggleGroupForm: Actions.toggleGroupForm,
+        onRenderGroupForm: Actions.renderGroupForm,
         onAddPasswordGroup: Actions.addPasswordGroup,
         onChangeGroupName: Actions.changeGroupFormGroupName,
         onChangeFormPasswordGroup: Actions.changeFormPasswordGroup,

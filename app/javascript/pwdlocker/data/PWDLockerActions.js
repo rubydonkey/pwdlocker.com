@@ -149,9 +149,9 @@ const Actions = {
             password: password,
         });
     },
-    toggleGroupForm(){
+    renderGroupForm(){
         Dispatcher.dispatch({
-            type: ActionTypes.TOGGLE_GROUP_FORM,
+            type: ActionTypes.RENDER_GROUP_FORM,
         });
     },
     changeGroupFormGroupName(name){

@@ -39,6 +39,7 @@ class PasswordFormStore extends ReduceStore{
     reduce(state, action){
         switch (action.type){
             case ActionTypes.CHANGE_FORM_TITLE: {
+                debugger;
                 var copy = Object.assign({}, state);
                 copy.password.title = action.title;
                 return copy;
@@ -85,15 +86,16 @@ class PasswordFormStore extends ReduceStore{
 
             case ActionTypes.ADD_NEW_GROUP:{
                 var copy = Object.assign({}, state);
+                copy.renderPasswordForm = false;
                 copy.groups = copy.groups.set(action.group.id, new PasswordGroup({
                     id: action.group.id,
                     name: action.group.name,
                 }));
                 return copy;
             }
-            case ActionTypes.TOGGLE_GROUP_FORM: {
+            case ActionTypes.RENDER_GROUP_FORM: {
                 var copy = Object.assign({}, state);
-                copy.renderPasswordForm = !state.renderPasswordForm;
+                copy.renderPasswordForm = true;
                 return copy;
             }
             case ActionTypes.CHANGE_GROUP_NAME:{

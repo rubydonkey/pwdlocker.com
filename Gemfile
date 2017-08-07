@@ -50,6 +50,8 @@ group :development, :test do
   gem 'phantomjs', :require => 'phantomjs/poltergeist'
   gem 'rails-controller-testing'
   gem 'mocha'
+  gem 'selenium-webdriver', '2.53.4'
+
 end
 
 group :development do

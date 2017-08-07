@@ -33,7 +33,7 @@ class PasswordGroupsStore extends ReduceStore {
                 copy.groups = copy.groups.set(action.group.id, action.group.name);
                 return copy;
             }
-            case ActionTypes.TOGGLE_GROUP_FORM: {
+            case ActionTypes.RENDER_GROUP_FORM: {
                 var copy = Object.assign({}, state);
                 copy.renderPasswordForm = !state.renderPasswordForm;
                 return copy;
