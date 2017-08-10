@@ -51,7 +51,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'mocha'
   gem 'selenium-webdriver', '2.53.4'
-
+  gem 'rspec-rails'
 end
 
 group :development do
