@@ -28,7 +28,7 @@ end
 
 Capybara.configure do |config|
   config.default_max_wait_time = 10 # seconds
-  config.default_driver        = :selenium_chrome
+  config.default_driver        = :selenium_chrome_headless
 end
 
 Capybara.javascript_driver = :selenium_chrome_headless
