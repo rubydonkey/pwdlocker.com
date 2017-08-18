@@ -70,7 +70,6 @@ class PasswordFormStore extends ReduceStore{
                 return copy;
             }
             case ActionTypes.START_EDIT_PASSWORD: {
-                debugger;
                 var copy = Object.assign({}, state);
                 copy.editPassword = true;
                 for(var property in copy.password){

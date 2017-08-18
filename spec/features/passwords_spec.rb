@@ -88,7 +88,7 @@ feature 'Passwords page', js:true do
 
     page.find("#password-edit-#{password.id}").click
 
-    expect(page).to have_css("button", text: "Update")
+    expect(page).to have_button("Update")
 
     expect(page).to have_css(%{input[name="password[title]"][value="#{password.title}"]})
     expect(page).to have_css(%{input[name="password[URL]"][value="#{password.URL}"]})
@@ -126,10 +126,10 @@ feature 'Passwords page', js:true do
 
     password = Password.create()
 
-    fill_in 'password[title]',    :with => ""
-    fill_in 'password[URL]',      :with => ""
-    fill_in 'password[username]', :with => ""
-    fill_in 'password[password]', :with => ""
+    fill_in 'password[title]',    :with => " "
+    fill_in 'password[URL]',      :with => " "
+    fill_in 'password[username]', :with => " "
+    fill_in 'password[password]', :with => " "
 
     click_button 'Update'
     wait_for_ajax

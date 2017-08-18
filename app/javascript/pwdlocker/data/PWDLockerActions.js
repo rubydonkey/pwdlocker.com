@@ -15,9 +15,20 @@ import Password from './Password';
 
 const Actions = {
 
+    ajaxSetup(){
+        jQuery.ajaxSetup({
+            beforeSend: function(xhr) {
+                $('#spinner').show();
+            },
+            // runs after AJAX requests complete, successfully or not
+            complete: function(xhr, status){
+                $('#spinner').hide();
+            }
+        });
+    },
+
     getPasswords(){
         let passwords = Immutable.OrderedMap();
-
         jQuery.ajax({
             async: false,
             method: 'GET',
@@ -61,6 +72,7 @@ const Actions = {
 
     addPassword(password){
         const pwd = password;
+
         jQuery.ajax({
             method: 'POST',
             beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', jQuery('meta[name="csrf-token"]').attr('content'))},
@@ -85,6 +97,7 @@ const Actions = {
 
     },
     updatePassword(password){
+        debugger;
         jQuery.ajax({
             method: 'PUT',
             beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', jQuery('meta[name="csrf-token"]').attr('content'))},
@@ -119,6 +132,14 @@ const Actions = {
             }
         })
     },
+
+    startEditPassword(password){
+        Dispatcher.dispatch({
+            type: ActionTypes.START_EDIT_PASSWORD,
+            password: password,
+        })
+    },
+
     changeFormTitle(title){
         Dispatcher.dispatch({
             type: ActionTypes.CHANGE_FORM_TITLE,
@@ -137,29 +158,34 @@ const Actions = {
             username: username,
         });
     },
-    changeFormPasswordGroup(id){
-        Dispatcher.dispatch({
-            type: ActionTypes.CHANGE_FORM_PASSWORD_GROUP,
-            password_group_id: id,
-        });
-    },
+
     changeFormPassword(password){
         Dispatcher.dispatch({
             type: ActionTypes.CHANGE_FORM_PASSWORD,
             password: password,
         });
     },
+
+    changeFormPasswordGroup(id){
+        Dispatcher.dispatch({
+            type: ActionTypes.CHANGE_FORM_PASSWORD_GROUP,
+            password_group_id: id,
+        });
+    },
+
     renderGroupForm(){
         Dispatcher.dispatch({
             type: ActionTypes.RENDER_GROUP_FORM,
         });
     },
+
     changeGroupFormGroupName(name){
         Dispatcher.dispatch({
             type: ActionTypes.CHANGE_GROUP_NAME,
             groupName: name,
         })
     },
+
     addPasswordGroup(name){
         jQuery.ajax({
             method: 'POST',
@@ -183,12 +209,7 @@ const Actions = {
             }
         });
     },
-    startEditPassword(password){
-        Dispatcher.dispatch({
-            type: ActionTypes.START_EDIT_PASSWORD,
-            password: password,
-        })
-    },
+
     changeSearchString(value){
         Dispatcher.dispatch({
             type: ActionTypes.CHANGE_SEARCH_STRING,

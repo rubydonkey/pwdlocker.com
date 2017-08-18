@@ -9883,9 +9883,19 @@ module.exports = lowPriorityWarning;
 
 
 var Actions = {
+    ajaxSetup: function ajaxSetup() {
+        __WEBPACK_IMPORTED_MODULE_0_jquery__["ajaxSetup"]({
+            beforeSend: function beforeSend(xhr) {
+                $('#spinner').show();
+            },
+            // runs after AJAX requests complete, successfully or not
+            complete: function complete(xhr, status) {
+                $('#spinner').hide();
+            }
+        });
+    },
     getPasswords: function getPasswords() {
         var passwords = __WEBPACK_IMPORTED_MODULE_1_immutable__["OrderedMap"]();
-
         __WEBPACK_IMPORTED_MODULE_0_jquery__["ajax"]({
             async: false,
             method: 'GET',
@@ -9925,6 +9935,7 @@ var Actions = {
     },
     addPassword: function addPassword(password) {
         var pwd = password;
+
         __WEBPACK_IMPORTED_MODULE_0_jquery__["ajax"]({
             method: 'POST',
             beforeSend: function beforeSend(xhr) {
@@ -9950,6 +9961,7 @@ var Actions = {
         });
     },
     updatePassword: function updatePassword(password) {
+        debugger;
         __WEBPACK_IMPORTED_MODULE_0_jquery__["ajax"]({
             method: 'PUT',
             beforeSend: function beforeSend(xhr) {
@@ -9988,6 +10000,12 @@ var Actions = {
             }
         });
     },
+    startEditPassword: function startEditPassword(password) {
+        __WEBPACK_IMPORTED_MODULE_2__PWDLockerDispatcher__["a" /* default */].dispatch({
+            type: __WEBPACK_IMPORTED_MODULE_3__PWDLockerActionTypes__["a" /* default */].START_EDIT_PASSWORD,
+            password: password
+        });
+    },
     changeFormTitle: function changeFormTitle(title) {
         __WEBPACK_IMPORTED_MODULE_2__PWDLockerDispatcher__["a" /* default */].dispatch({
             type: __WEBPACK_IMPORTED_MODULE_3__PWDLockerActionTypes__["a" /* default */].CHANGE_FORM_TITLE,
@@ -10006,16 +10024,16 @@ var Actions = {
             username: username
         });
     },
-    changeFormPasswordGroup: function changeFormPasswordGroup(id) {
-        __WEBPACK_IMPORTED_MODULE_2__PWDLockerDispatcher__["a" /* default */].dispatch({
-            type: __WEBPACK_IMPORTED_MODULE_3__PWDLockerActionTypes__["a" /* default */].CHANGE_FORM_PASSWORD_GROUP,
-            password_group_id: id
-        });
-    },
     changeFormPassword: function changeFormPassword(password) {
         __WEBPACK_IMPORTED_MODULE_2__PWDLockerDispatcher__["a" /* default */].dispatch({
             type: __WEBPACK_IMPORTED_MODULE_3__PWDLockerActionTypes__["a" /* default */].CHANGE_FORM_PASSWORD,
             password: password
+        });
+    },
+    changeFormPasswordGroup: function changeFormPasswordGroup(id) {
+        __WEBPACK_IMPORTED_MODULE_2__PWDLockerDispatcher__["a" /* default */].dispatch({
+            type: __WEBPACK_IMPORTED_MODULE_3__PWDLockerActionTypes__["a" /* default */].CHANGE_FORM_PASSWORD_GROUP,
+            password_group_id: id
         });
     },
     renderGroupForm: function renderGroupForm() {
@@ -10052,12 +10070,6 @@ var Actions = {
                     errors: res.responseJSON.errors
                 });
             }
-        });
-    },
-    startEditPassword: function startEditPassword(password) {
-        __WEBPACK_IMPORTED_MODULE_2__PWDLockerDispatcher__["a" /* default */].dispatch({
-            type: __WEBPACK_IMPORTED_MODULE_3__PWDLockerActionTypes__["a" /* default */].START_EDIT_PASSWORD,
-            password: password
         });
     },
     changeSearchString: function changeSearchString(value) {
@@ -19155,7 +19167,6 @@ function FaviconBlock(props) {
 }
 
 function DataBlock(props) {
-    debugger;
 
     var password = props.password.data;
     var group_name = null;
@@ -29982,7 +29993,6 @@ var PasswordFormStore = function (_ReduceStore) {
                     }
                 case __WEBPACK_IMPORTED_MODULE_2__PWDLockerActionTypes__["a" /* default */].START_EDIT_PASSWORD:
                     {
-                        debugger;
                         var copy = Object.assign({}, state);
                         copy.editPassword = true;
                         for (var property in copy.password) {

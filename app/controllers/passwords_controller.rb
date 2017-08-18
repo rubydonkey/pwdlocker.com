@@ -41,7 +41,6 @@ class PasswordsController < ApplicationController
 
     if favicon = get_favicon
       @password.favicon = favicon
-      @password.save
     end
 
     respond_to do |format|

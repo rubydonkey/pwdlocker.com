@@ -47,7 +47,6 @@ function FaviconBlock(props) {
 }
 
 function DataBlock(props) {
-    debugger;
 
     const password = props.password.data;
     let group_name = null;

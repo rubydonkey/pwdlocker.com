@@ -30,10 +30,18 @@ module Features
       page.evaluate_script('jQuery.active').zero?
     end
   end
+
+  module CapybaraDriver
+    def inspect_in_chrome()
+      Capybara.javascript_driver = :selenium_chrome
+    end
+  end
 end
 
 RSpec.configure do |config|
   config.include Features::PasswordsHelpers, :type => :feature
   config.include Features::PasswordGroupsHelper, :type => :feature
   config.include Features::WaitForAjax, :type => :feature
+  config.include Features::CapybaraDriver, :type => :feature
+
 end
