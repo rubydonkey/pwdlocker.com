@@ -138,7 +138,7 @@ feature 'Passwords page', js:true do
     expect(page).to have_text(password.errors.messages[:username].first)
     expect(page).to have_text(password.errors.messages[:password].first)
 
-    expect(page).to have_css("button", text: "Update")
+    expect(page).to have_css("button", text: "Create")
 
   end
 
