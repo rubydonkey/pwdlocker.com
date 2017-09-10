@@ -18,11 +18,11 @@ const Actions = {
     ajaxSetup(){
         jQuery.ajaxSetup({
             beforeSend: function(xhr) {
-                $('#spinner').show();
+                jQuery('#spinner').show();
             },
             // runs after AJAX requests complete, successfully or not
             complete: function(xhr, status){
-                $('#spinner').hide();
+                jQuery('#spinner').hide();
             }
         });
     },

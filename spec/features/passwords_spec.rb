@@ -52,9 +52,7 @@ feature 'Passwords page', js:true do
 
     click_button 'Create'
 
-    wait_for_ajax
-
-    expect(page).to have_text(data[:title].to_s.downcase.titleize, wait: 10)
+    expect(page).to have_text(data[:title].to_s.downcase.titleize)
 
     expect(page).to have_css('.password-block-password-data', :visible => false, :text => data[:username].to_s)
     expect(page).to have_css('.password-block-password-data', :visible => false, :text => data[:password].to_s)
@@ -74,7 +72,6 @@ feature 'Passwords page', js:true do
     password = Password.create()
 
     click_button('Create')
-    wait_for_ajax
 
     expect(page).to have_text(password.errors.messages[:title].first)
     expect(page).to have_text(password.errors.messages[:username].first)
@@ -103,7 +100,6 @@ feature 'Passwords page', js:true do
     fill_in 'password[password]', :with => data[:password]
 
     click_button 'Update'
-    wait_for_ajax
 
     expect(page).to have_button('Create')
 
@@ -124,22 +120,19 @@ feature 'Passwords page', js:true do
     password = Password.first
     page.find("#password-edit-#{password.id}").click
 
-    password = Password.create()
-
     fill_in 'password[title]',    :with => " "
     fill_in 'password[URL]',      :with => " "
     fill_in 'password[username]', :with => " "
     fill_in 'password[password]', :with => " "
 
     click_button 'Update'
-    wait_for_ajax
 
-    expect(page).to have_text(password.errors.messages[:title].first)
-    expect(page).to have_text(password.errors.messages[:username].first)
-    expect(page).to have_text(password.errors.messages[:password].first)
+    empty_password = Password.create()
 
-    expect(page).to have_css("button", text: "Create")
 
+    expect(page).to have_text(empty_password.errors.messages[:title].first)
+    expect(page).to have_text(empty_password.errors.messages[:username].first)
+    expect(page).to have_text(empty_password.errors.messages[:password].first)
   end
 
   scenario 'destroy password' do
@@ -176,14 +169,12 @@ feature 'Passwords page', js:true do
 
     password = Password.first
     page.find("#password-edit-#{password.id}").click
-    wait_for_ajax
 
     data = get_random_password_data
 
     fill_in 'password[password]',    :with => data[:password]
 
     click_button 'Update'
-    wait_for_ajax
 
     #password.reload
     # time_ago_in_word rails function gives different message than function used in inteface so it is not able to compare!
@@ -200,7 +191,6 @@ feature 'Passwords page', js:true do
     fill_in 'password[title]',    :with => data[:title]
 
     click_button 'Update'
-    wait_for_ajax
 
     #password.reload
     # time_ago_in_word rails function gives different message than function used in inteface so it is not able to compare!

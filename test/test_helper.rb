@@ -6,7 +6,7 @@ require 'capybara/rails'
 require 'capybara/poltergeist'
 
 Capybara.default_driver = :selenium
-Capybara.default_max_wait_time = 10
+Capybara.default_max_wait_time = 30
 
 ActionView::Helpers::DateHelper
 
@@ -39,10 +39,10 @@ class ActiveSupport::TestCase
     data[:URL]      = Faker::Internet.url
     data[:username] = Faker::Internet.user_name
     data[:password] = Faker::Internet.password(6, 10)
-    
+
     data
   end
-  
+
   def get_random_password_group_name
     data = Hash.new
     data[:name]  = Faker::Lorem.words(2).join(' ')

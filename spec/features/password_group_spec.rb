@@ -39,26 +39,22 @@ feature 'Password group', js:true do
   scenario 'create invalid password groups' do
 
     click_button 'Add group'
-    wait_for_ajax
 
     data = "TestGroup"
     fill_in 'password_group[name]', :with => data
 
     click_button 'Create group'
-    wait_for_ajax
-
-    password_group = PasswordGroup.create(name: data);
 
     # repeat password group name input, with the same name
+    expect(page).to have_button('Add group')
     click_button 'Add group'
-    wait_for_ajax
 
     fill_in 'password_group[name]', :with => data
 
     click_button 'Create group'
-    wait_for_ajax
+
+    password_group = PasswordGroup.create(name: data);
 
     expect(page).to have_text(password_group.errors.messages[:name].first)
   end
 end
-

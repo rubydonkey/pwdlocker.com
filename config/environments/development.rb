@@ -51,8 +51,4 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-
-  config.react.variant = :development
-  config.react.addons = true # defaults to false
-  config.x.webpacker[:dev_server_host] = "http://127.0.0.1:8080"
 end

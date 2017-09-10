@@ -5,6 +5,8 @@
 'use strict';
 
 import React from 'react';
+import * as jQuery from 'jquery';
+
 
 function Password(props) {
     return(
@@ -80,9 +82,9 @@ function ControlsBlock(props) {
 }
 
 function onToggleVisibility(id) {
-    $("#password-data-username-"+id.toString()).toggle();
-    $("#password-data-password-"+id.toString()).toggle();
-    $("#password-data-password-changed-"+id.toString()).toggle();
+    jQuery("#password-data-username-"+id.toString()).toggle();
+    jQuery("#password-data-password-"+id.toString()).toggle();
+    jQuery("#password-data-password-changed-"+id.toString()).toggle();
 }
 
 function time_ago_in_words_with_parsing(from) {

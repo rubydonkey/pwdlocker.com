@@ -27,14 +27,8 @@ Capybara.register_driver :poltergeist_debug do |app|
 end
 
 Capybara.configure do |config|
-  config.default_max_wait_time = 10 # seconds
+  config.default_max_wait_time = 30 # seconds
   config.default_driver        = :selenium_chrome_headless
 end
 
 Capybara.javascript_driver = :selenium_chrome_headless
-
-RSpec.configure do |config|
-  config.before(:suite) do
-    `bin/webpack`
-  end
-end

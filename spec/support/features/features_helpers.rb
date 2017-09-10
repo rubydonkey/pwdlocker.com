@@ -19,18 +19,6 @@ module Features
     end
   end
 
-  module WaitForAjax
-    def wait_for_ajax
-      Timeout.timeout(Capybara.default_max_wait_time) do
-        loop until finished_all_ajax_requests?
-      end
-    end
-
-    def finished_all_ajax_requests?
-      page.evaluate_script('jQuery.active').zero?
-    end
-  end
-
   module CapybaraDriver
     def inspect_in_chrome()
       Capybara.javascript_driver = :selenium_chrome
@@ -41,7 +29,6 @@ end
 RSpec.configure do |config|
   config.include Features::PasswordsHelpers, :type => :feature
   config.include Features::PasswordGroupsHelper, :type => :feature
-  config.include Features::WaitForAjax, :type => :feature
   config.include Features::CapybaraDriver, :type => :feature
 
 end

@@ -12,10 +12,16 @@ import Passwords from './Passwords';
 
 function AppView(props) {
     return(
-        <div>
-            <SearchForm {...props}/>
-            <PasswordForm {...props}/>
-            <Passwords {...props}/>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-4'>
+              <PasswordForm {...props}/>
+            </div>
+            <div className='col-md-8'>
+              <SearchForm {...props}/>
+              <Passwords {...props}/>
+            </div>
+          </div>
         </div>
     );
 }

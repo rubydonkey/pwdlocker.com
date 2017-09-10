@@ -23,11 +23,10 @@ feature 'Signin', js:true do
     # valid number signin
     fill_in 'Number', :with => "+38162205217"
     click_button "Send me token"
-    wait_for_ajax
-
+    
     expect(page).to have_css('form', :count => 1)
 
-    expect(page).to have_css("label[for=session_token]", wait: 30)
+    expect(page).to have_css("label[for=session_token]")
     expect(page).to have_field("Token")
     expect(page).to have_button?('Login')
     expect(page).to have_button?('Resend')
@@ -38,7 +37,7 @@ feature 'Signin', js:true do
     click_button 'Signin'
     fill_in 'Number', :with => "000"
     click_button 'Send me token'
-    expect(page).to have_css("#error_explanation", wait: 30)
+    expect(page).to have_css("#error_explanation")
 
   end
 
@@ -47,7 +46,7 @@ feature 'Signin', js:true do
     click_button 'Signin'
     fill_in 'Number', :with => ""
     click_button 'Send me token'
-    expect(page).to have_css("#error_explanation", wait: 30)
+    expect(page).to have_css("#error_explanation")
 
   end
 
@@ -57,7 +56,7 @@ feature 'Signin', js:true do
     click_button 'Signin'
     fill_in 'Number', :with => "+38134342480"
     click_button 'Send me token'
-    expect(page).to have_css("#error_explanation", wait: 30)
+    expect(page).to have_css("#error_explanation")
 
   end
 
