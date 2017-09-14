@@ -7,14 +7,10 @@ class PasswordsController < ApplicationController
   FAVICON_DEFAULT_PATH = '/favicon.ico'
 
   before_action :get_all_passwords, only: [:create, :update, :destroy]
-  
-  
-  def new
-    @password = Password.new
-    
-    respond_to do |format|
-      format.js
-    end
+
+  def get_all
+    @passwords = Password.all
+    render json: @passwords
   end
 
   def create
@@ -22,23 +18,19 @@ class PasswordsController < ApplicationController
 
     @password = Password.create(password_params)
 
-    if favico = get_favicon
-      @password.favicon = favico
-      @password.save
+    if favicon = get_favicon
+      @password.favicon = favicon
     end
 
     respond_to do |format|
-      format.js  
+      format.json do
+        if @password.save
+          render :json => @password.as_json(include: [:favicon, :password_group], methods: [:timestamp])
+        else
+          render :json => { :errors => @password.errors.messages }, :status => 422
+        end
+      end
     end
-  end
-
-  def edit
-    @password = Password.find(params[:id])
-
-    respond_to do |format|
-      format.js
-    end
-
   end
 
   def update
@@ -47,13 +39,18 @@ class PasswordsController < ApplicationController
     @password = Password.find(params[:id])
     @password.update_attributes(password_params)
 
-    if favico = get_favicon
-      @password.favicon = favico
-      @password.save
+    if favicon = get_favicon
+      @password.favicon = favicon
     end
 
     respond_to do |format|
-      format.js
+      format.json do
+        if @password.save
+          render :json => @password.as_json(include: [:favicon, :password_group], methods: [:timestamp])
+        else
+          render :json => { :errors => @password.errors.messages }, :status => 422
+        end
+      end
     end
   end
 
@@ -62,8 +59,9 @@ class PasswordsController < ApplicationController
     @password.destroy
 
     respond_to do |format|
-      format.js
+      format.json { render :json => {}, :status => :no_content }
     end
+
   end
 
   private

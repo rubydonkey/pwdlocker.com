@@ -5,12 +5,18 @@ require 'rails/test_help'
 require 'capybara/rails'
 require 'capybara/poltergeist'
 
-Capybara.default_driver = :poltergeist
-Capybara.default_max_wait_time = 10
+Capybara.default_driver = :selenium
+Capybara.default_max_wait_time = 30
+
+ActionView::Helpers::DateHelper
 
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
+
+  def setup
+    puts 'setup'
+  end
 
   # Reset sessions and driver between tests
   # Use super wherever this method is redefined in your individual test classes
@@ -33,10 +39,10 @@ class ActiveSupport::TestCase
     data[:URL]      = Faker::Internet.url
     data[:username] = Faker::Internet.user_name
     data[:password] = Faker::Internet.password(6, 10)
-    
+
     data
   end
-  
+
   def get_random_password_group_name
     data = Hash.new
     data[:name]  = Faker::Lorem.words(2).join(' ')

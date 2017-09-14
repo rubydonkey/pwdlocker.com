@@ -12,6 +12,8 @@ class Password < ApplicationRecord
 
   before_update :update_password_last_changed, if: :password_changed?
 
+  #after_save :update_password_last_changed, if: changed.include?("password")
+
   # validates :URL, presence: true, format: { with: URI::DEFAULT_PARSER.regexp[:ABS_URI] }
 
   def favicon_URI
@@ -32,10 +34,6 @@ class Password < ApplicationRecord
   
   def as_json(options = nil)
     super({ include: [:favicon, :password_group], methods: [:timestamp] }.merge(options || {}))
-  end
-
-  def to_json(options={})
-    super(options.merge(methods: :timestamp))
   end
 
   private
