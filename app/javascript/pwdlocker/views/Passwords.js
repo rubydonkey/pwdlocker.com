@@ -24,7 +24,13 @@ function Passwords(props) {
             />
         )});
 
-    return( <div className='col-md-9'>{passwords}</div> );
+    return(
+        <div className='content'>
+          <div className='container-fluid'>
+            <div className='row'>{passwords}</div>
+          </div>
+        </div>
+    );
 }
 
 export default Passwords;

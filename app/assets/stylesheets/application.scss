@@ -17,6 +17,10 @@
 
 @import 'passwords';
 
+@import 'light-bootstrap-dashboard';
+
+@import 'pe-icon-7-stroke';
+
 * {
   box-sizing: border-box;
 }
@@ -40,6 +44,7 @@ body {
 
 }
 
+
 @media(min-width: $screen-md-min){
   html {
 
@@ -47,12 +52,28 @@ body {
     filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.cover.jpg', sizingMethod='scale');
     -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='cover.jpg', sizingMethod='scale')";
   }
-
-  body {
-    padding-top: 40px;
-  }
 }
 
 @media(min-width: $screen-lg-min){
 
+}
+
+.btn.btn-link {
+  border: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.pointer-reset {
+  cursor: auto;
+}
+
+img.favicon {
+  vertical-align: top;
+}
+
+.password-search {
+  width: 300px;
 }

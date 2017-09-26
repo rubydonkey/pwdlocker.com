@@ -32,7 +32,7 @@ const Actions = {
         jQuery.ajax({
             async: false,
             method: 'GET',
-            url: '/passwords/get_all.json',
+            url: '/passwords.json',
 
             success: function(res) {
                 for(var i = 0; i < res.length; i++)
@@ -54,7 +54,7 @@ const Actions = {
         jQuery.ajax({
             async: false,
             method: 'GET',
-            url: '/password_groups/get_all.json',
+            url: '/password_groups.json',
 
             success: function(res) {
                 for(var i = 0; i < res.length; i++)
@@ -97,7 +97,6 @@ const Actions = {
 
     },
     updatePassword(password){
-        debugger;
         jQuery.ajax({
             method: 'PUT',
             beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', jQuery('meta[name="csrf-token"]').attr('content'))},
@@ -123,7 +122,7 @@ const Actions = {
         jQuery.ajax({
             method: 'DELETE',
             beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', jQuery('meta[name="csrf-token"]').attr('content'))},
-            url: '/passwords/' + id + '.json',
+            url: `/passwords/${id}.json`,
             success: function(res) {
                 Dispatcher.dispatch({
                     type: ActionTypes.DELETE_PASSWORD,
@@ -138,6 +137,12 @@ const Actions = {
             type: ActionTypes.START_EDIT_PASSWORD,
             password: password,
         })
+    },
+
+    startAddNewPassword() {
+      Dispatcher.dispatch({
+          type: ActionTypes.START_ADD_NEW_PASSWORD
+      })
     },
 
     changeFormTitle(title){

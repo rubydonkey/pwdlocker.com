@@ -2,7 +2,7 @@ class PasswordGroupsController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
-  def get_all
+  def index
     @password_groups = PasswordGroup.all
     render json: @password_groups
   end

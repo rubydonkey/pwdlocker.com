@@ -6,15 +6,35 @@
 
 import React from 'react';
 
+import {Link} from 'react-router-dom';
+import {Prompt} from 'react-router';
+
 function PasswordForm(props){
     return(
-        <div>
-            <TitleBlock {...props}/>
-            <URLBlock {...props}/>
-            <UsernameBlock {...props}/>
-            <PasswordBlock {...props}/>
-            <GroupForm {...props}/>
-            <SubmitButton {...props}/>
+        <div className='row'>
+          <div className='col-md-8 col-md-offset-2'>
+
+            <div className='card'>
+              <div className="header">
+                  <h4 className="title">{props.passwordForm.editPassword ? 'Edit Password' : 'New Password'}</h4>
+                  <p className="category">
+                    {props.passwordForm.editPassword ? 'Update your Password data' : 'Please enter your new Password data for this website'}
+                  </p>
+              </div>
+              <div className='content'>
+                <UsernameBlock {...props}/>
+                <PasswordBlock {...props}/>
+                <TitleBlock {...props}/>
+                <GroupForm {...props}/>
+                <URLBlock {...props}/>
+
+              </div>
+              <div className="footer text-right">
+                  <hr />
+                  <SubmitButton {...props}/>
+              </div>
+            </div>
+          </div>
         </div>
     );
 }
@@ -45,7 +65,7 @@ function URLBlock(props){
 
     return(
         <div>
-            <label>Url</label>
+            <label>Website Url</label>
             <input className="form-control"
                    type="text"
                    value={URL}
@@ -98,15 +118,32 @@ function PasswordBlock(props){
 
 function SubmitButton(props){
     const password = props.passwordForm.password;
+    const cancelButton = (
+      <div>
+        <Link className='btn btn-cancel btn-link btn-lg' to='/passwords'>Cancel</Link>
+        <Prompt message='Are you sure you want to leave? Your data is not saved!' when={props.passwordForm.unsavedData}/>
+      </div>
+    );
+
     if(props.passwordForm.editPassword === true){
-        return( <button className="btn btn-success"
+        return(
+          <div>
+            {cancelButton}
+            <button className="btn btn-primary btn-lg"
                         type="submit"
-                        onClick={ () => props.onUpdatePassword(password) }>Update</button>);
+                        onClick={ () => props.onUpdatePassword(password) }>Update</button>
+          </div>
+        );
     }
     else{
-        return( <button className="btn btn-success"
+        return(
+          <div>
+            {cancelButton}
+            <button className="btn btn-primary btn-lg"
                         type="submit"
-                        onClick={ () => props.onAddPassword(password) }>Create</button>);
+                        onClick={ () => props.onAddPassword(password) }>Save</button>
+          </div>
+        );
     }
 }
 
@@ -134,24 +171,28 @@ function GroupForm(props) {
                 name="password_group_add"
                 type="submit"
                 onClick={() => props.onRenderGroupForm()} >
-            Add group
+            Add new group
         </button>
 
-    const passwordGroupForm =
-        <div>
+    const passwordGroupForm =(
+        <div style={{padding: '1em', backgroundColor: '#eee'}}>
             <input  className="form-control"
                     name="password_group[name]"
                     value = {groupName}
                     autoComplete="off"
+                    placeholder="Enter group name"
                     onChange={(e) => props.onChangeGroupName(e.target.value)}
             />
             <span style={{color: 'red'}}>{error}</span>
-            <br/>
-            <button className="btn btn-primary"
+
+            <div className='text-right'>
+              <button className="btn btn-primary text-right btn-xs"
                     type="submit"
                     name="password_group_create"
-                    onClick={() => props.onAddPasswordGroup(groupName) }> Create group </button>
+                    onClick={(e) => { e.preventDefault(); props.onAddPasswordGroup(groupName) }}> Create group </button>
+            </div>
         </div>
+    )
 
     if(props.passwordForm.renderPasswordForm)
     {
@@ -159,6 +200,7 @@ function GroupForm(props) {
             <div>
                 {passwordGroupSelect}
                 {passwordGroupForm}
+                <div className='clearfix'></div>
             </div>
         );
     }
@@ -168,6 +210,7 @@ function GroupForm(props) {
             <div>
                 {passwordGroupSelect}
                 {passwordGroupButtonAdd}
+                <div className='clearfix'></div>
             </div>
         );
     }

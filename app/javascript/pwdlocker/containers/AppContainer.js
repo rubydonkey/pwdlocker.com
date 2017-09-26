@@ -35,6 +35,7 @@ function getState() {
         onChangeGroupName: Actions.changeGroupFormGroupName,
         onChangeFormPasswordGroup: Actions.changeFormPasswordGroup,
         onStartEditPassword: Actions.startEditPassword,
+        onStartAddNewPassword: Actions.startAddNewPassword,
 
         searchString: SearchFormStore.getState(),
         onChangeSearchString: Actions.changeSearchString,
@@ -42,4 +43,3 @@ function getState() {
 }
 
 export default Container.createFunctional(AppView, getStores, getState);
-

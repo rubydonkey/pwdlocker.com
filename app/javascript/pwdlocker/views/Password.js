@@ -4,22 +4,34 @@
 
 'use strict';
 
-import React from 'react';
+import React,  { Component }  from 'react';
 import * as jQuery from 'jquery';
 
+import PasswordCard from 'pwdlocker/components/PasswordCard';
+import favico from 'pwdlocker/assets/images/favico.png'
 
-function Password(props) {
+export class Password extends Component {
+  render() {
+    const props = this.props;
+
+    // let old = <div className="js-password-block-show-hidden col-md-4" id={"password-block-" + props.password.id} onClick={() => {onToggleVisibility(props.password.id)}}>
+    //       <div className='well password-block'>
+    //           <div className='row'>
+    //               <FaviconBlock {...props}/>
+    //               <DataBlock {...props}/>
+    //               <ControlsBlock {...props}/>
+    //           </div>
+    //       </div>
+    //   </div>;
+
     return(
-        <div className="js-password-block-show-hidden col-md-4" id={"password-block-" + props.password.id} onClick={() => {onToggleVisibility(props.password.id)}}>
-            <div className='well password-block'>
-                <div className='row'>
-                    <FaviconBlock {...props}/>
-                    <DataBlock {...props}/>
-                    <ControlsBlock {...props}/>
-                </div>
-            </div>
-        </div>
+        <PasswordCard
+            bigIcon={<FaviconBlock {...props}/>}
+            password={props.password.data}
+            onDeletePassword={props.onDeletePassword}
+        />
     );
+  }
 }
 
 function FaviconBlock(props) {
@@ -29,21 +41,17 @@ function FaviconBlock(props) {
     if(favicon_URI)
     {
         return(
-            <div className="col-xs-2">
-                <a target="_blank" href= {password.URL} >
-                    <img className="favicon password-block-favicon" src={"data:image/gif;base64," + favicon_URI} alt="pwdlocker"/>
-                </a>
-            </div>
+            <a target="_blank" href= {password.URL} onClick={(e)=>{e.stopPropagation()}} >
+                <img className="favicon password-block-favicon" src={"data:image/gif;base64," + favicon_URI} alt="pwdlocker"/>
+            </a>
         );
     }
     else
     {
         return(
-            <div className="col-xs-2">
-                <a target="_blank" href= {password.URL} >
-                    <img className="favicon password-block-favicon" src="assets/favicon.ico" alt="pwdlocker"/>
-                </a>
-            </div>
+            <a target="_blank" href= {password.URL} onClick={(e)=>{e.stopPropagation()}}>
+                <img className="favicon password-block-favicon" src={favico} alt="pwdlocker" width='32' />
+            </a>
         );
     }
 }

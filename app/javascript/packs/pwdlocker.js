@@ -3,8 +3,17 @@
  */
 'use strict';
 
+
+import { HashRouter, Route, Switch } from 'react-router-dom';
+
 import AppContainer from '../pwdlocker/containers/AppContainer';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-ReactDOM.render(<AppContainer />, document.getElementById('pwdlocker'));
+
+ReactDOM.render(
+    <HashRouter>
+      <Switch>
+          <Route path="/" name="Home" component={AppContainer}/>
+      </Switch>
+    </HashRouter>, document.getElementById('pwdlocker'));
