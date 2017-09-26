@@ -3,22 +3,23 @@ require 'feature_helper.rb'
 feature 'Passwords page', js:true do
 
   background do
-    visit(root_path)
+    visit(app_path)
   end
 
   scenario 'show all passwords' do
 
-    expect(page.all('div.js-password-block-show-hidden').size).to eql(Password.count)
+    expect(page.all('.card-password').size).to eql(Password.count)
     expect(page.all('img.password-block-favicon').size).to eql(Password.count)
-    expect(page.all('span.glyphicon-pencil').size).to eql(Password.count)
-    expect(page.all('span.glyphicon-remove').size).to eql(Password.count)
+    expect(page.all('.pe-7s-pen').size).to eql(Password.count)
+    expect(page.all('.pe-7s-trash').size).to eql(Password.count)
 
     Password.all.each_with_index do |password, rowID|
       expect(page).to have_css("div#password-block-#{password.id}")
-      expect(page).to have_link(password.title.to_s.titleize, href: password.URL)
-      expect(page).to have_css("#password-data-title-#{password.id}",     :visible => true,   text: password.title.to_s.titleize)
+      # expect(page).to have_link(password.URL)
+      expect(page).to have_css("#password-data-title-#{password.id}",     :visible => true,   text: password.title)
       expect(page).to have_css("#password-data-username-#{password.id}",  :visible => false,  text: password.username.to_s)
-      expect(page).to have_css("#password-data-password-#{password.id}",  :visible => false,  text: password.password.to_s)
+      #password should be masked with '*'
+      expect(page).to have_css("#password-data-password-#{password.id}",  :visible => false,  text: password.password.split('').map{|_| '*'}.join(''))
 
       if(password.password_group.try(:name))
         expect(page).to have_css("#password-data-group-#{password.id}",   :visible => false,  text: password.password.password_group)
@@ -27,9 +28,10 @@ feature 'Passwords page', js:true do
   end
 
   scenario 'render all form elements' do
+      click_on('New Password')
 
       # test form layout
-      expect(page).to have_button('Create')
+      expect(page).to have_button('Save')
 
       expect(page).to have_css('input[name="password[title]"]')
       expect(page).to have_css('input[name="password[URL]"]')
@@ -37,27 +39,21 @@ feature 'Passwords page', js:true do
       expect(page).to have_css('textarea[name="password[password]"]')
 
       for i in 1..4
-        expect(page).to have_css('label', text: Password.attribute_names[i].to_s.downcase.capitalize)
+        expect(page).to have_css('label', text: Password.attribute_names[i].to_s.downcase.upcase)
       end
   end
 
   scenario 'create valid passwords' do
-
     data = get_random_password_data
+
+    click_on('New Password')
 
     fill_in 'password[title]',    :with => data[:title]
     fill_in 'password[URL]',      :with => data[:URL]
     fill_in 'password[username]', :with => data[:username]
     fill_in 'password[password]', :with => data[:password]
 
-    click_button 'Create'
-
-    expect(page).to have_text(data[:title].to_s.downcase.titleize)
-
-    expect(page).to have_css('.password-block-password-data', :visible => false, :text => data[:username].to_s)
-    expect(page).to have_css('.password-block-password-data', :visible => false, :text => data[:password].to_s)
-
-    expect(page).to have_link(href: data[:URL])
+    click_button 'Save'
 
     # after creating password input fields should be empty
     expect(page).to have_css(%{input[name="password[title]"][value=""]})
@@ -65,13 +61,24 @@ feature 'Passwords page', js:true do
     expect(page).to have_css(%{input[name="password[username]"][value=""]})
     expect(page).to have_css(%{textarea[name="password[password]"]}, text: "")
 
+    click_link('My Passwords')
+
+    # save_and_open_screenshot
+    expect(page).to have_text(data[:title])
+
+    expect(page).to have_css('.username', :visible => false, :text => data[:username].to_s)
+    expect(page).to have_css('.password', :visible => false, :text => data[:password].split('').map{|_|'*'}.join(''))
+
+    expect(page).to have_link(href: data[:URL])
   end
 
   scenario 'create invalid passwords' do
 
     password = Password.create()
 
-    click_button('Create')
+    click_on('New Password')
+
+    click_button('Save')
 
     expect(page).to have_text(password.errors.messages[:title].first)
     expect(page).to have_text(password.errors.messages[:username].first)
@@ -101,17 +108,17 @@ feature 'Passwords page', js:true do
 
     click_button 'Update'
 
-    expect(page).to have_button('Create')
-
     # after updating password input fields should be empty
     expect(page).to have_css(%{input[name="password[title]"][value=""]})
     expect(page).to have_css(%{input[name="password[URL]"][value=""]})
     expect(page).to have_css(%{input[name="password[username]"][value=""]})
     expect(page).to have_css(%{textarea[name="password[password]"]}, text: "")
 
-    expect(page).to have_text(data[:title].to_s.downcase.titleize)
-    expect(page).to have_css('.password-block-password-data', :visible => false, :text => data[:username].to_s)
-    expect(page).to have_css('.password-block-password-data', :visible => false, :text => data[:password].to_s)
+    click_on('My Passwords')
+
+    expect(page).to have_text(data[:title])
+    expect(page).to have_css('.username', :visible => false, :text => data[:username])
+    expect(page).to have_css('.password', :visible => false, :text => data[:password].split('').map{|_|'*'}.join(''))
     expect(page).to have_link(href: data[:URL])
   end
 
@@ -129,7 +136,6 @@ feature 'Passwords page', js:true do
 
     empty_password = Password.create()
 
-
     expect(page).to have_text(empty_password.errors.messages[:title].first)
     expect(page).to have_text(empty_password.errors.messages[:username].first)
     expect(page).to have_text(empty_password.errors.messages[:password].first)
@@ -141,16 +147,17 @@ feature 'Passwords page', js:true do
 
     id = Password.first.id
     expect(page).to have_css("#password-block-#{id}")
-    page.find("#password-remove-#{password.id}").click
+    accept_confirm do
+      page.find("#password-remove-#{password.id}").click
+    end
     expect(page).not_to have_css("#password-block-#{id}")
-
   end
 
   scenario 'click on password block show username and password' do
 
     password = Password.first
     expect(page).to have_css("#password-data-username-#{password.id}", :visible => false, :text => password.username.to_s)
-    expect(page).to have_css("#password-data-password-#{password.id}", :visible => false, :text => password.password.to_s)
+    expect(page).to have_css("#password-data-password-#{password.id}", :visible => false, :text => password.password.split('').map{|_|'*'}.join(''))
 
     # time_ago_in_word rails function gives different message than function used in inteface so it is not able to compare!
     # assert(page.has_css?("#password-data-password-changed-#{password.id}", :visible => false, :text => time_ago_in_words(password.timestamp)))
@@ -160,7 +167,7 @@ feature 'Passwords page', js:true do
     password_block.click
 
     expect(page).to have_css("#password-data-username-#{password.id}", :visible => true, :text => password.username.to_s)
-    expect(page).to have_css("#password-data-password-#{password.id}", :visible => true, :text => password.password.to_s)
+    expect(page).to have_css("#password-data-password-#{password.id}", :visible => true, :text => password.password.split('').map{|_|'*'}.join(''))
     # time_ago_in_word rails function gives different message than function used in inteface so it is not able to compare!
     # assert(page.has_css?("#password-data-password-changed-#{password.id}", :visible => true, :text => time_ago_in_words(password.timestamp)))
   end
@@ -182,7 +189,6 @@ feature 'Passwords page', js:true do
   end
 
   scenario 'password last change time stamp not be shown when non password field is updated' do
-
     password = Password.first
     page.find("#password-edit-#{password.id}").click
 

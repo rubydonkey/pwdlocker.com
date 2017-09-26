@@ -61,4 +61,8 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  config.before(:suite) do
+    # compile front-end and load manifest
+    Webpacker.compile
+  end
 end

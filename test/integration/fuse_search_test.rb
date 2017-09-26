@@ -6,7 +6,7 @@ class FuseSearchTest < ActionDispatch::IntegrationTest
     skip 'fuse search has to be implemented'
 
     # test page layout
-    visit(root_path)
+    visit(app_path)
 
     assert(page.has_button?('Add'))
     assert(page.has_link?(href: new_password_path))
@@ -31,7 +31,7 @@ class FuseSearchTest < ActionDispatch::IntegrationTest
 
   test 'enter search text should decrease number of cards' do
     skip 'fuse search has to be implemented'
-    visit(root_path)
+    visit(app_path)
     page.fill_in('search', :with => 'lore')
     assert_not_equal(page.all('div.password-block').size, Password.count)
   end
@@ -39,7 +39,7 @@ class FuseSearchTest < ActionDispatch::IntegrationTest
   test 'enter no sense search text should return 0 cards' do
     skip 'fuse search has to be implemented'
 
-    visit(root_path)
+    visit(app_path)
     page.fill_in('search', :with => 'leggrhksoeudhfjeje')
     assert_equal(page.all('div.password-block').size, 0)
   end

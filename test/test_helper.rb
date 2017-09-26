@@ -3,10 +3,9 @@ require File.expand_path('../../config/environment', __FILE__)
 
 require 'rails/test_help'
 require 'capybara/rails'
-require 'capybara/poltergeist'
 
 Capybara.default_driver = :selenium
-Capybara.default_max_wait_time = 30
+Capybara.default_max_wait_time = 10
 
 ActionView::Helpers::DateHelper
 

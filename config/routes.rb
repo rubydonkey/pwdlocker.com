@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root to: redirect('/app')
 
-  get '/app', to: "pages#index"
+  get '/app', to: "pages#index", as: :app
 
   resources :passwords
   resources :password_groups
