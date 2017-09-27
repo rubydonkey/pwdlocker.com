@@ -1,7 +1,7 @@
 {
   "name": "pwdlocker.com",
   "description": "pwdlokcer.com | no more passwords to remember",
-  "website": "http://www.pwdlocker.com",
+  "website": "http://www.keyslocker.com",
   "success_url": "/",
   "addons": ["heroku-postgresql:hobby-dev"],
   "env": {
@@ -13,7 +13,12 @@
       "required": true
     }
   },
-  "scripts": {
-    "postdeploy": "bundle exec rake db:migrate && bundle exec rake db:seed"
-  }
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/ruby"
+    }
+  ]
 }

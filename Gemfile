@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'sprockets'
-gem 'sprockets-es6'
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
@@ -41,8 +40,6 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'capybara'
   gem "launchy"
-  gem 'poltergeist'
-  gem 'phantomjs', :require => 'phantomjs/poltergeist'
   gem 'rails-controller-testing'
   gem 'mocha'
   gem 'selenium-webdriver'
@@ -63,3 +60,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'twilio-ruby', '4.13.0'
+
+ruby '2.3.1'

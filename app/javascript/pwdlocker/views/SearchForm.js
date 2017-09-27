@@ -5,13 +5,13 @@
 import React from 'react';
 
 function SearchForm(props) {
-
     return (
-        <div>
-            <input value={props.searchString}
-                   onChange={(e) => props.onChangeSearchString(e.target.value)}
-                   placeholder="Search..." />
-        </div>
+        <form className="navbar-form navbar-left">
+          <input value={props.searchString}
+               onChange={(e) => props.onChangeSearchString(e.target.value)}
+               placeholder="Search passwords..."
+               className='form-control password-search' />
+        </form>
     );
 }
 

@@ -1,18 +1,12 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root to: "pages#index"
-  
-  resources :passwords do
-    collection do
-      get :get_all
-    end
-  end
-  resources :password_groups do
-    collection do
-      get :get_all
-    end
-  end
+  root to: redirect('/app')
+
+  get '/app', to: "pages#index", as: :app
+
+  resources :passwords
+  resources :password_groups
 
   resources :signins do
     collection do

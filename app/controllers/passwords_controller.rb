@@ -8,7 +8,7 @@ class PasswordsController < ApplicationController
 
   before_action :get_all_passwords, only: [:create, :update, :destroy]
 
-  def get_all
+  def index
     @passwords = Password.all
     render json: @passwords
   end
