@@ -13,7 +13,5 @@ import ReactDOM from 'react-dom';
 
 ReactDOM.render(
     <HashRouter>
-      <Switch>
-          <Route path="/" name="Home" component={AppContainer}/>
-      </Switch>
+      <Route path="/" name="Home" component={AppContainer}/>
     </HashRouter>, document.getElementById('pwdlocker'));

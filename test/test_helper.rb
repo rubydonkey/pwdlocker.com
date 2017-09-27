@@ -5,7 +5,7 @@ require 'rails/test_help'
 require 'capybara/rails'
 
 Capybara.default_driver = :selenium
-Capybara.default_max_wait_time = 10
+Capybara.default_max_wait_time = 30
 
 ActionView::Helpers::DateHelper
 

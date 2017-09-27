@@ -28,11 +28,11 @@ function AppView(props) {
               <Header {...props}/>
 
               <Switch>
+                  <Redirect from="/" exact to="/passwords"/>
+
                   <Route path="/passwords/:id/edit" render={()=> <PasswordEditPage {...props} />} />
                   <Route path="/passwords/new" render={(routerProps)=> <PasswordNewPage  {...Object.assign({}, routerProps, props)} />} />
                   <Route path="/passwords" render={()=> <Passwords  {...props} />} />
-
-                  <Redirect from="/" to="/passwords"/>
               </Switch>
           </div>
         </div>
