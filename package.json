@@ -41,5 +41,9 @@
     "webpack-dev-server": "^2.7.1",
     "webpack-manifest-plugin": "^1.1.2",
     "webpack-merge": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=7.10.1",
+    "yarn": ">=0.27.5"
   }
 }
