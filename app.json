@@ -12,5 +12,13 @@
     "TWILIO_AUTH_TOKEN": {
       "required": true
     }
-  }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/ruby"
+    }
+  ]
 }
