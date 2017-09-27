@@ -33,7 +33,6 @@
     "react-dom": "^15.6.1",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-shortcut": "^1.0.6",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",

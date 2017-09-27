@@ -905,10 +905,6 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@3.4.7:
-  version "3.4.7"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.4.7.tgz#f72d760be09b7f76d08ed8fae98b289a8d05fab3"
-
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
@@ -4502,7 +4498,7 @@ react-bootstrap@^0.31.3:
     uncontrollable "^4.1.0"
     warning "^3.0.0"
 
-react-dom@^15.4.2, react-dom@^15.6.1:
+react-dom@^15.6.1:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.2.tgz#41cfadf693b757faf2708443a1d1fd5a02bef730"
   dependencies:
@@ -4549,23 +4545,6 @@ react-router@^4.2.0:
     path-to-regexp "^1.7.0"
     prop-types "^15.5.4"
     warning "^3.0.0"
-
-react-shortcut@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/react-shortcut/-/react-shortcut-1.0.6.tgz#93d97802561231a04fd9b812fffa79ef0258a3df"
-  dependencies:
-    bluebird "3.4.7"
-    lodash "^4.17.4"
-    react "15.4.2"
-    react-dom "^15.4.2"
-
-react@15.4.2:
-  version "15.4.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
-  dependencies:
-    fbjs "^0.8.4"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.0"
 
 react@^15.6.1:
   version "15.6.2"
