@@ -28,9 +28,8 @@ class PasswordFormStore extends ReduceStore{
                 password: '',
                 password_group_id: 0,
             },
-            groups: Actions.getPasswordGroups(),
             groupName: '',
-            renderPasswordForm: false,
+            renderPasswordGroupForm: false,
             editPassword: false,
             errors: {},
             unsavedData: false
@@ -63,12 +62,6 @@ class PasswordFormStore extends ReduceStore{
                 copy.unsavedData = true;
                 return copy;
             }
-            case ActionTypes.CHANGE_FORM_PASSWORD_GROUP:{
-                var copy = Object.assign({}, state);
-                copy.password.password_group_id = action.password_group_id;
-                copy.unsavedData = true;
-                return copy;
-            }
             case ActionTypes.SET_PASSWORD_FORM_ERRORS: {
                 var copy = Object.assign({}, state);
                 copy.errors = action.errors;
@@ -90,24 +83,26 @@ class PasswordFormStore extends ReduceStore{
             case ActionTypes.UPDATE_PASSWORD:
                 return this.getInitialState();
 
-            case ActionTypes.ADD_NEW_GROUP:{
-                var copy = Object.assign({}, state);
-                copy.renderPasswordForm = false;
-                copy.groups = copy.groups.set(action.group.id, new PasswordGroup({
-                    id: action.group.id,
-                    name: action.group.name,
-                }));
-                return copy;
-            }
             case ActionTypes.RENDER_GROUP_FORM: {
                 var copy = Object.assign({}, state);
-                copy.renderPasswordForm = true;
+                copy.renderPasswordGroupForm = true;
                 return copy;
             }
             case ActionTypes.CHANGE_GROUP_NAME:{
                 var copy = Object.assign({}, state);
                 copy.groupName = action.groupName;
 
+                return copy;
+            }
+            case ActionTypes.ADD_NEW_GROUP:{
+                var copy = Object.assign({}, state);
+                copy.renderPasswordGroupForm = false;
+                return copy;
+            }
+            case ActionTypes.CHANGE_PASSWORD_GROUP:{
+                var copy = Object.assign({}, state);
+                copy.password.password_group_id = action.password_group_id;
+                copy.unsavedData = true;
                 return copy;
             }
             default:

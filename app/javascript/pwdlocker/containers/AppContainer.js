@@ -8,12 +8,14 @@ import AppView from '../views/AppView';
 import Actions from '../data/PWDLockerActions';
 
 import PasswordStore from '../data/PasswordStore';
+import PasswordGroupStore from '../data/PasswordGroupStore';
 import PasswordFormStore from '../data/PasswordFormStore';
 import SearchFormStore from '../data/SearchFormStore';
 
 function getStores() {
     return [
         PasswordStore,
+        PasswordGroupStore,
         PasswordFormStore,
         SearchFormStore,
     ];
@@ -25,17 +27,19 @@ function getState() {
         onUpdatePassword: Actions.updatePassword,
         onDeletePassword: Actions.deletePassword,
 
+        passwordGroups: PasswordGroupStore.getState(),
+        onAddPasswordGroup: Actions.addPasswordGroup,
+
         passwordForm: PasswordFormStore.getState(),
+        onStartAddNewPassword: Actions.startAddNewPassword,
+        onStartEditPassword: Actions.startEditPassword,
         onChangeFormTitle: Actions.changeFormTitle,
         onChangeFormURL: Actions.changeFormURL,
         onChangeFormUsername: Actions.changeFormUsername,
         onChangeFormPassword: Actions.changeFormPassword,
         onRenderGroupForm: Actions.renderGroupForm,
-        onAddPasswordGroup: Actions.addPasswordGroup,
         onChangeGroupName: Actions.changeGroupFormGroupName,
-        onChangeFormPasswordGroup: Actions.changeFormPasswordGroup,
-        onStartEditPassword: Actions.startEditPassword,
-        onStartAddNewPassword: Actions.startAddNewPassword,
+        onChangePasswordGroup: Actions.changeFormPasswordGroup,
 
         searchString: SearchFormStore.getState(),
         onChangeSearchString: Actions.changeSearchString,

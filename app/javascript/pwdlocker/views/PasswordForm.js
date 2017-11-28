@@ -27,7 +27,6 @@ function PasswordForm(props){
                 <TitleBlock {...props}/>
                 <GroupForm {...props}/>
                 <URLBlock {...props}/>
-
               </div>
               <div className="footer text-right">
                   <hr />
@@ -148,7 +147,7 @@ function SubmitButton(props){
 }
 
 function GroupForm(props) {
-    const groups = props.passwordForm.groups;
+    const groups = props.passwordGroups;
     const error = props.passwordForm.errors.name;
     const groupName = props.passwordForm.groupName;
 
@@ -161,7 +160,7 @@ function GroupForm(props) {
             className="form-control"
             name="password_group_select"
             value={props.passwordForm.password.password_group_id}
-            onChange={(e) => props.onChangeFormPasswordGroup(e.target.value)}>
+            onChange={(e) => props.onChangePasswordGroup(e.target.value)}>
             <option value={0}>Select group</option>
             {passwordGroups}
         </select>
@@ -194,7 +193,7 @@ function GroupForm(props) {
         </div>
     )
 
-    if(props.passwordForm.renderPasswordForm)
+    if(props.passwordForm.renderPasswordGroupForm)
     {
         return(
             <div>

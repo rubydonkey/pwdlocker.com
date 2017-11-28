@@ -16,6 +16,7 @@ class Sidebar extends Component{
             width: window.innerWidth
         }
     }
+
     activeRoute(routeName) {
         return this.props.location.pathname === routeName ? 'active' : '';
     }
@@ -23,10 +24,12 @@ class Sidebar extends Component{
     updateDimensions(){
         this.setState({width:window.innerWidth});
     }
+
     componentDidMount() {
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions.bind(this));
     }
+
     render(){
         const sidebarBackground = {
             backgroundImage: 'url(' + imagine + ')'
@@ -34,13 +37,13 @@ class Sidebar extends Component{
         return (
             <div id="sidebar" className="sidebar" data-color="black" data-image={imagine}>
                 <div className="sidebar-background" style={sidebarBackground}></div>
-                    <div className="logo">
-                        <a href="#" className="simple-text logo-normal">
-                            <div className="logo-img">
-                                <img src={logo} alt="logo image" width='200'/>
-                            </div>
-                        </a>
-                    </div>
+                <div className="logo">
+                    <a href="#" className="simple-text logo-normal">
+                        <div className="logo-img">
+                            <img src={logo} alt="logo image" width='200'/>
+                        </div>
+                    </a>
+                </div>
                 <div className="sidebar-wrapper">
                     <ul className="nav">
                         { this.state.width <= 991 ? (<HeaderLinks />):null }

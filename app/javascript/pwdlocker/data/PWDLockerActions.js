@@ -173,7 +173,7 @@ const Actions = {
 
     changeFormPasswordGroup(id){
         Dispatcher.dispatch({
-            type: ActionTypes.CHANGE_FORM_PASSWORD_GROUP,
+            type: ActionTypes.CHANGE_PASSWORD_GROUP,
             password_group_id: id,
         });
     },
