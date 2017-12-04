@@ -27,6 +27,18 @@ const Actions = {
         });
     },
 
+    getUser(){
+        jQuery.ajax({
+            async: false,
+            method: 'GET',
+            url: '/users.json',
+
+            success: function(res) {
+                return res;
+            },
+        });
+    },
+
     getPasswords(){
         let passwords = Immutable.OrderedMap();
         jQuery.ajax({

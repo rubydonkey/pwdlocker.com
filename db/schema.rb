@@ -10,45 +10,60 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112223043) do
+ActiveRecord::Schema.define(version: 20171203205728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "favicons", force: :cascade do |t|
-    t.string   "host"
-    t.text     "data"
+  create_table "favicons", id: :serial, force: :cascade do |t|
+    t.string "host"
+    t.text "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "password_groups", force: :cascade do |t|
-    t.string   "name",       default: "empty"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.index ["name"], name: "index_password_groups_on_name", unique: true, using: :btree
+  create_table "password_groups", id: :serial, force: :cascade do |t|
+    t.string "name", default: "empty"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_password_groups_on_name", unique: true
   end
 
-  create_table "passwords", force: :cascade do |t|
-    t.string   "title"
-    t.string   "URL"
-    t.string   "username"
-    t.text     "password"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.integer  "password_group_id"
-    t.integer  "favicon_id"
+  create_table "passwords", id: :serial, force: :cascade do |t|
+    t.string "title"
+    t.string "URL"
+    t.string "username"
+    t.text "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "password_group_id"
+    t.integer "favicon_id"
     t.datetime "password_last_changed_at"
-    t.index ["favicon_id"], name: "index_passwords_on_favicon_id", using: :btree
-    t.index ["password_group_id"], name: "index_passwords_on_password_group_id", using: :btree
+    t.index ["favicon_id"], name: "index_passwords_on_favicon_id"
+    t.index ["password_group_id"], name: "index_passwords_on_password_group_id"
   end
 
-  create_table "phone_numbers", force: :cascade do |t|
-    t.string   "number"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "token_digest"
+  create_table "phone_numbers", id: :serial, force: :cascade do |t|
+    t.string "number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "token_digest"
     t.datetime "token_sent_at"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: ""
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "provider"
+    t.string "uid"
+    t.index ["email"], name: "index_users_on_email"
   end
 
   add_foreign_key "passwords", "favicons"

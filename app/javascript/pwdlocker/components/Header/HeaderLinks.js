@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { NavItem, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
+import { NavItem, Nav} from 'react-bootstrap';
 
 import SearchForm from 'pwdlocker/views/SearchForm';
 
@@ -18,7 +18,7 @@ class HeaderLinks extends Component{
                 </Nav>
                 <Nav pullRight>
                     <NavItem title='Remember to wipe your clipboard after use, so no passwords are left there unprotected!' onClick={(e)=> {e.stopPropagation(); clipboard.copy(" ");}}><i className='pe-7s-attention' style={iconStyle} />&nbsp;Wipe Clipboard</NavItem>
-                    <NavItem eventKey={3} href="#"><i className='pe-7s-less' style={iconStyle} />&nbsp;Log out</NavItem>
+                    <NavItem eventKey={3} href="/sign_in"><i className='pe-7s-less' style={iconStyle} />&nbsp;Log out</NavItem>
                 </Nav>
             </div>
         );

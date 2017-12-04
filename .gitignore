@@ -23,6 +23,7 @@
 
 .idea/
 config/database.yml
+.env
 .env.local
 /public/packs
 /public/packs-test

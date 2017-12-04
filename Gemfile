@@ -60,5 +60,10 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'twilio-ruby', '4.13.0'
-
 ruby '2.3.1'
+
+# Omniauth
+gem 'devise'
+gem 'omniauth-heroku'
+
+
