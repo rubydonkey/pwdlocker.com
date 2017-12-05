@@ -11,9 +11,11 @@ import PasswordStore from '../data/PasswordStore';
 import PasswordGroupStore from '../data/PasswordGroupStore';
 import PasswordFormStore from '../data/PasswordFormStore';
 import SearchFormStore from '../data/SearchFormStore';
+import UsersStore from '../data/UsersStore';
 
 function getStores() {
     return [
+        UsersStore,
         PasswordStore,
         PasswordGroupStore,
         PasswordFormStore,
@@ -22,6 +24,8 @@ function getStores() {
 }
 function getState() {
     return{
+        user: UsersStore.getState(),
+
         passwords: PasswordStore.getState(),
         onAddPassword: Actions.addPassword,
         onUpdatePassword: Actions.updatePassword,

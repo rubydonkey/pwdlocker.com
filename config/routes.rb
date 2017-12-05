@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   resources :passwords
   resources :password_groups
+  resources :users
 
   resources :signins do
     collection do

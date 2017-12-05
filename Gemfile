@@ -65,5 +65,6 @@ ruby '2.3.1'
 # Omniauth
 gem 'devise'
 gem 'omniauth-heroku'
+gem 'platform-api'
 
 

@@ -6,7 +6,11 @@ class User < ApplicationRecord
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
+      token = auth.credentials.token
     end
+  end
+
+  def getData
+    @heroku = PlatformAPI.connect_oauth(token)
   end
 end

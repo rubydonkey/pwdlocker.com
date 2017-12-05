@@ -28,15 +28,19 @@ const Actions = {
     },
 
     getUser(){
+        let user = {};
         jQuery.ajax({
             async: false,
             method: 'GET',
             url: '/users.json',
-
             success: function(res) {
-                return res;
+                debugger;
+                user = res;
             },
         });
+        debugger;
+
+        return user;
     },
 
     getPasswords(){
