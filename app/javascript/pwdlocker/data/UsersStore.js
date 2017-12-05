@@ -18,7 +18,6 @@ class UsersStore extends ReduceStore {
     }
 
     reduce(state, action){
-        debugger;
         return state;
     }
 }

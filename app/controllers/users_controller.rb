@@ -1,7 +1,10 @@
 class UsersController < ApplicationController
 
   def index
-    @user = current_user
+    if(current_user)
+      @user = current_user
+      @user.getData
+    end
     render json: @user
   end
 

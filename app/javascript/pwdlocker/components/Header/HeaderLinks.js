@@ -13,8 +13,6 @@ class HeaderLinks extends Component{
         const props = this.props;
 
         const linkLogIn = "/sign_out";
-
-        debugger;
         return (
             <div>
                 <Nav>

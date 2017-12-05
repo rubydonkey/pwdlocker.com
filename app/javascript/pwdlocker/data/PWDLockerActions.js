@@ -34,12 +34,9 @@ const Actions = {
             method: 'GET',
             url: '/users.json',
             success: function(res) {
-                debugger;
                 user = res;
             },
         });
-        debugger;
-
         return user;
     },
 
