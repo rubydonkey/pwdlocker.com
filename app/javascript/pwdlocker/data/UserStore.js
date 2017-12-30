@@ -20,7 +20,13 @@ class UserStore extends ReduceStore {
     }
 
     reduce(state, action){
-        return state;
+        debugger;
+        switch (action.type){
+            case ActionTypes.ON_GET_USER_DATA:
+                return Actions.getUser();
+            default:
+                return state;
+        }
     }
 }
 

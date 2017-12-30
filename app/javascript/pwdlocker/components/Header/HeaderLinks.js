@@ -13,15 +13,33 @@ class HeaderLinks extends Component{
         const props = this.props;
 
         const linkLogIn = "/sign_out";
+        let userLinks = null;
+
+        // if user logged in add this links as well
+        debugger;
+        if(props.user != null && props.user.data != null){
+            userLinks = (
+                <Nav pullRight>
+                    <NavItem eventKey={3} onClick={(e) => {e.preventDefault(); props.onSyncUserData()}}><i className='pe-7s-refresh' style={iconStyle} />&nbsp;Sync</NavItem>
+                    <NavItem title='Remember to wipe your clipboard after use, so no passwords are left there unprotected!' onClick={(e)=> {e.stopPropagation(); clipboard.copy(" ");}}><i className='pe-7s-attention' style={iconStyle} />&nbsp;Wipe Clipboard</NavItem>
+                    <NavItem eventKey={3} href={this.getLink().href}><i className='pe-7s-less' style={iconStyle} />&nbsp;{this.getLink().label}</NavItem>
+                </Nav>
+            )
+        }
+        else{
+            userLinks = (
+                <Nav pullRight>
+                    <NavItem eventKey={3} href={this.getLink().href}><i className='pe-7s-less' style={iconStyle} />&nbsp;{this.getLink().label}</NavItem>
+                </Nav>
+            )
+        }
+
         return (
             <div>
                 <Nav>
                     {this.props.location.pathname === '/passwords' ? (<SearchForm {...props} />) : null}
                 </Nav>
-                <Nav pullRight>
-                    <NavItem title='Remember to wipe your clipboard after use, so no passwords are left there unprotected!' onClick={(e)=> {e.stopPropagation(); clipboard.copy(" ");}}><i className='pe-7s-attention' style={iconStyle} />&nbsp;Wipe Clipboard</NavItem>
-                    <NavItem eventKey={3} href={this.getLink().href}><i className='pe-7s-less' style={iconStyle} />&nbsp;{this.getLink().label}</NavItem>
-                </Nav>
+                {userLinks}
             </div>
         );
     }

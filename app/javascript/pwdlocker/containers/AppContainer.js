@@ -25,6 +25,7 @@ function getStores() {
 function getState() {
     return{
         user: UsersStore.getState(),
+        onSyncUserData: Actions.syncUserData,
 
         passwords: PasswordStore.getState(),
         onAddPassword: Actions.addPassword,

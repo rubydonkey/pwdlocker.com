@@ -29,19 +29,6 @@ const Actions = {
         });
     },
 
-    getUser1(){
-        let user = {};
-        jQuery.ajax({
-            async: false,
-            method: 'GET',
-            url: '/users.json',
-            success: function(res) {
-                user = res;
-            },
-        });
-        return user;
-    },
-
     getUser(){
         let configVars = Immutable.OrderedMap();
         let user = null;
@@ -140,6 +127,7 @@ const Actions = {
         });
 
     },
+
     updatePassword(password){
         jQuery.ajax({
             method: 'PUT',
@@ -162,6 +150,7 @@ const Actions = {
             }
         });
     },
+
     deletePassword(id){
         jQuery.ajax({
             method: 'DELETE',
@@ -195,6 +184,7 @@ const Actions = {
             title: title,
         });
     },
+
     changeFormURL(URL){
         Dispatcher.dispatch({
             type: ActionTypes.CHANGE_FORM_URL,
@@ -264,7 +254,13 @@ const Actions = {
             type: ActionTypes.CHANGE_SEARCH_STRING,
             value: value,
         })
+    },
+
+    syncUserData(){
+        debugger;
+        Dispatcher.dispatch({
+            type: ActionTypes.ON_GET_USER_DATA,
+        })
     }
 }
-
 export default Actions;

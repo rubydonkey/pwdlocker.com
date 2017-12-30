@@ -10,20 +10,27 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 function AppView(props) {
 
-    return(
+    let mainPanel = null;
+    if(props.user.data != null)
+    {
+        mainPanel = (
+            <div>
+                <Switch>
+                    <Redirect from="/" exact to={`/user/${props.user.data.id}/configVars`}/>
+                    <Route path="/user/:id/configVars" render={() => <ConfigVars  {...props} />}/>
+                </Switch>
+                <Sidebar {...props} />
+            </div>
+        )
+    }
+
+    return (
         <div className='wrapper'>
-          <Sidebar {...props} />
-
-          <div className='main-panel'>
-              <Header {...props}/>
-
-              <Switch>
-                  <Redirect from="/" exact to="/configVars"/>
-                  <Route path="/configVars" render={()=> <ConfigVars  {...props} />} />
-              </Switch>
-          </div>
+            <div className='main-panel'>
+                <Header {...props}/>
+                {mainPanel}
+            </div>
         </div>
-    );
+    )
 }
-
 export default AppView;
