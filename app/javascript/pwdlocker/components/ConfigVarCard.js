@@ -56,7 +56,7 @@ export class ConfigVarCard extends Component{
                     <div className="content">
                         <div className="row">
                             <div className="col-xs-9">
-                                <div className="text">
+                                <div className='label label-default pull-left'>
                                     {configVar.name}
                                 </div>
                             </div>
