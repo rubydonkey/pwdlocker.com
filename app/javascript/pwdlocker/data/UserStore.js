@@ -8,7 +8,9 @@ import Dispatcher from './PWDLockerDispatcher';
 import ActionTypes from './PWDLockerActionTypes';
 import Actions from './PWDLockerActions';
 
-class UsersStore extends ReduceStore {
+import ConfigVar from './ConfigVar';
+
+class UserStore extends ReduceStore {
     constructor(){
         super(Dispatcher);
     }
@@ -22,4 +24,4 @@ class UsersStore extends ReduceStore {
     }
 }
 
-export default new UsersStore();
+export default new UserStore();

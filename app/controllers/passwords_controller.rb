@@ -76,18 +76,18 @@ class PasswordsController < ApplicationController
 
   def get_favicon
     if host = get_host
-      if favico = Favicon.where(host: host).first
-        favico
+      if favicon = Favicon.where(host: host).first
+        favicon
       else
-        favico = Favicon.new(host: get_host)
+        favicon = Favicon.new(host: get_host)
 
         unless ico = get_favicon_from_uri
           ico = get_favicon_from_html_tag
         end
 
-        favico.data = ico
-        favico.save
-        favico
+        favicon.data = ico
+        favicon.save
+        favicon
       end
     end
   end

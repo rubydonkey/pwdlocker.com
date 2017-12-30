@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205214712) do
+ActiveRecord::Schema.define(version: 20171207220430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "applications", force: :cascade do |t|
+    t.bigint "config_var_id"
+    t.string "name"
+    t.string "url"
+    t.index ["config_var_id"], name: "index_applications_on_config_var_id"
+  end
+
+  create_table "config_vars", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "name"
+    t.string "value"
+    t.index ["user_id"], name: "index_config_vars_on_user_id"
+  end
 
   create_table "favicons", id: :serial, force: :cascade do |t|
     t.string "host"
@@ -52,6 +66,9 @@ ActiveRecord::Schema.define(version: 20171205214712) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "token"
+    t.string "provider"
+    t.string "uid"
     t.string "email", default: ""
     t.datetime "remember_created_at"
     t.integer "sign_in_count", default: 0, null: false
@@ -61,10 +78,8 @@ ActiveRecord::Schema.define(version: 20171205214712) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "provider"
-    t.string "uid"
-    t.string "token"
     t.index ["email"], name: "index_users_on_email"
+    t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
   add_foreign_key "passwords", "favicons"

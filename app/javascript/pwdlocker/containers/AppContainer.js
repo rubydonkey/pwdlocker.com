@@ -11,7 +11,7 @@ import PasswordStore from '../data/PasswordStore';
 import PasswordGroupStore from '../data/PasswordGroupStore';
 import PasswordFormStore from '../data/PasswordFormStore';
 import SearchFormStore from '../data/SearchFormStore';
-import UsersStore from '../data/UsersStore';
+import UsersStore from '../data/UserStore';
 
 function getStores() {
     return [

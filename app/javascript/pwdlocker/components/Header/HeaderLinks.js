@@ -27,8 +27,9 @@ class HeaderLinks extends Component{
     }
 
     getLink(){
-        var link = {href: this.props.user === null ? "/users/auth/heroku" : "/sign_out",
-            label: this.props.user === null ? "Log in" : "Log out"}
+        let isCurrentUser = this.props.user != null && this.props.user.data != null;
+        var link = {href: isCurrentUser ? "/sign_out" : "/users/auth/heroku",
+            label: isCurrentUser ? "Log out" : "Log in"}
 
         return link;
     }

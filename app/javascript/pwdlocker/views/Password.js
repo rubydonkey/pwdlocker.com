@@ -7,7 +7,7 @@
 import React,  { Component }  from 'react';
 import * as jQuery from 'jquery';
 
-import PasswordCard from 'pwdlocker/components/PasswordCard';
+import PasswordCard from '../components/PasswordCard.js';
 import favico from 'pwdlocker/assets/images/favico.png'
 
 export class Password extends Component {

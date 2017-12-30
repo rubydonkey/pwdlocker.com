@@ -11,6 +11,8 @@ import ActionTypes from './PWDLockerActionTypes';
 
 import PasswordGroup from './PasswordGroup';
 import Password from './Password';
+import ConfigVar from './ConfigVar';
+
 
 
 const Actions = {
@@ -27,7 +29,7 @@ const Actions = {
         });
     },
 
-    getUser(){
+    getUser1(){
         let user = {};
         jQuery.ajax({
             async: false,
@@ -38,6 +40,35 @@ const Actions = {
             },
         });
         return user;
+    },
+
+    getUser(){
+        let configVars = Immutable.OrderedMap();
+        let user = null;
+        jQuery.ajax({
+            async: false,
+            method: 'GET',
+            url: '/users.json',
+            success: function(res) {
+                if(res != null)
+                {
+                    for (var i = 0; i < res.config_vars.length; i++)
+                    {
+                        const configVar = res.config_vars[i];
+                        configVars = configVars.set(configVar.id, new ConfigVar({
+                            id: configVar.id,
+                            data: configVar,
+                        }));
+                    }
+                    user = res;
+                }
+            },
+        });
+
+        return {
+            data: user,
+            configVars: configVars,
+        };
     },
 
     getPasswords(){

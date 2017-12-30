@@ -3,9 +3,9 @@ class UsersController < ApplicationController
   def index
     if(current_user)
       @user = current_user
-      @user.getData
+      @user.syncData
     end
-    render json: @user
+    render :json => @user.as_json(include: { config_vars: { include: :applications }})
   end
 
 end
