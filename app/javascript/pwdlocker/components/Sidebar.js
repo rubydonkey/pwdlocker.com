@@ -34,6 +34,9 @@ class Sidebar extends Component{
         const sidebarBackground = {
             backgroundImage: 'url(' + imagine + ')'
         };
+
+        const configVarsRoute = `/user/${this.props.user.data.id}/configVars`;
+        const newConfigVarRoute = `/user/${this.props.user.data.id}/configVar/new`;
         return (
             <div id="sidebar" className="sidebar" data-color="black" data-image={imagine}>
                 <div className="sidebar-background" style={sidebarBackground}></div>
@@ -47,16 +50,16 @@ class Sidebar extends Component{
                 <div className="sidebar-wrapper">
                     <ul className="nav">
                         { this.state.width <= 991 ? (<HeaderLinks />):null }
-                        <li className={this.activeRoute("/passwords")}>
-                            <NavLink to={'/passwords'} className="nav-link" activeClassName="active">
+                        <li className={this.activeRoute(configVarsRoute)}>
+                            <NavLink to={configVarsRoute} className="nav-link" activeClassName="active">
                                 <i className="pe-7s-lock"></i>
-                                <p>My Passwords</p>
+                                <p>My ConfigVars</p>
                             </NavLink>
                         </li>
-                        <li className={this.activeRoute("/passwords/new")}>
-                            <NavLink to={'/passwords/new'} className="nav-link" activeClassName="active">
+                        <li className={this.activeRoute(newConfigVarRoute)}>
+                            <NavLink to={newConfigVarRoute} className="nav-link" activeClassName="active">
                                 <i className="pe-7s-plus"></i>
-                                <p>New Password</p>
+                                <p>New ConfigVar</p>
                             </NavLink>
                         </li>
                     </ul>

@@ -7,15 +7,18 @@ import {Container} from 'flux/utils';
 import AppView from '../views/AppView';
 import Actions from '../data/PWDLockerActions';
 
-import PasswordStore from '../data/PasswordStore';
-import PasswordGroupStore from '../data/PasswordGroupStore';
-import PasswordFormStore from '../data/PasswordFormStore';
-import SearchFormStore from '../data/SearchFormStore';
-import UsersStore from '../data/UserStore';
+import PasswordStore        from '../data/PasswordStore';
+import PasswordGroupStore   from '../data/PasswordGroupStore';
+import PasswordFormStore    from '../data/PasswordFormStore';
+import SearchFormStore      from '../data/SearchFormStore';
+import UsersStore           from '../data/UserStore';
+import ConfigVarFormStore       from '../data/ConfigVarFormStore';
+
 
 function getStores() {
     return [
         UsersStore,
+        ConfigVarFormStore,
         PasswordStore,
         PasswordGroupStore,
         PasswordFormStore,
@@ -26,6 +29,15 @@ function getState() {
     return{
         user: UsersStore.getState(),
         onSyncUserData: Actions.syncUserData,
+
+        configVarForm: ConfigVarFormStore.getState(),
+        onChangeFormName: Actions.changeFormName,
+        onChangeFormValue: Actions.changeFormValue,
+        onStartCreateConfigVar: Actions.startCreateConfigVar,
+        onStartUpdateConfigVar: Actions.startUpdateConfigVar,
+        onCreateConfigVar: Actions.createConfigVar,
+        onUpdateConfigVar: Actions.updateConfigVar,
+
 
         passwords: PasswordStore.getState(),
         onAddPassword: Actions.addPassword,

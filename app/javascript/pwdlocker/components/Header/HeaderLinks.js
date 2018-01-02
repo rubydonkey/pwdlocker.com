@@ -16,7 +16,6 @@ class HeaderLinks extends Component{
         let userLinks = null;
 
         // if user logged in add this links as well
-        debugger;
         if(props.user != null && props.user.data != null){
             userLinks = (
                 <Nav pullRight>

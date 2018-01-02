@@ -257,10 +257,57 @@ const Actions = {
     },
 
     syncUserData(){
-        debugger;
         Dispatcher.dispatch({
             type: ActionTypes.ON_GET_USER_DATA,
         })
-    }
+    },
+
+    startCreateConfigVar(){
+        type: ActionTypes.START_CREATE_CONFIGVAR,
+        Dispatcher.dispatch({
+        })
+    },
+
+    startUpdateConfigVar(configVar){
+        Dispatcher.dispatch({
+            type: ActionTypes.START_UPDATE_CONFIGVAR,
+            configVar: configVar,
+        })
+    },
+
+    createConfigVar(){
+        Dispatcher.dispatch({
+            type: ActionTypes.CREATE_CONFIGVAR,
+        })
+    },
+
+    updateConfigVar(configVar){
+        Dispatcher.dispatch({
+            type: ActionTypes.UPDATE_CONFIGVAR,
+            configVar: configVar,
+        })
+    },
+
+    deleteConfigVar(configVar){
+        Dispatcher.dispatch({
+            type: ActionTypes.DELETE_CONFIGVAR,
+            configVar: configVar,
+        });
+    },
+
+
+    changeFormName(name){
+        Dispatcher.dispatch({
+            type: ActionTypes.CHANGE_FORM_NAME,
+            title: name,
+        });
+    },
+
+    changeFormValue(value){
+        Dispatcher.dispatch({
+            type: ActionTypes.CHANGE_FORM_VALUE,
+            title: value,
+        });
+    },
 }
 export default Actions;

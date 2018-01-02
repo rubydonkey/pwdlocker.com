@@ -20,10 +20,12 @@ class UserStore extends ReduceStore {
     }
 
     reduce(state, action){
-        debugger;
         switch (action.type){
             case ActionTypes.ON_GET_USER_DATA:
                 return Actions.getUser();
+            case Actions.CREATE_CONFIGVAR:
+            case Actions.UPDATE_CONFIGVAR:
+            case Actions.DELETE_CONFIGVAR:
             default:
                 return state;
         }

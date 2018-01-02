@@ -9,14 +9,14 @@ export class ConfigVarCard extends Component{
         super(props);
 
         this.state = {
-            configVarRevealed: false,
+            configVarValueRevealed: false,
             dataRevealed: false
         };
     }
 
-    revealConfigVar(e) {
+    revealConfigVarValue(e) {
         e.stopPropagation();
-        this.setState({configVarRevealed: !this.state.configVarRevealed});
+        this.setState({configVarValueRevealed: !this.state.configVarValueRevealed});
         return false;
     }
 
@@ -38,8 +38,8 @@ export class ConfigVarCard extends Component{
         return this.configVar().value;
     }
 
-    displayedConfigVar() {
-        if(this.state.configVarRevealed) {
+    displayedConfigVarValue() {
+        if(this.state.configVarValueRevealed) {
             return this.plainConfigVar();
         } else {
             return this.maskedConfigVar();
@@ -63,9 +63,9 @@ export class ConfigVarCard extends Component{
                         </div>
                         <ControlsBlock
                             dataRevealed={this.state.dataRevealed}
-                            revealConfigVar={this.revealConfigVar.bind(this)}
+                            revealConfigVar={this.revealConfigVarValue.bind(this)}
                             plainConfigVar={this.plainConfigVar.bind(this)}
-                            displayedConfigVar={this.displayedConfigVar.bind(this)}
+                            displayedConfigVarValue={this.displayedConfigVarValue.bind(this)}
                             {...props} />
                     </div>
                 </div>
@@ -96,6 +96,10 @@ function ControlsBlock(props) {
                 <a className='btn btn-link btn-xs btn-primary' onClick={(e)=> {e.stopPropagation(); clipboard.copy(props.plainConfigVar());}}>
                     <i className='pe-7s-copy-file' /> Copy ConfigVar
                 </a>
+
+                <Link to={`/user/${configVar.user_id}/configVar/${configVar.id}/edit`} className='btn btn-link btn-default btn-xs'>
+                    <i className='pe-7s-pen' /> Edit
+                </Link>
             </div>
         </div>
     );
@@ -117,9 +121,9 @@ function DataBlock(props) {
             {applications}
             <ul className='list-unstyled' >
                 <li className='username'><b><i className='icon pe-7s-id'></i>&nbsp;</b><span>{configVar.name}</span></li>
-                <li className='password pointer' onClick={props.revealConfigVar}  >
+                <li className='password pointer' onClick={props.revealConfigVarValue}  >
                     <b><i className='icon pe-7s-key'></i>&nbsp;</b>
-                    <span>{props.displayedConfigVar()}</span>
+                    <span>{props.displayedConfigVarValue()}</span>
                 </li>
             </ul>
             <hr />
