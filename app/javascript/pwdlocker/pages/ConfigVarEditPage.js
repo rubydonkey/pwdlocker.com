@@ -23,7 +23,6 @@ class ConfigVarEditPage extends Component {
     }
 
     componentWllChangeProps(nextProps) {
-        debugger;
         if (this.props.params.configVarID !== nextProps.params.configVarID) {
             const id = parseInt(nextProps.match.params.configVarID),
                 configVar = this.getConfigVar(configVarID);

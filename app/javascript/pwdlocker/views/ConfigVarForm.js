@@ -36,7 +36,6 @@ function ConfigVarForm(props){
 }
 
 function NameBlock(props){
-
     const name = props.configVarForm.configVar.name;
     const error = props.configVarForm.errors.name;
 

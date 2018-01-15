@@ -16,7 +16,6 @@ function AppView(props) {
     let mainPanel = null;
     if(props.user.data != null)
     {
-        debugger;
         mainPanel = (
             <div>
                 <Switch>

@@ -13,8 +13,6 @@ import PasswordGroup from './PasswordGroup';
 import Password from './Password';
 import ConfigVar from './ConfigVar';
 
-
-
 const Actions = {
 
     ajaxSetup(){
@@ -30,6 +28,7 @@ const Actions = {
     },
 
     getUser(){
+        debugger;
         let configVars = Immutable.OrderedMap();
         let user = null;
         jQuery.ajax({
@@ -42,9 +41,12 @@ const Actions = {
                     for (var i = 0; i < res.config_vars.length; i++)
                     {
                         const configVar = res.config_vars[i];
-                        configVars = configVars.set(configVar.id, new ConfigVar({
-                            id: configVar.id,
+                        configVars = configVars.set(i, new ConfigVar({
+                            id: i,
                             data: configVar,
+                            isCreated: false,
+                            isUpdated: false,
+                            isDeleted: false,
                         }));
                     }
                     user = res;
@@ -263,8 +265,8 @@ const Actions = {
     },
 
     startCreateConfigVar(){
-        type: ActionTypes.START_CREATE_CONFIGVAR,
         Dispatcher.dispatch({
+            type: ActionTypes.START_CREATE_CONFIGVAR,
         })
     },
 
@@ -275,9 +277,10 @@ const Actions = {
         })
     },
 
-    createConfigVar(){
+    createConfigVar(configVar){
         Dispatcher.dispatch({
             type: ActionTypes.CREATE_CONFIGVAR,
+            configVar: configVar,
         })
     },
 
@@ -299,14 +302,14 @@ const Actions = {
     changeFormName(name){
         Dispatcher.dispatch({
             type: ActionTypes.CHANGE_FORM_NAME,
-            title: name,
+            name: name,
         });
     },
 
     changeFormValue(value){
         Dispatcher.dispatch({
             type: ActionTypes.CHANGE_FORM_VALUE,
-            title: value,
+            value: value,
         });
     },
 }

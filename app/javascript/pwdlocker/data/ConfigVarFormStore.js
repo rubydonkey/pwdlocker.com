@@ -22,6 +22,9 @@ class ConfigVarFormStore extends ReduceStore{
                 id: 0,
                 name: '',
                 value: '',
+                isCreated: false,
+                isUpdated: false,
+                isDeleted: false,
             },
             editConfigVar: false,
             errors: {},
@@ -49,7 +52,6 @@ class ConfigVarFormStore extends ReduceStore{
                 return copy;
             }
             case ActionTypes.START_UPDATE_CONFIGVAR: {
-                debugger;
                 var copy = Object.assign({}, state);
                 copy.editConfigVar = true;
                 copy.errors = {};

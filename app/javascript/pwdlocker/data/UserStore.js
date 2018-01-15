@@ -23,9 +23,39 @@ class UserStore extends ReduceStore {
         switch (action.type){
             case ActionTypes.ON_GET_USER_DATA:
                 return Actions.getUser();
-            case Actions.CREATE_CONFIGVAR:
-            case Actions.UPDATE_CONFIGVAR:
-            case Actions.DELETE_CONFIGVAR:
+            case ActionTypes.CREATE_CONFIGVAR:
+                debugger;
+                action.configVar.isCreated = true;
+                const configVar = action.configVar;
+                const id = state.configVars.count();
+                return state['configVars'].set(id, new ConfigVar({
+                    id: id,
+                    data: configVar,
+                    isCreated: configVar.isCreated,
+                    isUpdated: configVar.isUpdated,
+                    isDeleted: configVar.isDeleted,
+                }));
+            case ActionTypes.UPDATE_CONFIGVAR:
+                debugger;
+                if(action.configVar.isCreated == false){
+                    // if new created is updated later before saved in db
+                    // flag should remain created so it will be created in db during sync
+                    action.configVar.isUpdated = true;
+                    action.configVar.isDeleted = false;
+                }
+                return state.configVars.setIn([action.configVar.id, "data"], action.configVar);
+            case ActionTypes.DELETE_CONFIGVAR:
+                debugger;
+                if(action.configVar.isCreated == true){
+                    // still not been saved in db
+                    // delete it immediately from configVars
+                    return state.delete(action.configVar.id);
+                }
+                else{
+                    action.configVar.isUpdated = false;
+                    action.configVar.isDeleted = true;
+                    return state.configVars.setIn([id, "data"], action.configVar);
+                }
             default:
                 return state;
         }

@@ -6,17 +6,14 @@ import { withRouter } from 'react-router'
 
 class ConfigVarCreatePage extends Component {
     constructor(props) {
-        debugger;
         super(props)
     }
 
     componentWillMount() {
-        debugger;
         this.props.onStartCreateConfigVar()
     }
 
     componentWllChangeProps(nextProps) {
-        debugger;
         this.props.onStartCreateConfigVar()
     }
 
@@ -31,7 +28,6 @@ class ConfigVarCreatePage extends Component {
             </div>
         );
     }
-
 }
 
 export default withRouter(ConfigVarCreatePage);
