@@ -28,13 +28,17 @@ class UserStore extends ReduceStore {
                 action.configVar.isCreated = true;
                 const configVar = action.configVar;
                 const id = state.configVars.count();
-                return state['configVars'].set(id, new ConfigVar({
+                const configVars = state['configVars'].set(id, new ConfigVar({
                     id: id,
                     data: configVar,
                     isCreated: configVar.isCreated,
                     isUpdated: configVar.isUpdated,
                     isDeleted: configVar.isDeleted,
                 }));
+                return {
+                    data: state.data,
+                    configVars: state.configVars,
+                };
             case ActionTypes.UPDATE_CONFIGVAR:
                 debugger;
                 if(action.configVar.isCreated == false){
