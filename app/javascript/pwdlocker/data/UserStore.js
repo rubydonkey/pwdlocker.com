@@ -40,7 +40,6 @@ class UserStore extends ReduceStore {
                     configVars: state.configVars,
                 };
             case ActionTypes.UPDATE_CONFIGVAR:
-                debugger;
                 if(action.configVar.isCreated == false){
                     // if new created is updated later before saved in db
                     // flag should remain created so it will be created in db during sync
@@ -49,7 +48,6 @@ class UserStore extends ReduceStore {
                 }
                 return state.configVars.setIn([action.configVar.id, "data"], action.configVar);
             case ActionTypes.DELETE_CONFIGVAR:
-                debugger;
                 if(action.configVar.isCreated == true){
                     // still not been saved in db
                     // delete it immediately from configVars

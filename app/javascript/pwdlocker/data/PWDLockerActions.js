@@ -28,7 +28,6 @@ const Actions = {
     },
 
     getUser(){
-        debugger;
         let configVars = Immutable.OrderedMap();
         let user = null;
         jQuery.ajax({

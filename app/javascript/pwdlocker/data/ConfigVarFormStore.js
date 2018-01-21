@@ -66,7 +66,6 @@ class ConfigVarFormStore extends ReduceStore{
             case ActionTypes.CREATE_CONFIGVAR:
             case ActionTypes.UPDATE_CONFIGVAR:
                 return this.getInitialState();
-
             default:
                 return state;
         }
