@@ -16,10 +16,12 @@ ActiveRecord::Schema.define(version: 20171207220430) do
   enable_extension "plpgsql"
 
   create_table "applications", force: :cascade do |t|
+    t.bigint "user_id"
     t.bigint "config_var_id"
     t.string "name"
     t.string "url"
     t.index ["config_var_id"], name: "index_applications_on_config_var_id"
+    t.index ["user_id"], name: "index_applications_on_user_id"
   end
 
   create_table "config_vars", force: :cascade do |t|

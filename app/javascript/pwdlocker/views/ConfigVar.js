@@ -11,7 +11,8 @@ export class ConfigVar extends Component {
 
         return(
             <ConfigVarCard
-                configVar={props.configVar.data}
+                configVar={props.configVar}
+                onDeleteConfigVar = {props.onDeleteConfigVar}
             />
         );
     }

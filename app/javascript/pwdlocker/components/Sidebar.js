@@ -35,8 +35,8 @@ class Sidebar extends Component{
             backgroundImage: 'url(' + imagine + ')'
         };
 
-        const configVarsRoute = `/user/${this.props.user.data.id}/configVars`;
-        const newConfigVarRoute = `/user/${this.props.user.data.id}/configVar/new`;
+        const configVarsRoute = `/user/${this.props.user.id}/configVars`;
+        const newConfigVarRoute = `/user/${this.props.user.id}/configVar/new`;
         return (
             <div id="sidebar" className="sidebar" data-color="black" data-image={imagine}>
                 <div className="sidebar-background" style={sidebarBackground}></div>

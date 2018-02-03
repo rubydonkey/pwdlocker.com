@@ -9,8 +9,7 @@ import React from 'react';
 import ConfigVar from './ConfigVar';
 
 function ConfigVars(props) {
-
-    const filteredConfigVars = props.user.configVars.filter((configVar) => {
+    const filteredConfigVars = props.configVars.filter((configVar) => {
         return configVar.data.name.toLowerCase().indexOf(props.searchString.toLowerCase()) !== -1;
     });
 
@@ -19,6 +18,7 @@ function ConfigVars(props) {
             <ConfigVar
                 key = {configVar.id}
                 configVar = {configVar}
+                onDeleteConfigVar = {props.onDeleteConfigVar}
             />
         )});
 

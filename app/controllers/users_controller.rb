@@ -5,7 +5,7 @@ class UsersController < ApplicationController
       @user = current_user
       @user.syncData
     end
-    render :json => @user.as_json(include: { config_vars: { include: :applications }})
+    render :json => @user.as_json(include: [:applications, config_vars: { include: :applications}])
   end
 
 end

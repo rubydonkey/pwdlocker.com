@@ -27,7 +27,7 @@ export class ConfigVarCard extends Component{
     }
 
     configVar() {
-        return this.props.configVar;
+        return this.props.configVar.data;
     }
 
     maskedConfigVar() {
@@ -47,18 +47,20 @@ export class ConfigVarCard extends Component{
     }
 
     render(){
-        const configVar = this.configVar(),
-            props = this.props, id = configVar.id;
+        const   configVar = this.configVar(),
+                props = this.props;
 
         return (
             <div className="col-lg-4 col-sm-6">
-                <div className="card card-password pointer" onClick={this.revealData.bind(this)}>
+                <div className="card card-password pointer">
                     <div className="content">
                         <div className="row">
                             <div className="col-xs-9">
-                                <div className='label label-default pull-left'>
+                                <div className='label label-default pull-left' onClick={this.revealData.bind(this)}>
+                                    {getConfigVarStatus(props)}
                                     {configVar.name}
                                 </div>
+
                             </div>
                         </div>
                         <ControlsBlock
@@ -66,6 +68,7 @@ export class ConfigVarCard extends Component{
                             revealConfigVar={this.revealConfigVarValue.bind(this)}
                             plainConfigVar={this.plainConfigVar.bind(this)}
                             displayedConfigVarValue={this.displayedConfigVarValue.bind(this)}
+                            revealData={this.revealData.bind(this)}
                             {...props} />
                     </div>
                 </div>
@@ -87,19 +90,28 @@ function ControlsBlock(props) {
                 <hr />
 
                 <div style={dataStyle} className='pointer-reset'>
-                    <DataBlock {...props} />
+                    <DataBlock
+                        revealConfigVar={props.revealConfigVar}
+                        {...props}
+                    />
                 </div>
 
-                <a className='btn btn-link btn-xs'>
+                <a className='btn btn-link btn-xs' onClick={(e) => props.revealData(e)}>
                     <i className='pe-7s-look' /> Show
                 </a>
+
                 <a className='btn btn-link btn-xs btn-primary' onClick={(e)=> {e.stopPropagation(); clipboard.copy(props.plainConfigVar());}}>
                     <i className='pe-7s-copy-file' /> Copy ConfigVar
                 </a>
 
-                <Link to={`/user/${configVar.user_id}/configVar/${configVar.id}/edit`} className='btn btn-link btn-default btn-xs'>
+                <Link to={`/user/${configVar.data.user_id}/configVar/${configVar.id}/edit`} className='btn btn-link btn-default btn-xs'>
                     <i className='pe-7s-pen' /> Edit
                 </Link>
+
+                <a className='btn btn-link btn-xs btn-danger' onClick={() => props.onDeleteConfigVar(configVar)}>
+                    <i className='pe-7s-junk' /> Delete
+                </a>
+
             </div>
         </div>
     );
@@ -110,18 +122,23 @@ function DataBlock(props) {
     const configVar = props.configVar;
     const id = configVar.id;
 
-    const applications = configVar.applications.map(application => {
-        return  <span key = {application.id} className='label label-default pull-right'>
-                    <a href={application.url} target='_blank' onClick={(e)=> e.stopPropagation()}>{application.name}</a>
-                </span>
-    });
+    let applications = null;
+    if(configVar.data.applications != null){
+        applications = configVar.data.applications.map(application => {
+            return( <span key={application.id} className='label label-warning pull-left'>
+                        <a href={application.url} target='_blank' onClick={(e)=> e.stopPropagation()}>{application.name}</a>
+                    </span>);
+        });
+    }
 
     return(
         <div>
-            {applications}
+            <ul className="list-group">
+                {applications}
+            </ul>
             <ul className='list-unstyled' >
-                <li className='username'><b><i className='icon pe-7s-id'></i>&nbsp;</b><span>{configVar.name}</span></li>
-                <li className='password pointer' onClick={props.revealConfigVarValue}  >
+                <li><b><i className='icon pe-7s-id'></i>&nbsp;</b><span>{configVar.data.name}</span></li>
+                <li onClick={(e) => props.revealConfigVar(e)}  >
                     <b><i className='icon pe-7s-key'></i>&nbsp;</b>
                     <span>{props.displayedConfigVarValue()}</span>
                 </li>
@@ -129,6 +146,34 @@ function DataBlock(props) {
             <hr />
         </div>
     );
+}
+
+function getConfigVarStatus(props){
+    const configVar = props.configVar.data;
+
+    if(configVar.isCreated === true){
+        return(
+            <div className="content">
+                <i className='pe-7s-plus pull-right' onClick={props.onDisableSyncConfigVar(configVar)}/>
+            </div>
+        );
+    }
+    else if(configVar.isUpdated === true){
+        debugger;
+
+        return(
+            <div className="content">
+                <i className='pe-7s-pen pull-right' onClick={props.onDisableSyncConfigVar(configVar)}/>
+            </div>
+        );
+    }
+    else if(configVar.isDeleted){
+        return(
+            <div className="content">
+                <i className='pe-7s-junk pull-right' onClick={props.onDisableSyncConfigVar(configVar)}/>
+            </div>
+        );
+    }
 }
 
 function time_ago_in_words_with_parsing(from) {

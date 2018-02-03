@@ -12,12 +12,14 @@ import PasswordGroupStore   from '../data/PasswordGroupStore';
 import PasswordFormStore    from '../data/PasswordFormStore';
 import SearchFormStore      from '../data/SearchFormStore';
 import UsersStore           from '../data/UserStore';
-import ConfigVarFormStore       from '../data/ConfigVarFormStore';
+import ConfigVarFormStore   from '../data/ConfigVarFormStore';
+import ConfigVarsStore      from '../data/ConfigVarsStore';
 
 
 function getStores() {
     return [
         UsersStore,
+        ConfigVarsStore,
         ConfigVarFormStore,
         PasswordStore,
         PasswordGroupStore,
@@ -27,6 +29,10 @@ function getStores() {
 }
 function getState() {
     return{
+        configVars: ConfigVarsStore.getState(),
+        onSyncConfigVars: Actions.syncConfigVars,
+        onDisableSyncConfigVar: Actions.disableConfigVarSync,
+
         user: UsersStore.getState(),
         onSyncUserData: Actions.syncUserData,
 
@@ -37,7 +43,11 @@ function getState() {
         onStartUpdateConfigVar: Actions.startUpdateConfigVar,
         onCreateConfigVar: Actions.createConfigVar,
         onUpdateConfigVar: Actions.updateConfigVar,
+        onDeleteConfigVar: Actions.deleteConfigVar,
+        onAddAppToConfigVar: Actions.addAppToConfigVar,
+        onRemoveAppFromConfigVar: Actions.removeAppFromConfigVar,
 
+        onSetConfigVarFormErrors: Actions.setConfigVarsFormErrors,
 
         passwords: PasswordStore.getState(),
         onAddPassword: Actions.addPassword,

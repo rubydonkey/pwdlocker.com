@@ -28,8 +28,22 @@ const Actions = {
     },
 
     getUser(){
-        let configVars = Immutable.OrderedMap();
         let user = null;
+        jQuery.ajax({
+            async: false,
+            method: 'GET',
+            url: '/users.json',
+            success: function(res) {
+                if(res != null)
+                    user = res;
+            },
+        });
+        return user;
+    },
+
+    getConfigVars(){
+        debugger;
+        let configVars = Immutable.OrderedMap();
         jQuery.ajax({
             async: false,
             method: 'GET',
@@ -43,20 +57,12 @@ const Actions = {
                         configVars = configVars.set(i, new ConfigVar({
                             id: i,
                             data: configVar,
-                            isCreated: false,
-                            isUpdated: false,
-                            isDeleted: false,
                         }));
                     }
-                    user = res;
                 }
             },
         });
-
-        return {
-            data: user,
-            configVars: configVars,
-        };
+        return configVars;
     },
 
     getPasswords(){
@@ -263,6 +269,12 @@ const Actions = {
         })
     },
 
+    syncConfigVars(){
+        Dispatcher.dispatch({
+            type: ActionTypes.ON_GET_CONFIG_VARS,
+        })
+    },
+
     startCreateConfigVar(){
         Dispatcher.dispatch({
             type: ActionTypes.START_CREATE_CONFIGVAR,
@@ -277,6 +289,7 @@ const Actions = {
     },
 
     createConfigVar(configVar){
+        debugger;
         Dispatcher.dispatch({
             type: ActionTypes.CREATE_CONFIGVAR,
             configVar: configVar,
@@ -310,6 +323,33 @@ const Actions = {
             type: ActionTypes.CHANGE_FORM_VALUE,
             value: value,
         });
+    },
+
+    setConfigVarsFormErrors(){
+        Dispatcher.dispatch({
+            type: ActionTypes.SET_CONFIGVAR_FORM_ERRORS,
+        });
+    },
+
+    addAppToConfigVar(application){
+        Dispatcher.dispatch({
+            type: ActionTypes.ON_ADD_APP_TO_CONFIGVAR,
+            application: application,
+        });
+    },
+
+    removeAppFromConfigVar(application){
+        Dispatcher.dispatch({
+            type: ActionTypes.ON_REMOVE_APP_TO_CONFIGVAR,
+            application: application,
+        });
+    },
+
+    disableConfigVarSync(configVar){
+        Dispatcher.dispatch({
+            type: ActionTypes.ON_DISABLE_CONFIG_VAR_CHANGES,
+            configVar: configVar,
+        })
     },
 }
 export default Actions;

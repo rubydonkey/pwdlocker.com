@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :config_vars
+  has_many :applications
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -22,8 +23,14 @@ class User < ApplicationRecord
       config_application = Array.new(config_vars.count, false)
 
       heroku_application_name = heroku_application['name']
-      heroku_config_vars = @heroku.config_var.info_for_app(heroku_application_name)
 
+      # add applications to the user if not exists
+      application = applications.find_by(name: heroku_application_name)
+      if application.nil?
+        applications.create(name: heroku_application_name)
+      end
+
+      heroku_config_vars = @heroku.config_var.info_for_app(heroku_application_name)
       heroku_config_vars.each do |heroku_config_var|
         config_var = config_vars.find_by(name: heroku_config_var[0], value: heroku_config_var[1])
         if config_var.nil?
@@ -46,7 +53,7 @@ class User < ApplicationRecord
         unless config_application[config_var.id - 1]
           application = config_var.applications.find_by(name: heroku_application_name)
           # application have this app but not found in previous block
-          if application != nil && !config_application[config_var.id - 1]
+          if application != nil
             # someone removed this config_var from app or changed it`s value on heroku
             # remove association and destroy record of application
             config_var.applications.destroy(application)

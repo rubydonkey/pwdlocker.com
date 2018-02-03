@@ -35,6 +35,7 @@ class CreateApplicationsUsersAndConfigVars < ActiveRecord::Migration[5.1]
     end
 
     create_table :applications do |t|
+      t.belongs_to :user, index: true
       t.belongs_to :config_var, index: true
       t.string :name
       t.string :url

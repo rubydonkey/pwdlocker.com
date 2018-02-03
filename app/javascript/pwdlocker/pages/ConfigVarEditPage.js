@@ -11,18 +11,19 @@ class ConfigVarEditPage extends Component {
     }
 
     getConfigVar(id) {
-        const configVars = this.props.user.configVars;
-        return configVars.get(id).get('data');
+        const configVars = this.props.configVars;
+        return configVars.get(id);
     }
 
     componentWillMount() {
-        const id = parseInt(this.props.match.params.configVarID),
-            configVar = this.getConfigVar(id);
+        const   id = parseInt(this.props.match.params.configVarID),
+                configVar = this.getConfigVar(id);
+
 
         this.props.onStartUpdateConfigVar(configVar)
     }
 
-    componentWllChangeProps(nextProps) {
+    componentWillChangeProps(nextProps) {
         if (this.props.params.configVarID !== nextProps.params.configVarID) {
             const id = parseInt(nextProps.match.params.configVarID),
                 configVar = this.getConfigVar(configVarID);

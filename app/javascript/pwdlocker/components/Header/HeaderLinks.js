@@ -16,7 +16,7 @@ class HeaderLinks extends Component{
         let userLinks = null;
 
         // if user logged in add this links as well
-        if(props.user != null && props.user.data != null){
+        if(props.user != null){
             userLinks = (
                 <Nav pullRight>
                     <NavItem eventKey={3} onClick={(e) => {e.preventDefault(); props.onSyncUserData()}}><i className='pe-7s-refresh' style={iconStyle} />&nbsp;Sync</NavItem>
@@ -44,7 +44,7 @@ class HeaderLinks extends Component{
     }
 
     getLink(){
-        let isCurrentUser = this.props.user != null && this.props.user.data != null;
+        let isCurrentUser = this.props.user != null;
         var link = {href: isCurrentUser ? "/sign_out" : "/users/auth/heroku",
             label: isCurrentUser ? "Log out" : "Log in"}
 
