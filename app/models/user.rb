@@ -27,6 +27,7 @@ class User < ApplicationRecord
         applications.create(name: heroku_application_name)
       end
 
+
       config_vars_to_heroku_apps = Hash.new
 
       heroku_config_vars = @heroku.config_var.info_for_app(heroku_application_name)
@@ -49,7 +50,7 @@ class User < ApplicationRecord
       config_vars.each do |config_var|
         application = config_var.applications.find_by(name: heroku_application_name)
         # application have this app but not found in previous block
-        if application != nil && config_vars_to_heroku_apps[config_var.name].nil?
+        if application != nil && config_vars_to_heroku_apps[config_var.name] == false
           # someone removed this config_var from app or changed it`s value on heroku
           # remove association and destroy record of application
           config_var.applications.destroy(application)

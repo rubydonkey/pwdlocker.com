@@ -30,7 +30,7 @@ const Actions = {
     getConfigVars(){
         let configVars = Immutable.OrderedMap();
         jQuery.ajax({
-            async: true,
+            async: false,
             method: 'GET',
             url: '/users.json',
             success: function(res) {

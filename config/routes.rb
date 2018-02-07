@@ -11,6 +11,6 @@ Rails.application.routes.draw do
 
   root to: redirect('/app')
 
-  get '/app', to: "pages#index", as: :app
+  get '/app', to: 'pages#index', as: :app
 
 end
