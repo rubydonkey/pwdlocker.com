@@ -57,10 +57,9 @@ export class ConfigVarCard extends Component{
                         <div className="row">
                             <div className="col-xs-9">
                                 <div className='label label-default pull-left' onClick={this.revealData.bind(this)}>
-                                    {getConfigVarStatus(props)}
                                     {configVar.name}
                                 </div>
-
+                                {getConfigVarStatus(props)}
                             </div>
                         </div>
                         <ControlsBlock
@@ -149,28 +148,30 @@ function DataBlock(props) {
 }
 
 function getConfigVarStatus(props){
-    const configVar = props.configVar.data;
 
-    if(configVar.isCreated === true){
+    if(props.configVar.isCreated === true){
         return(
-            <div className="content">
-                <i className='pe-7s-plus pull-right' onClick={props.onDisableSyncConfigVar(configVar)}/>
+            <div>
+                <i className='pe-7s-plus pull-right' onClick={() => props.onDisableSyncConfigVar(props.configVar)}/>
+                <i className='pe-7s-refresh pull-right' onClick={() => props.onSyncConfigVar(props.configVar)}/>
             </div>
         );
     }
-    else if(configVar.isUpdated === true){
+    else if(props.configVar.isUpdated === true){
         debugger;
 
         return(
-            <div className="content">
-                <i className='pe-7s-pen pull-right' onClick={props.onDisableSyncConfigVar(configVar)}/>
+            <div>
+                <i className='pe-7s-pen pull-right' onClick={() => props.onDisableSyncConfigVar(props.configVar)}/>
+                <i className='pe-7s-refresh pull-right' onClick={() => props.onSyncConfigVar(props.configVar)}/>
             </div>
         );
     }
-    else if(configVar.isDeleted){
+    else if(props.configVar.isDeleted === true){
         return(
-            <div className="content">
-                <i className='pe-7s-junk pull-right' onClick={props.onDisableSyncConfigVar(configVar)}/>
+            <div>
+                <i className='pe-7s-junk pull-right' onClick={() => props.onDisableSyncConfigVar(props.configVar)}/>
+                <i className='pe-7s-refresh pull-right' onClick={() => props.onSyncConfigVar(props.configVar)}/>
             </div>
         );
     }

@@ -18,9 +18,6 @@ class User < ApplicationRecord
     heroku_apps = @heroku.app.list
 
     heroku_apps.each do |heroku_application|
-      # here are flags showing which of the users configs are related with current app
-      # this array used to find users vars that are not related with this app anymore
-      config_application = Array.new(config_vars.count, false)
 
       heroku_application_name = heroku_application['name']
 
@@ -30,6 +27,8 @@ class User < ApplicationRecord
         applications.create(name: heroku_application_name)
       end
 
+      config_vars_to_heroku_apps = Hash.new
+
       heroku_config_vars = @heroku.config_var.info_for_app(heroku_application_name)
       heroku_config_vars.each do |heroku_config_var|
         config_var = config_vars.find_by(name: heroku_config_var[0], value: heroku_config_var[1])
@@ -37,27 +36,23 @@ class User < ApplicationRecord
           # add new config_vars if doesn`t exists and make association with app
           config_var = config_vars.create(name: heroku_config_var[0], value: heroku_config_var[1])
           config_var.applications.create(name: heroku_application_name, url: get_app_url(heroku_application_name))
-          config_application.push(true)
         else
           unless config_var.applications.find_by(name: heroku_application_name)
             # existing config_var found in new app. Make association with app
             config_var.applications.create(name: heroku_application_name, url: get_app_url(heroku_application_name))
           end
-          config_application[config_var.id - 1] = true
+          config_vars_to_heroku_apps[heroku_config_var[0]] = true;
         end
       end
 
       # some of the config_vars does not belongs to this heroku_application anymore
       config_vars.each do |config_var|
-        # if this config not found in heroku_config for current app
-        unless config_application[config_var.id - 1]
-          application = config_var.applications.find_by(name: heroku_application_name)
-          # application have this app but not found in previous block
-          if application != nil
-            # someone removed this config_var from app or changed it`s value on heroku
-            # remove association and destroy record of application
-            config_var.applications.destroy(application)
-          end
+        application = config_var.applications.find_by(name: heroku_application_name)
+        # application have this app but not found in previous block
+        if application != nil && config_vars_to_heroku_apps[config_var.name].nil?
+          # someone removed this config_var from app or changed it`s value on heroku
+          # remove association and destroy record of application
+          config_var.applications.destroy(application)
         end
       end
     end

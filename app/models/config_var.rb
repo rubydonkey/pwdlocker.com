@@ -15,4 +15,7 @@ class ConfigVar < ApplicationRecord
     @isDeleted = false
   end
 
+  def as_json(options = nil)
+    super({include: [:user, :applications], methods: [:isCreated, :isUpdated, :isDeleted]}.merge(options || {}))
+  end
 end

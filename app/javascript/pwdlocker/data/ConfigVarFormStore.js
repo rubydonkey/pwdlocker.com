@@ -29,6 +29,9 @@ class ConfigVarFormStore extends ReduceStore{
                     isDeleted: false,
                     applications: [],
                 },
+                isCreated: false,
+                isUpdated: false,
+                isDeletd: false,
             },
             editConfigVar: false,
             errors: {
@@ -74,11 +77,7 @@ class ConfigVarFormStore extends ReduceStore{
             }
             case ActionTypes.ON_ADD_APP_TO_CONFIGVAR:{
                 var copy = Object.assign({}, state);
-                const maxID = Math.max.apply(Math, copy.configVar.data.applications.map(app => {return app.id}));
-                copy.configVar.data.applications.push({
-                   id: maxID + 1,
-                   name: action.application.name,
-                });
+                copy.configVar.data.applications.push(action.application);
                 copy.unsavedData = true;
                 return copy;
             }

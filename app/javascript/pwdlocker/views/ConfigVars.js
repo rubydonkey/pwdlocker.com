@@ -18,7 +18,7 @@ function ConfigVars(props) {
             <ConfigVar
                 key = {configVar.id}
                 configVar = {configVar}
-                onDeleteConfigVar = {props.onDeleteConfigVar}
+                {...props}
             />
         )});
 

@@ -30,18 +30,21 @@ class ConfigVarsStore extends ReduceStore {
                 configVar.data.isCreated = true;
                 return state.set(configVar.id, new ConfigVar({
                     id: configVar.id,
+                    isCreated: true,
                     data: configVar.data,
                 }));
             case ActionTypes.UPDATE_CONFIGVAR:
-                if(action.configVar.data.isCreated === false){
+                if(action.configVar.isCreated === false){
                     // if new created is updated later before saved in db
                     // flag should remain created so it will be created in db during sync
+                    state = state.setIn([action.configVar.id, "isUpdated"], true);
+                    state = state.setIn([action.configVar.id, "isDeleted"], false);
+
                     action.configVar.data.isUpdated = true;
                     action.configVar.data.isDeleted = false;
                 }
                 return state.setIn([action.configVar.id, "data"], action.configVar.data);
             case ActionTypes.DELETE_CONFIGVAR:
-                debugger;
                 if(action.configVar.data.isCreated === true){
                     // still not been saved in db
                     // delete it immediately from configVars
@@ -49,15 +52,24 @@ class ConfigVarsStore extends ReduceStore {
                 }
                 else{
                     // if exist in db mark for deletion
+                    state = state.setIn([action.configVar.id, "isUpdated"], false);
+                    state = state.setIn([action.configVar.id, "isDeleted"], true);
+
                     action.configVar.data.isUpdated = false;
                     action.configVar.data.isDeleted = true;
                     return state.setIn([action.configVar.id, "data"], action.configVar.data);
                 }
+
             case ActionTypes.ON_DISABLE_CONFIG_VAR_CHANGES:
+
                 action.configVar.data.isCreated = false;
                 action.configVar.data.isUpdated = false;
                 action.configVar.data.isDeleted = false;
-                return state.setIn([action.configVar.id, "data"], action.configVar);
+
+                state = state.setIn([action.configVar.id, "isCreated"], false);
+                state = state.setIn([action.configVar.id, "isUpdated"], false);
+                state = state.setIn([action.configVar.id, "isDeleted"], false);
+                return state.setIn([action.configVar.id, "data"], action.configVar.data);
             default:
                 return state;
         }
