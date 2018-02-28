@@ -22,57 +22,90 @@ const Actions = {
             success: function(res) {
                 if(res != null)
                     user = res;
+                Dispatcher.dispatch({
+                    type: ActionTypes.ON_GET_USER_DATA,
+                    user: user,
+                });
             },
         });
         return user;
     },
 
     getConfigVars(){
-        let configVars = Immutable.OrderedMap();
+        Dispatcher.dispatch({
+            type: ActionTypes.ON_START_GET_CONFIG_VARS,
+        });
         jQuery.ajax({
-            async: false,
+            async: true,
             method: 'GET',
-            url: '/users.json',
+            url: '/user_data.json',
             success: function(res) {
-                debugger;
-                if(res != null)
-                {
-                    for (var i = 0; i < res.config_vars.length; i++)
-                    {
-                        const configVar = res.config_vars[i];
-                        configVars = configVars.set(i, new ConfigVar({
-                            id: i,
-                            data: configVar,
-                        }));
-                    }
+                if(res != null) {
+                    Dispatcher.dispatch({
+                        type: ActionTypes.ON_GET_CONFIG_VARS,
+                        configVars: res.config_vars,
+                    });
+                    Dispatcher.dispatch({
+                        type: ActionTypes.ON_GET_USER_DATA,
+                        user: res,
+                    });
                 }
             },
         });
-        return configVars;
     },
+
+    commitConfigVar(configVar, configVars){
+        let changedConfigVars = configVars.filter((cv) => {
+            return (cv.isCreated === true ||
+                cv.isUpdated === true ||
+                cv.isDeleted === true ||
+                cv.id == configVar.id
+            );
+        });
+        if(changedConfigVars.size == 0){
+            Actions.getConfigVars();
+            return;
+        }
+
+        Actions.commitConfigVars(changedConfigVars);
+    },
+
+    commitConfigVars(configVars){
+        let changedConfigVars = configVars.filter((configVar) => {
+            return (configVar.isCreated === true || configVar.isUpdated === true || configVar.isDeleted === true);
+        });
+        if(changedConfigVars.size == 0){
+            Actions.getConfigVars();
+            return;
+        }
+        Dispatcher.dispatch({
+            type: ActionTypes.ON_START_COMMIT_CONFIG_VARS,
+        });
+        jQuery.ajax({
+            async: true,
+            method: 'POST',
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', jQuery('meta[name="csrf-token"]').attr('content'))},
+            dataType: 'json',
+            data: {
+                configVars: changedConfigVars.toJSON(),
+            },
+            url: '/commit_config_vars.json',
+
+            success: function(res) {
+                Dispatcher.dispatch({
+                    type: ActionTypes.ON_COMMIT_CONFIG_VARS,
+                });
+                Actions.getConfigVars();
+            },
+        });
+    },
+
 
     changeSearchString(value){
         Dispatcher.dispatch({
             type: ActionTypes.CHANGE_SEARCH_STRING,
             value: value,
         })
-    },
-
-    syncUserData(){
-        Dispatcher.dispatch({
-            type: ActionTypes.ON_GET_USER_DATA,
-        })
-    },
-
-    syncConfigVars(){
-        Dispatcher.dispatch({
-            type: ActionTypes.ON_GET_CONFIG_VARS,
-        })
-    },
-
-    syncConfigVar(configVar){
-        // here config var will be directly sent as password
-        // on success will notify store about change
     },
 
     startCreateConfigVar(){
@@ -89,7 +122,6 @@ const Actions = {
     },
 
     createConfigVar(configVar){
-        debugger;
         Dispatcher.dispatch({
             type: ActionTypes.CREATE_CONFIGVAR,
             configVar: configVar,

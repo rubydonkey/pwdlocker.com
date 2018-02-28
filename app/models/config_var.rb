@@ -5,14 +5,17 @@ class ConfigVar < ApplicationRecord
 
   after_initialize :set_flags
 
-  attr_accessor :isCreated
-  attr_accessor :isUpdated
-  attr_accessor :isDeleted
+  attr_accessor :is_created
+  attr_accessor :is_updated
+  attr_accessor :is_deleted
+  attr_accessor :applications_names
+
 
   def set_flags
-    @isCreated = false
-    @isUpdated = false
-    @isDeleted = false
+    @is_created = false
+    @is_updated = false
+    @is_deleted = false
+    @applications_names = []
   end
 
   def as_json(options = nil)

@@ -149,32 +149,27 @@ function DataBlock(props) {
 
 function getConfigVarStatus(props){
 
-    if(props.configVar.isCreated === true){
-        return(
-            <div>
-                <i className='pe-7s-plus pull-right' onClick={() => props.onDisableSyncConfigVar(props.configVar)}/>
-                <i className='pe-7s-refresh pull-right' onClick={() => props.onSyncConfigVar(props.configVar)}/>
-            </div>
-        );
-    }
-    else if(props.configVar.isUpdated === true){
-        debugger;
+    if(!props.configVar.isCreated && !props.configVar.isUpdated && !props.configVar.isDeleted)
+        return;
 
-        return(
-            <div>
-                <i className='pe-7s-pen pull-right' onClick={() => props.onDisableSyncConfigVar(props.configVar)}/>
-                <i className='pe-7s-refresh pull-right' onClick={() => props.onSyncConfigVar(props.configVar)}/>
-            </div>
-        );
-    }
-    else if(props.configVar.isDeleted === true){
-        return(
-            <div>
-                <i className='pe-7s-junk pull-right' onClick={() => props.onDisableSyncConfigVar(props.configVar)}/>
-                <i className='pe-7s-refresh pull-right' onClick={() => props.onSyncConfigVar(props.configVar)}/>
-            </div>
-        );
-    }
+    const onDisableConfigVar = () => props.onDisableSyncConfigVar(props.configVar);
+    const onCommitConfigVar = () => props.onCommitConfigVar(props.configVar, props.configVars);
+
+    var className = 'pull-right';
+
+    if(props.configVar.isCreated === true)
+        className = 'pe-7s-plus '.concat(className);
+    else if(props.configVar.isUpdated === true)
+        className = 'pe-7s-plus '.concat(className);
+    else if(props.configVar.isDeleted === true)
+        className = 'pe-7s-plus '.concat(className);
+
+    return(
+        <div>
+            <i className={className} onClick={onDisableConfigVar}/>
+            <i className='pe-7s-refresh pull-right' onClick={onCommitConfigVar}/>
+        </div>
+    );
 }
 
 function time_ago_in_words_with_parsing(from) {

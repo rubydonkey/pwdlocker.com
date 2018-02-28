@@ -22,9 +22,12 @@ class UserStore extends ReduceStore {
     reduce(state, action){
         switch (action.type){
             case ActionTypes.ON_GET_USER_DATA:
-                return Actions.getUser();
+                return action.user;
             default:
-                return state;
+                if(state === undefined)
+                    return null;
+                else
+                    return state;
         }
     }
 }

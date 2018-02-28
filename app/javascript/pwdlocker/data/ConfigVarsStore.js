@@ -14,6 +14,7 @@ import ConfigVar from './ConfigVar';
 class ConfigVarsStore extends ReduceStore {
     constructor(){
         super(Dispatcher);
+        this.toConfigVars = this.toConfigVars.bind(this);
     }
 
     getInitialState(){
@@ -22,12 +23,19 @@ class ConfigVarsStore extends ReduceStore {
 
     reduce(state, action){
         switch (action.type){
+            // this is not called because this store is not created
+            // when user store dispatch this action from it`s getInitialState()
+            case ActionTypes.ON_GET_USER_DATA:
+                // if user not logged in return null
+                if (action.user == null)
+                    return null;
+                return this.toConfigVars(action.user.config_vars);
             case ActionTypes.ON_GET_CONFIG_VARS:
-                return Actions.getConfigVars();
+                return this.toConfigVars(action.configVars);
             case ActionTypes.CREATE_CONFIGVAR:
+                let configVar = action.configVar;
                 configVar.id = state.count();
-                const configVar = action.configVar;
-                configVar.data.isCreated = true;
+                configVar.data.is_created = true;
                 return state.set(configVar.id, new ConfigVar({
                     id: configVar.id,
                     isCreated: true,
@@ -40,12 +48,12 @@ class ConfigVarsStore extends ReduceStore {
                     state = state.setIn([action.configVar.id, "isUpdated"], true);
                     state = state.setIn([action.configVar.id, "isDeleted"], false);
 
-                    action.configVar.data.isUpdated = true;
-                    action.configVar.data.isDeleted = false;
+                    action.configVar.data.is_updated = true;
+                    action.configVar.data.is_deleted = false;
                 }
                 return state.setIn([action.configVar.id, "data"], action.configVar.data);
             case ActionTypes.DELETE_CONFIGVAR:
-                if(action.configVar.data.isCreated === true){
+                if(action.configVar.isCreated === true){
                     // still not been saved in db
                     // delete it immediately from configVars
                     return state.delete(action.configVar.id);
@@ -55,24 +63,39 @@ class ConfigVarsStore extends ReduceStore {
                     state = state.setIn([action.configVar.id, "isUpdated"], false);
                     state = state.setIn([action.configVar.id, "isDeleted"], true);
 
-                    action.configVar.data.isUpdated = false;
-                    action.configVar.data.isDeleted = true;
+                    action.configVar.data.is_updated = false;
+                    action.configVar.data.is_deleted = true;
                     return state.setIn([action.configVar.id, "data"], action.configVar.data);
                 }
 
             case ActionTypes.ON_DISABLE_CONFIG_VAR_CHANGES:
 
-                action.configVar.data.isCreated = false;
-                action.configVar.data.isUpdated = false;
-                action.configVar.data.isDeleted = false;
+                action.configVar.data.is_created = false;
+                action.configVar.data.is_updated = false;
+                action.configVar.data.is_deleted = false;
 
                 state = state.setIn([action.configVar.id, "isCreated"], false);
                 state = state.setIn([action.configVar.id, "isUpdated"], false);
                 state = state.setIn([action.configVar.id, "isDeleted"], false);
                 return state.setIn([action.configVar.id, "data"], action.configVar.data);
             default:
+                if(state == undefined)
+                    return null;
                 return state;
         }
+    }
+
+    toConfigVars(config_vars){
+        let configVars = Immutable.OrderedMap();
+        for (var i = 0; i < config_vars.length; i++)
+        {
+            const configVar = config_vars[i];
+            configVars = configVars.set(i, new ConfigVar({
+                id: i,
+                data: configVar,
+            }));
+        }
+        return configVars;
     }
 }
 

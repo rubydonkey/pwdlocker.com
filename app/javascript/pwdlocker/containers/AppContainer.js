@@ -7,25 +7,35 @@ import {Container} from 'flux/utils';
 import AppView from '../views/AppView';
 import Actions from '../data/PWDLockerActions';
 
-import SearchFormStore      from '../data/SearchFormStore';
+
+// ConfigVarsStore have to be created before UsersStore
+// so it will be available to respond on ON_GET_USER_DATA action
+// which dispatch UsersStore while being created in getInitialState
+// ON_GET_USER_DATA action send preparied data from which will be shown immediately
+// while being waited for data to be synchronized from heroku
+
+import SyncStore            from '../data/SyncStore';
+import ConfigVarsStore      from '../data/ConfigVarsStore';
 import UsersStore           from '../data/UserStore';
 import ConfigVarFormStore   from '../data/ConfigVarFormStore';
-import ConfigVarsStore      from '../data/ConfigVarsStore';
-
+import SearchFormStore      from '../data/SearchFormStore';
 
 function getStores() {
     return [
-        UsersStore,
+        SyncStore,
         ConfigVarsStore,
+        UsersStore,
         ConfigVarFormStore,
         SearchFormStore,
     ];
 }
 function getState() {
     return{
+        syncStatus: SyncStore.getState(),
+
         configVars: ConfigVarsStore.getState(),
-        onSyncConfigVars: Actions.syncConfigVars,
-        onSyncConfigVar: Actions.syncConfigVar,
+        onCommitConfigVar: Actions.commitConfigVar,
+        onCommitConfigVars: Actions.commitConfigVars,
         onDisableSyncConfigVar: Actions.disableConfigVarSync,
 
         user: UsersStore.getState(),

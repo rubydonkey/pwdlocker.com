@@ -31,42 +31,6 @@ ActiveRecord::Schema.define(version: 20171207220430) do
     t.index ["user_id"], name: "index_config_vars_on_user_id"
   end
 
-  create_table "favicons", id: :serial, force: :cascade do |t|
-    t.string "host"
-    t.text "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "password_groups", id: :serial, force: :cascade do |t|
-    t.string "name", default: "empty"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_password_groups_on_name", unique: true
-  end
-
-  create_table "passwords", id: :serial, force: :cascade do |t|
-    t.string "title"
-    t.string "URL"
-    t.string "username"
-    t.text "password"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "password_group_id"
-    t.integer "favicon_id"
-    t.datetime "password_last_changed_at"
-    t.index ["favicon_id"], name: "index_passwords_on_favicon_id"
-    t.index ["password_group_id"], name: "index_passwords_on_password_group_id"
-  end
-
-  create_table "phone_numbers", id: :serial, force: :cascade do |t|
-    t.string "number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "token_digest"
-    t.datetime "token_sent_at"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "token"
     t.string "provider"
@@ -84,5 +48,4 @@ ActiveRecord::Schema.define(version: 20171207220430) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
-  add_foreign_key "passwords", "favicons"
 end

@@ -32,7 +32,7 @@ class Header extends Component{
         const props = this.props;
 
         return (
-            <Navbar fluid>
+            <Navbar staticTop>
                 <Navbar.Header>
                     <Navbar.Toggle onClick={this.mobileSidebarToggle}/>
                 </Navbar.Header>
