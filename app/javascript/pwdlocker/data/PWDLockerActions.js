@@ -28,10 +28,14 @@ const Actions = {
                 });
             },
         });
+        // have to be returned here as well
+        // in order to state be initialized via getInitalState
+        // which is required for HeaderLinks
         return user;
     },
 
     getConfigVars(){
+        debugger;
         Dispatcher.dispatch({
             type: ActionTypes.ON_START_GET_CONFIG_VARS,
         });
@@ -44,10 +48,6 @@ const Actions = {
                     Dispatcher.dispatch({
                         type: ActionTypes.ON_GET_CONFIG_VARS,
                         configVars: res.config_vars,
-                    });
-                    Dispatcher.dispatch({
-                        type: ActionTypes.ON_GET_USER_DATA,
-                        user: res,
                     });
                 }
             },
