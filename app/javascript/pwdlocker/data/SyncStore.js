@@ -23,7 +23,6 @@ class SyncStore extends ReduceStore{
     reduce(state, action){
         switch (action.type){
             case ActionTypes.ON_START_GET_CONFIG_VARS:
-                debugger;
                 return state.set('isGetConfigVars', true);
             case ActionTypes.ON_GET_CONFIG_VARS:
                 return state.set('isGetConfigVars', false);

@@ -15,24 +15,26 @@ class HeaderLinks extends Component{
         const linkLogIn = "/sign_out";
         let userLinks = null;
         let syncStatus = null;
-        if(props.syncStatus.get('isGetConfigVars') === true) {
+        if(props.syncStatus != null){
+            if(props.syncStatus.get('isGetConfigVars') === true) {
 
-            syncStatus = (
-                <NavItem eventKey={3}><i className='pe-7s-cloud-download' style={iconStyle}/>&nbsp;Syncing</NavItem>
-            )
-        }
-        else if(props.syncStatus.get('isCommitConfigVars') === true) {
-            syncStatus = (
-                <NavItem eventKey={3}><i className='pe-7s-cloud-upload' style={iconStyle}/>&nbsp;Syncing</NavItem>
-            )
-        }
-        else {
-            syncStatus = (
-                <NavItem eventKey={3} onClick={(e) => {
-                    e.preventDefault();
-                    props.onCommitConfigVars(props.configVars)
-                }}><i className='pe-7s-refresh' style={iconStyle}/>&nbsp;Sync</NavItem>
-            )
+                syncStatus = (
+                    <NavItem eventKey={3}><i className='pe-7s-cloud-download' style={iconStyle}/>&nbsp;Syncing</NavItem>
+                )
+            }
+            else if(props.syncStatus.get('isCommitConfigVars') === true) {
+                syncStatus = (
+                    <NavItem eventKey={3}><i className='pe-7s-cloud-upload' style={iconStyle}/>&nbsp;Syncing</NavItem>
+                )
+            }
+            else {
+                syncStatus = (
+                    <NavItem eventKey={3} onClick={(e) => {
+                        e.preventDefault();
+                        props.onCommitConfigVars(props.configVars)
+                    }}><i className='pe-7s-refresh' style={iconStyle}/>&nbsp;Sync</NavItem>
+                )
+            }
         }
 
         // if user logged in add this links as well

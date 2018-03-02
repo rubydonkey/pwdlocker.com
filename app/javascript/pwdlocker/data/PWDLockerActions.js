@@ -35,7 +35,6 @@ const Actions = {
     },
 
     getConfigVars(){
-        debugger;
         Dispatcher.dispatch({
             type: ActionTypes.ON_START_GET_CONFIG_VARS,
         });
@@ -49,6 +48,10 @@ const Actions = {
                         type: ActionTypes.ON_GET_CONFIG_VARS,
                         configVars: res.config_vars,
                     });
+                    Dispatcher.dispatch({
+                        type: ActionTypes.ON_GET_USER_DATA,
+                        user: res,
+                    })
                 }
             },
         });

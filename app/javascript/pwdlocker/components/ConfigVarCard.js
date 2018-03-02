@@ -160,9 +160,9 @@ function getConfigVarStatus(props){
     if(props.configVar.isCreated === true)
         className = 'pe-7s-plus '.concat(className);
     else if(props.configVar.isUpdated === true)
-        className = 'pe-7s-plus '.concat(className);
+        className = 'pe-7s-pen '.concat(className);
     else if(props.configVar.isDeleted === true)
-        className = 'pe-7s-plus '.concat(className);
+        className = 'pe-7s-junk '.concat(className);
 
     return(
         <div>
