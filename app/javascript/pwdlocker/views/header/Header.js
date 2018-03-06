@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Navbar } from 'react-bootstrap';
 
-import HeaderLinks from 'pwdlocker/components/Header/HeaderLinks.js';
+import HeaderLinks from './HeaderLinks.js';
 
 class Header extends Component{
     constructor(props){

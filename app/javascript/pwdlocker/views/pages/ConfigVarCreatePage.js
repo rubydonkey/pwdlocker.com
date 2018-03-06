@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import ConfigVarForm from '../views/ConfigVarForm.js';
+import ConfigVarForm from '../ConfigVarForm.js';
 
 import { withRouter } from 'react-router'
 

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-import HeaderLinks from 'pwdlocker/components/Header/HeaderLinks.js';
+import HeaderLinks from './header/HeaderLinks.js';
 
 import { withRouter } from 'react-router'
 

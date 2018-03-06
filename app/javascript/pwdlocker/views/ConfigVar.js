@@ -3,7 +3,7 @@
 import React,  { Component }  from 'react';
 import * as jQuery from 'jquery';
 
-import ConfigVarCard from '../components/ConfigVarCard';
+import ConfigVarCard from './ConfigVarCard';
 
 export class ConfigVar extends Component {
     render() {

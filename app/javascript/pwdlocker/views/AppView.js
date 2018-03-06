@@ -3,11 +3,11 @@
 import React from 'react';
 
 import ConfigVars from './ConfigVars';
-import ConfigVarCreatePage from '../pages/ConfigVarCreatePage';
-import ConfigVarEditPage from '../pages/ConfigVarEditPage';
+import ConfigVarCreatePage from './pages/ConfigVarCreatePage';
+import ConfigVarEditPage from './pages/ConfigVarEditPage';
 
-import Sidebar from 'pwdlocker/components/Sidebar';
-import Header from 'pwdlocker/components/Header/Header';
+import Sidebar from './Sidebar';
+import Header from './header/Header';
 
 import { Route, Switch, Redirect } from 'react-router-dom';
 
