@@ -5,6 +5,7 @@
 'use strict';
 
 import React from 'react';
+import Fuse from 'fuse';
 
 import ConfigVar from './ConfigVar';
 

@@ -15,6 +15,7 @@ class HeaderLinks extends Component{
         const linkLogIn = "/sign_out";
         let userLinks = null;
         let syncStatus = null;
+        let searchFrom = null;
         if(props.syncStatus != null){
             if(props.syncStatus.get('isGetConfigVars') === true) {
 
@@ -55,11 +56,17 @@ class HeaderLinks extends Component{
             )
         }
 
+        if(props.user != null){
+            searchFrom = (
+                <Nav>
+                    {this.props.location.pathname === '/user/:userID/configVars'.replace(":userID", props.user.id) ? (<SearchForm {...props} />) : null}
+                </Nav>
+            )
+        }
+
         return (
             <div>
-                <Nav>
-                    {this.props.location.pathname === '/passwords' ? (<SearchForm {...props} />) : null}
-                </Nav>
+                {searchFrom}
                 {userLinks}
             </div>
         );
