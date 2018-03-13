@@ -103,7 +103,6 @@ const Actions = {
         });
     },
 
-
     changeSearchString(value){
         Dispatcher.dispatch({
             type: ActionTypes.CHANGE_SEARCH_STRING,

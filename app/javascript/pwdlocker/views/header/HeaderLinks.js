@@ -6,16 +6,14 @@ import SearchForm from 'pwdlocker/views/SearchForm';
 import { withRouter } from 'react-router'
 
 import clipboard from 'clipboard-js';
+import { Link } from 'react-router-dom';
 
 class HeaderLinks extends Component{
     render(){
         const iconStyle = {fontSize: '1.2em', verticalAlign: 'middle'};
         const props = this.props;
 
-        const linkLogIn = "/sign_out";
-        let userLinks = null;
         let syncStatus = null;
-        let searchFrom = null;
         if(props.syncStatus != null){
             if(props.syncStatus.get('isGetConfigVars') === true) {
 
@@ -38,6 +36,7 @@ class HeaderLinks extends Component{
             }
         }
 
+        let userLinks = null;
         // if user logged in add this links as well
         if(props.user != null){
             userLinks = (
@@ -56,16 +55,31 @@ class HeaderLinks extends Component{
             )
         }
 
+        let searchFrom = null;
         if(props.user != null){
             searchFrom = (
-                <Nav>
+                <Nav pullLeft>
                     {this.props.location.pathname === '/user/:userID/configVars'.replace(":userID", props.user.id) ? (<SearchForm {...props} />) : null}
+                </Nav>
+            )
+        }
+
+        let toggleView = null;
+        if(props.user != null){
+            toggleView = (
+                <Nav pullLeft>
+                <NavItem eventKey={3}>
+                    <Link to={`/user/${props.user.id}/applications`}>
+                        <i className='pe-7s-menu' style={iconStyle}/>
+                    </Link>
+                </NavItem>
                 </Nav>
             )
         }
 
         return (
             <div>
+                {toggleView}
                 {searchFrom}
                 {userLinks}
             </div>

@@ -14,14 +14,17 @@ import Actions from '../data/PWDLockerActions';
 // ON_GET_USER_DATA action send preparied data from which will be shown immediately
 // while being waited for data to be synchronized from heroku
 
+import ApplicationsStore    from '../data/ApplicationsStore';
 import SyncStore            from '../data/SyncStore';
 import ConfigVarsStore      from '../data/ConfigVarsStore';
 import UsersStore           from '../data/UserStore';
 import ConfigVarFormStore   from '../data/ConfigVarFormStore';
 import SearchFormStore      from '../data/SearchFormStore';
 
+
 function getStores() {
     return [
+        ApplicationsStore,
         SyncStore,
         ConfigVarsStore,
         UsersStore,
@@ -31,6 +34,8 @@ function getStores() {
 }
 function getState() {
     return{
+        applications: ApplicationsStore.getState(),
+
         syncStatus: SyncStore.getState(),
 
         configVars: ConfigVarsStore.getState(),
