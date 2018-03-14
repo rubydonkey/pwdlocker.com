@@ -83,6 +83,25 @@ function ControlsBlock(props) {
         display: (props.dataRevealed ? 'block' : 'none')
     }
 
+    // anything modified during the sync will be overwritten with new data
+    // while sync is in progress disable modifiying configVars
+    let editDeleteLinks = null;
+    if( props.syncStatus != null &&
+        props.syncStatus.get('isGetConfigVars') === false &&
+        props.syncStatus.get('isCommitConfigVars') === false){
+        editDeleteLinks = (
+            <div>
+                <Link to={`/user/${configVar.data.user_id}/configVar/${configVar.id}/edit`} className='btn btn-link btn-default btn-xs'>
+                    <i className='pe-7s-pen' /> Edit
+                </Link>
+
+                <a className='btn btn-link btn-xs btn-danger' onClick={() => props.onDeleteConfigVar(configVar)}>
+                    <i className='pe-7s-junk' /> Delete
+                </a>
+            </div>
+        );
+    }
+
     return(
         <div className="footer">
             <div className="actions">
@@ -102,15 +121,7 @@ function ControlsBlock(props) {
                 <a className='btn btn-link btn-xs btn-primary' onClick={(e)=> {e.stopPropagation(); clipboard.copy(props.plainConfigVar());}}>
                     <i className='pe-7s-copy-file' /> Copy ConfigVar
                 </a>
-
-                <Link to={`/user/${configVar.data.user_id}/configVar/${configVar.id}/edit`} className='btn btn-link btn-default btn-xs'>
-                    <i className='pe-7s-pen' /> Edit
-                </Link>
-
-                <a className='btn btn-link btn-xs btn-danger' onClick={() => props.onDeleteConfigVar(configVar)}>
-                    <i className='pe-7s-junk' /> Delete
-                </a>
-
+                {editDeleteLinks}
             </div>
         </div>
     );

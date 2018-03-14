@@ -44,7 +44,6 @@ function getState() {
         onDisableSyncConfigVar: Actions.disableConfigVarSync,
 
         user: UsersStore.getState(),
-        onSyncUserData: Actions.syncUserData,
 
         configVarForm: ConfigVarFormStore.getState(),
         onChangeFormName: Actions.changeFormName,

@@ -31,12 +31,29 @@ class Sidebar extends Component{
     }
 
     render(){
+        const props = this.props;
         const sidebarBackground = {
             backgroundImage: 'url(' + imagine + ')'
         };
+        // anything modified during the sync will be overwritten with new data
+        // while sync is in progress disable modifiying configVars
+        let newConfigVar = null;
+        if( props.syncStatus != null &&
+            props.syncStatus.get('isGetConfigVars') === false &&
+            props.syncStatus.get('isCommitConfigVars') === false)
+        {
+            const newConfigVarRoute = `/user/${this.props.user.id}/configVar/new`;
+            newConfigVar = (
+                <li className={this.activeRoute(newConfigVarRoute)}>
+                    <NavLink to={newConfigVarRoute} className="nav-link" activeClassName="active">
+                        <i className="pe-7s-plus"></i>
+                        <p>New ConfigVar</p>
+                    </NavLink>
+                </li>
+            )
+        }
 
         const configVarsRoute = `/user/${this.props.user.id}/configVars`;
-        const newConfigVarRoute = `/user/${this.props.user.id}/configVar/new`;
         return (
             <div id="sidebar" className="sidebar" data-color="black" data-image={imagine}>
                 <div className="sidebar-background" style={sidebarBackground}></div>
@@ -56,12 +73,7 @@ class Sidebar extends Component{
                                 <p>My ConfigVars</p>
                             </NavLink>
                         </li>
-                        <li className={this.activeRoute(newConfigVarRoute)}>
-                            <NavLink to={newConfigVarRoute} className="nav-link" activeClassName="active">
-                                <i className="pe-7s-plus"></i>
-                                <p>New ConfigVar</p>
-                            </NavLink>
-                        </li>
+                        {newConfigVar}
                     </ul>
                 </div>
             </div>
