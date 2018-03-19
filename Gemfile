@@ -1,5 +1,11 @@
 source 'https://rubygems.org'
 
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-heroku'
+gem 'platform-api'
+
+
 gem 'sprockets'
 
 gem 'dotenv-rails', :groups => [:development, :test]
@@ -61,4 +67,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'twilio-ruby', '4.13.0'
 
-ruby '2.3.1'
+ruby '2.5.0'

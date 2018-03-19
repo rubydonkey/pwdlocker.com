@@ -1,9 +1,0 @@
-<%= form_for(:session, url: login_path, method: "post", remote: true) do |f| %>
-
-    <%= f.label :token %>
-    <%= f.text_field :token , class: "form-control" %>
-
-    <%= f.submit "Login", class: "btn btn-success" %>
-    <%= f.submit "Resend", class: "btn btn-success", formaction: resend_token_signins_url %>
-
-<% end %>

@@ -20,7 +20,6 @@ class SearchFormStore extends ReduceStore{
 
     reduce(state, action){
         switch (action.type){
-
             case ActionTypes.CHANGE_SEARCH_STRING:
                 return action.value;
             default:
