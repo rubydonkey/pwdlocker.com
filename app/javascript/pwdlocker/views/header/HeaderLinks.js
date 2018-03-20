@@ -57,9 +57,11 @@ class HeaderLinks extends Component{
 
         let searchFrom = null;
         if(props.user != null){
-            searchFrom = (
+            if (this.props.location.pathname === '/user/:userID/configVars'.replace(":userID", props.user.id) ||
+                this.props.location.pathname === '/user/:userID/applications'.replace(":userID", props.user.id))
+                searchFrom = (
                 <Nav pullLeft>
-                    {this.props.location.pathname === '/user/:userID/configVars'.replace(":userID", props.user.id) ? (<SearchForm {...props} />) : null}
+                    <SearchForm {...props} />
                 </Nav>
             )
         }

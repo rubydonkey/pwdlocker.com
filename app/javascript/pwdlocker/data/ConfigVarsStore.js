@@ -34,7 +34,7 @@ class ConfigVarsStore extends ReduceStore {
                 return this.toConfigVars(action.configVars);
             case ActionTypes.CREATE_CONFIGVAR:
                 let configVar = action.configVar;
-                configVar.id = state.count();
+                configVar.id = this.getMaxID(state) + 1;
                 configVar.data.is_created = true;
                 return state.set(configVar.id, new ConfigVar({
                     id: configVar.id,
@@ -90,12 +90,16 @@ class ConfigVarsStore extends ReduceStore {
         for (var i = 0; i < config_vars.length; i++)
         {
             const configVar = config_vars[i];
-            configVars = configVars.set(i, new ConfigVar({
-                id: i,
+            configVars = configVars.set(configVar.id, new ConfigVar({
+                id: configVar.id,
                 data: configVar,
             }));
         }
         return configVars;
+    }
+
+    getMaxID(state){
+        return state.reduce((max, configVar) => configVar.id > max ? configVar.id : max, -1);
     }
 }
 

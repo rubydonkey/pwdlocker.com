@@ -29,6 +29,8 @@ class ApplicationsStore extends ReduceStore{
     }
 
     toApplications(user){
+        // this id is just used for rendering
+        var cvID = 0;
         let applications = Immutable.Map();
         for(var i = 0; i < user.applications.length; i++){
             const userApp = user.applications[i];
@@ -39,7 +41,7 @@ class ApplicationsStore extends ReduceStore{
                     const cvApp = configVar.applications[k];
                     if(userApp.name == cvApp.name){
                         appConfigVars = appConfigVars.push(new ConfigVar({
-                            id: i,
+                            id: configVar.id,
                             data: configVar,
                         }));
                     }
