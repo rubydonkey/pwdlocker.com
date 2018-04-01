@@ -97,14 +97,16 @@ function ConfigVarApplicationsBlock(props){
 function UnusedApplicationsBlock(props) {
     const configVar = props.configVarForm.configVar;
 
-    const unusedApps = props.user.applications.filter((application) => {
-       return configVar.data.applications.filter(configApp => configApp.name === application.name).length === 0;
-    });
+    const [... apps] = props.user.applications.keys();
 
-    const applications = unusedApps.map((application) => {
+    const unusedApps = apps.filter((app) => {
+       return configVar.data.applications.find(configApp => configApp.name === app.name) === undefined;
+    });
+    
+    const applications = unusedApps.map((app, index) => {
         return(
-            <button className="btn btn-primary btn-xs" type="button" key={application.id} onClick={() => props.onAddAppToConfigVar(application)}>
-                {application.name}<span className="badge">Add</span>
+            <button className="btn btn-primary btn-xs" type="button" key={index} onClick={() => props.onAddAppToConfigVar(app)}>
+                {app.name}<span className="badge">Add</span>
             </button>
         );
     });

@@ -42,15 +42,15 @@ const Actions = {
             async: true,
             method: 'GET',
             url: '/user_data.json',
-            success: function(res) {
-                if(res != null) {
+            success: function(user) {
+                if(user != null) {
                     Dispatcher.dispatch({
                         type: ActionTypes.ON_GET_CONFIG_VARS,
-                        configVars: res.config_vars,
+                        configVars: user.config_vars,
                     });
                     Dispatcher.dispatch({
                         type: ActionTypes.ON_GET_USER_DATA,
-                        user: res,
+                        user: user,
                     })
                 }
             },
