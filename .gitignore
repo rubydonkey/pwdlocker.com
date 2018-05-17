@@ -29,3 +29,8 @@ config/database.yml
 /public/packs-test
 /node_modules
 /public/assets/*
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity

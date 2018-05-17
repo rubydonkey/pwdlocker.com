@@ -28,10 +28,6 @@ const Actions = {
                 });
             },
         });
-        // have to be returned here as well
-        // in order to state be initialized via getInitalState
-        // which is required for HeaderLinks
-        return user;
     },
 
     getConfigVars(){

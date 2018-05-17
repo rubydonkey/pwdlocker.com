@@ -9,7 +9,7 @@ import React from 'react';
 import ConfigVar from './ConfigVar';
 
 function ConfigVars(props) {
-    const filteredConfigVars = props.configVars.filter((configVar) => {
+    const filteredConfigVars = props.user.configVars.filter((configVar) => {
         return configVar.data.name.toLowerCase().indexOf(props.searchString.toLowerCase()) !== -1;
     });
 

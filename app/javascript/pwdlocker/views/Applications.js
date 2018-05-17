@@ -26,7 +26,7 @@ function Applications(props){
            return(
                <ConfigVar
                    key = {"" + application.id + configVar.id}
-                   configVar = {props.configVars.get(configVar.id)}
+                   configVar = {props.user.configVars.get(configVar.id)}
                    {...props}
                />
            )});

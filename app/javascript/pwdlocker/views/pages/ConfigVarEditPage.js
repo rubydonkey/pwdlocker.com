@@ -11,7 +11,7 @@ class ConfigVarEditPage extends Component {
     }
 
     getConfigVar(id) {
-        const configVars = this.props.configVars;
+        const configVars = this.props.user.configVars;
         return configVars.get(id);
     }
 

@@ -18,7 +18,8 @@ class ConfigVarsStore extends ReduceStore {
     }
 
     getInitialState(){
-        return Actions.getConfigVars();
+        Actions.getConfigVars();
+        return this.getState();
     }
 
     reduce(state, action){
