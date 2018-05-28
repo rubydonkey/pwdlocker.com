@@ -15,13 +15,13 @@ class HeaderLinks extends Component{
 
         let syncStatus = null;
         if(props.syncStatus != null){
-            if(props.syncStatus.get('isGetConfigVars') === true) {
+            if(props.syncStatus.get('isPullingUserData') === true) {
 
                 syncStatus = (
                     <NavItem eventKey={3}><i className='pe-7s-cloud-download' style={iconStyle}/>&nbsp;Syncing</NavItem>
                 )
             }
-            else if(props.syncStatus.get('isCommitConfigVars') === true) {
+            else if(props.syncStatus.get('isPushingConfigVars') === true) {
                 syncStatus = (
                     <NavItem eventKey={3}><i className='pe-7s-cloud-upload' style={iconStyle}/>&nbsp;Syncing</NavItem>
                 )
@@ -30,7 +30,7 @@ class HeaderLinks extends Component{
                 syncStatus = (
                     <NavItem eventKey={3} onClick={(e) => {
                         e.preventDefault();
-                        props.onCommitConfigVars(props.configVars)
+                        props.onPushConfigVars(props.user.configVars)
                     }}><i className='pe-7s-refresh' style={iconStyle}/>&nbsp;Sync</NavItem>
                 )
             }

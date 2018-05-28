@@ -15,21 +15,21 @@ class SyncStore extends ReduceStore{
 
     getInitialState(){
         return Immutable.Map({
-            isGetConfigVars: false,
-            isCommitConfigVars: false,
+            isPullingUserData: false,
+            isPushingConfigVars: false,
         });
     }
 
     reduce(state, action){
         switch (action.type){
-            case ActionTypes.ON_START_GET_CONFIG_VARS:
-                return state.set('isGetConfigVars', true);
-            case ActionTypes.ON_GET_CONFIG_VARS:
-                return state.set('isGetConfigVars', false);
-            case ActionTypes.ON_START_COMMIT_CONFIG_VARS:
-                return state.set('isCommitConfigVars', true);
-            case ActionTypes.ON_COMMIT_CONFIG_VARS:
-                return state.set('isCommitConfigVars', false);
+            case ActionTypes.ON_BEGIN_PULL_USER_DATA:
+                return state.set('isPullingUserData', true);
+            case ActionTypes.ON_END_PULL_USER_DATA:
+                return state.set('isPullingUserData', false);
+            case ActionTypes.ON_BEGIN_PUSH_CONFIG_VAR:
+                return state.set('isPushingConfigVars', true);
+            case ActionTypes.ON_END_PUSH_CONFIG_VAR:
+                return state.set('isPushingConfigVars', false);
             default:
                 return state;
         }

@@ -10,6 +10,7 @@ import {ReduceStore} from 'flux/utils';
 import Dispatcher from './PWDLockerDispatcher';
 import ActionTypes from './PWDLockerActionTypes';
 import Actions from './PWDLockerActions';
+import ConfigVar from './ConfigVar'
 
 class ConfigVarFormStore extends ReduceStore{
     constructor(){
@@ -68,9 +69,10 @@ class ConfigVarFormStore extends ReduceStore{
                 var copy = Object.assign({}, state);
                 copy.editConfigVar = true;
                 copy.errors = {};
+                const configVar = JSON.parse(JSON.stringify((action.configVar)));
                 for(var property in copy.configVar){
                     if(copy.configVar.hasOwnProperty(property)){
-                        copy.configVar[property] = action.configVar[property];
+                        copy.configVar[property] = configVar[property];
                     }
                 }
                 return copy;

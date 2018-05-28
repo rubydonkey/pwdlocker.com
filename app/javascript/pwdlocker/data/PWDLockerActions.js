@@ -30,9 +30,9 @@ const Actions = {
         });
     },
 
-    getConfigVars(){
+    pullUser(){
         Dispatcher.dispatch({
-            type: ActionTypes.ON_START_GET_CONFIG_VARS,
+            type: ActionTypes.ON_BEGIN_PULL_USER_DATA,
         });
         jQuery.ajax({
             async: true,
@@ -41,44 +41,41 @@ const Actions = {
             success: function(user) {
                 if(user != null) {
                     Dispatcher.dispatch({
-                        type: ActionTypes.ON_GET_CONFIG_VARS,
-                        configVars: user.config_vars,
-                    });
-                    Dispatcher.dispatch({
-                        type: ActionTypes.ON_GET_USER_DATA,
+                        type: ActionTypes.ON_END_PULL_USER_DATA,
                         user: user,
                     })
                 }
             },
         });
+
     },
 
-    commitConfigVar(configVar, configVars){
+    pushConfigVar(configVar, configVars){
         let changedConfigVars = configVars.filter((cv) => {
             return (cv.isCreated === true ||
                 cv.isUpdated === true ||
                 cv.isDeleted === true ||
-                cv.id == configVar.id
+                cv.id === configVar.id
             );
         });
-        if(changedConfigVars.size == 0){
-            Actions.getConfigVars();
-            return;
-        }
+//        if(changedConfigVars.size == 0){
+//            Actions.getConfigVars();
+//            return;
+//        }
 
-        Actions.commitConfigVars(changedConfigVars);
+        Actions.pushConfigVars(changedConfigVars);
     },
 
-    commitConfigVars(configVars){
+    pushConfigVars(configVars){
         let changedConfigVars = configVars.filter((configVar) => {
             return (configVar.isCreated === true || configVar.isUpdated === true || configVar.isDeleted === true);
         });
         if(changedConfigVars.size == 0){
-            Actions.getConfigVars();
+            Actions.pullUser();
             return;
         }
         Dispatcher.dispatch({
-            type: ActionTypes.ON_START_COMMIT_CONFIG_VARS,
+            type: ActionTypes.ON_BEGIN_PUSH_CONFIG_VAR,
         });
         jQuery.ajax({
             async: true,
@@ -92,9 +89,10 @@ const Actions = {
 
             success: function(res) {
                 Dispatcher.dispatch({
-                    type: ActionTypes.ON_COMMIT_CONFIG_VARS,
+                    type: ActionTypes.ON_END_PUSH_CONFIG_VAR,
                 });
-                Actions.getConfigVars();
+                // refresh with pushed data
+                Actions.pullUser();
             },
         });
     },

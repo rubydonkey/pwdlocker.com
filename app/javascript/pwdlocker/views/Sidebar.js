@@ -39,8 +39,8 @@ class Sidebar extends Component{
         // while sync is in progress disable modifiying configVars
         let newConfigVar = null;
         if( props.syncStatus != null &&
-            props.syncStatus.get('isGetConfigVars') === false &&
-            props.syncStatus.get('isCommitConfigVars') === false)
+            props.syncStatus.get('isPullingUserData') === false &&
+            props.syncStatus.get('isPushingConfigVars') === false)
         {
             const newConfigVarRoute = `/user/${this.props.user.id}/configVar/new`;
             newConfigVar = (

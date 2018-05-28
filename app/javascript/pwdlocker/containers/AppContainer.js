@@ -14,16 +14,13 @@ import Actions from '../data/PWDLockerActions';
 // while being waited for data to be synchronized from heroku
 
 import SyncStore            from '../data/SyncStore';
-import ConfigVarsStore      from '../data/ConfigVarsStore';
 import UsersStore           from '../data/UserStore';
 import ConfigVarFormStore   from '../data/ConfigVarFormStore';
 import SearchFormStore      from '../data/SearchFormStore';
 
-
 function getStores() {
     return [
         SyncStore,
-        ConfigVarsStore,
         UsersStore,
         ConfigVarFormStore,
         SearchFormStore,
@@ -33,12 +30,11 @@ function getState() {
     return{
         syncStatus: SyncStore.getState(),
 
-        configVars: ConfigVarsStore.getState(),
-        onCommitConfigVar: Actions.commitConfigVar,
-        onCommitConfigVars: Actions.commitConfigVars,
-        onDisableSyncConfigVar: Actions.disableConfigVarSync,
+        onPushConfigVar: Actions.pushConfigVar,
+        onPushConfigVars: Actions.pushConfigVars,
 
         user: UsersStore.getState(),
+        onDisableSyncConfigVar: Actions.disableConfigVarSync,
 
         configVarForm: ConfigVarFormStore.getState(),
         onChangeFormName: Actions.changeFormName,

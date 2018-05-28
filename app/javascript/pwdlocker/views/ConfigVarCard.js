@@ -87,8 +87,8 @@ function ControlsBlock(props) {
     // while sync is in progress disable modifiying configVars
     let editDeleteLinks = null;
     if( props.syncStatus != null &&
-        props.syncStatus.get('isGetConfigVars') === false &&
-        props.syncStatus.get('isCommitConfigVars') === false){
+        props.syncStatus.get('isPullingUserData') === false &&
+        props.syncStatus.get('isPushingConfigVars') === false){
         editDeleteLinks = (
             <div>
                 <Link to={`/user/${configVar.data.user_id}/configVar/${configVar.id}/edit`} className='btn btn-link btn-default btn-xs'>
@@ -163,8 +163,8 @@ function getConfigVarStatus(props){
     if(!props.configVar.isCreated && !props.configVar.isUpdated && !props.configVar.isDeleted)
         return;
 
-    const onDisableConfigVar = () => props.onDisableSyncConfigVar(props.configVar);
-    const onCommitConfigVar = () => props.onCommitConfigVar(props.configVar, props.configVars);
+    const onDisableSyncConfigVar = () => props.onDisableSyncConfigVar(props.configVar);
+    const onPushConfigVar = () => props.onPushConfigVar(props.configVar, props.user.configVars);
 
     var className = 'pull-right';
 
@@ -177,8 +177,8 @@ function getConfigVarStatus(props){
 
     return(
         <div>
-            <i className={className} onClick={onDisableConfigVar}/>
-            <i className='pe-7s-refresh pull-right' onClick={onCommitConfigVar}/>
+            <i className={className} onClick={onDisableSyncConfigVar}/>
+            <i className='pe-7s-refresh pull-right' onClick={onPushConfigVar}/>
         </div>
     );
 }
