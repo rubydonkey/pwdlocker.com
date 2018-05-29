@@ -16,10 +16,10 @@ class UserStore extends ReduceStore {
     }
 
     getInitialState(){
+        Actions.pullUser();
         Actions.getUser();
         // this is async call so after done
         // store will have updated state
-        Actions.pullUser();
         // return updated state
         return this.getState();
     }
@@ -28,9 +28,8 @@ class UserStore extends ReduceStore {
         switch (action.type){
             case ActionTypes.ON_GET_USER_DATA:
             case ActionTypes.ON_END_PULL_USER_DATA:
-                const user = this.parseUserData(action.user);
-                return user;
-            case ActionTypes.CREATE_CONFIGVAR:{
+                return this.parseUserData(action.user);
+            case ActionTypes.CREATE_CONFIGVAR:
                 action.configVar.id = this.getNextID(state);
                 action.configVar.data.is_created = true;
                 state.configVars = state.configVars.set(action.configVar.id, new ConfigVar({
@@ -38,14 +37,9 @@ class UserStore extends ReduceStore {
                     isCreated: true,
                     data: action.configVar.data,
                 }));
-                const [... applicationsKeys] = state.applications.keys();
-                action.configVar.data.applications.map(application => {
-                    const applicationKey = applicationsKeys.find(app => app.name == application.name);
-                    let appConfigVars = state.applications.get(applicationKey).push(action.configVar);
-                    state.applications = state.applications.set(applicationKey, appConfigVars);
-                });}
+                state.applications = this.updateApplications(state.applications, action.configVar);
                 return this.createState(state);
-            case ActionTypes.UPDATE_CONFIGVAR: {
+            case ActionTypes.UPDATE_CONFIGVAR:
                 if (action.configVar.isCreated === false) {
                     // if new created is updated later before saved in db
                     // flag should remain created so it will be created in db during sync
@@ -61,7 +55,6 @@ class UserStore extends ReduceStore {
 
                 state.applications = this.updateApplications(state.applications, action.configVar);
                 return this.createState(state);
-            }
             case ActionTypes.DELETE_CONFIGVAR:
                 if(action.configVar.isCreated === true){
                     state = this.deleteConfigVar(state, action.configVar);
@@ -80,25 +73,20 @@ class UserStore extends ReduceStore {
                 if(action.configVar.isCreated === true){
                     state = this.deleteConfigVar(state, action.configVar);
                 }
+                // undo to previous values
+                else if(action.configVar.isUpdated === true) {
+                    action.configVar = state.undoEdit.get(action.configVar.id);
+                    state.configVars = state.configVars.set(action.configVar.id, action.configVar);
+                    state.applications = this.updateApplications(state.applications, action.configVar);
+                }
                 else{
-                    // undo to previous values
-                    if(action.configVar.isUpdated === true)
-                        action.configVar = state.undoEdit.get(action.configVar.id);
-
-                    state.configVars = state.configVars.setIn([action.configVar.id, "isCreated"], false);
-                    state.configVars = state.configVars.setIn([action.configVar.id, "isUpdated"], false);
                     state.configVars = state.configVars.setIn([action.configVar.id, "isDeleted"], false);
-
-                    action.configVar.data.is_created = false;
-                    action.configVar.data.is_updated = false;
                     action.configVar.data.is_deleted = false;
                     state.configVars = state.configVars.setIn([action.configVar.id, "data"], action.configVar.data);
-
-                    state.applications = this.updateApplications(state.applications, action.configVar);
                 }
                 return this.createState(state);
             default:
-                return state;
+                return this.createState(state);
         }
     }
 
@@ -111,7 +99,7 @@ class UserStore extends ReduceStore {
         configVar.data.applications.map(app => {
             const applicationKey = applicationsKeys.find(key => key.name == app.name);
             let configVars = state.applications.get(applicationKey);
-            configVars = configVars.splice(configVars.indexOf(configVar), 1);
+            configVars = configVars.splice(configVars.findIndex(cv => cv.id === configVar.id), 1);
             state.applications = state.applications.set(applicationKey, configVars);
         });
         // than from configVars
@@ -160,6 +148,8 @@ class UserStore extends ReduceStore {
     }
 
     createState(state){
+        if(state === undefined)
+            return null;
         return {
             configVars: state.configVars,
             applications: state.applications,
@@ -174,7 +164,7 @@ class UserStore extends ReduceStore {
             // check if config var is removed from application
            if(configVars.find(cv => cv.id === configVar.id) &&
            !configVar.data.applications.find(app => app.name === applicationKey.name)){
-               configVars = configVars.splice(configVars.indexOf(configVar), 1);
+               configVars = configVars.splice(configVars.findIndex(cv => cv.id === configVar.id), 1);
                applications = applications.set(applicationKey, configVars);
            }
            // check if new app is added to config var

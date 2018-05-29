@@ -97,10 +97,10 @@ function ConfigVarApplicationsBlock(props){
 function UnusedApplicationsBlock(props) {
     const configVar = props.configVarForm.configVar;
 
-    const [... apps] = props.user.applications.keys();
+    const [... applicationsKeys] = props.user.applications.keys();
 
-    const unusedApps = apps.filter((app) => {
-       return configVar.data.applications.find(configApp => configApp.name === app.name) === undefined;
+    const unusedApps = applicationsKeys.filter((applicationKey) => {
+       return configVar.data.applications.find(configApp => configApp.name === applicationKey.name) === undefined;
     });
     
     const applications = unusedApps.map((app, index) => {
