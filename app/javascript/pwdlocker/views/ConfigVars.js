@@ -7,13 +7,33 @@
 import React from 'react';
 
 import ConfigVar from './ConfigVar';
+import Fuse from 'fuse.js';
 
 function ConfigVars(props) {
-    const filteredConfigVars = props.user.configVars.filter((configVar) => {
-        return configVar.data.name.toLowerCase().indexOf(props.searchString.toLowerCase()) !== -1;
-    });
 
-    const configVars = filteredConfigVars.entrySeq().map(([index, configVar]) => {
+    var   options      = {
+        shouldSort: true,
+        threshold: 0.6,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: [
+            "data.name",
+        ]
+    };
+
+    const configVarsFuse = props.user.configVars.toList().toJS();
+    var fuse = new Fuse(configVarsFuse, options);
+
+    let filteredConfigVars;
+
+    if(props.searchString != "")
+        filteredConfigVars = fuse.search(props.searchString);
+    else
+        filteredConfigVars = configVarsFuse;
+
+    const configVars = filteredConfigVars.map(configVar => {
         return(
             <ConfigVar
                 key = {configVar.id}

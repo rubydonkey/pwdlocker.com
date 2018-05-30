@@ -1,19 +1,36 @@
 'use strict';
 
 import React from 'react';
+import Fuse from 'fuse.js';
 
 import ConfigVar from './ConfigVar';
 
 function Applications(props){
+
+    var   options      = {
+        shouldSort: true,
+        threshold: 0.6,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: [
+            "data.name",
+        ]
+    };
+
     const [... applicationsKeys] = props.user.applications.keys();
-
     const applicationsCards = applicationsKeys.map( applicationKey => {
-        const configVars = props.user.applications.get(applicationKey);
-        const filteredConfigVars = configVars.filter((configVar) => {
-            return configVar.data.name.toLowerCase().indexOf(props.searchString.toLowerCase()) != -1;
-        });
+        const configVars = props.user.applications.get(applicationKey).toList().toJS();
 
-        if(filteredConfigVars.size === 0)
+        const fuse = new Fuse(configVars, options);
+        let filteredConfigVars;
+        if(props.searchString != "")
+            filteredConfigVars = fuse.search(props.searchString);
+        else
+            filteredConfigVars = configVars;
+
+        if(filteredConfigVars.length === 0)
             return null;
 
         const configVarsCards = filteredConfigVars.map((configVar) => {
@@ -43,7 +60,5 @@ function Applications(props){
             {applicationsCards}
         </div>
     );
-
 }
-
 export default Applications;
