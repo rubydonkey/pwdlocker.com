@@ -6,8 +6,8 @@
 import * as jQuery from 'jquery';
 import * as Immutable from 'immutable';
 
-import Dispatcher from './PWDLockerDispatcher';
-import ActionTypes from './PWDLockerActionTypes';
+import Dispatcher from './Dispatcher';
+import ActionTypes from './ActionTypes';
 
 import ConfigVar from './ConfigVar';
 
@@ -39,12 +39,10 @@ const Actions = {
             method: 'GET',
             url: '/user_data.json',
             success: function(user) {
-                if(user != null) {
-                    Dispatcher.dispatch({
-                        type: ActionTypes.ON_END_PULL_USER_DATA,
-                        user: user,
-                    })
-                }
+                Dispatcher.dispatch({
+                    type: ActionTypes.ON_END_PULL_USER_DATA,
+                    user: user,
+                });
             },
         });
 
@@ -58,11 +56,6 @@ const Actions = {
                 cv.id === configVar.id
             );
         });
-//        if(changedConfigVars.size == 0){
-//            Actions.getConfigVars();
-//            return;
-//        }
-
         Actions.pushConfigVars(changedConfigVars);
     },
 
@@ -85,7 +78,7 @@ const Actions = {
             data: {
                 configVars: changedConfigVars.toJSON(),
             },
-            url: '/commit_config_vars.json',
+            url: '/push_config_vars.json',
 
             success: function(res) {
                 Dispatcher.dispatch({
@@ -94,6 +87,31 @@ const Actions = {
                 // refresh with pushed data
                 Actions.pullUser();
             },
+        });
+    },
+
+    getWorkProgress(){
+        let user = null;
+        jQuery.ajax({
+            async: true,
+            method: 'GET',
+            url: '/work_progress.json',
+            success: function(res) {
+                if(res != null){
+                    Dispatcher.dispatch({
+                        type: ActionTypes.ON_GET_WORK_PROGRESS,
+                        workProgress: res,
+                    });}
+            },
+        });
+    },
+
+    resetWorkProgress(){
+        let user = null;
+        jQuery.ajax({
+            async: true,
+            method: 'GET',
+            url: '/reset_work_progress.json',
         });
     },
 

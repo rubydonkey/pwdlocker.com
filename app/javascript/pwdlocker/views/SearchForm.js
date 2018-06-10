@@ -3,15 +3,24 @@
  */
 
 import React from 'react';
+import { Navbar } from 'react-bootstrap';
+import { FormGroup } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
+
+
 
 function SearchForm(props) {
     return (
-        <form className="navbar-form navbar-left">
-          <input value={props.searchString}
-               onChange={(e) => props.onChangeSearchString(e.target.value)}
-               placeholder="Search passwords..."
-               className='form-control password-search' />
-        </form>
+        <Navbar.Form pullLeft>
+            <FormGroup>
+                <FormControl
+                    type='text'
+                    placeholder='Search Config Var'
+                    onChange={ (e) => props.onChangeSearchString(e.target.value)}
+                    defaultVaule={props.searchString}
+                />
+            </FormGroup>
+        </Navbar.Form>
     );
 }
 

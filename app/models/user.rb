@@ -13,7 +13,7 @@ class User < ApplicationRecord
     @user
   end
 
-  def pull_config_vars
+  def pull_config_vars(session)
     @heroku = PlatformAPI.connect_oauth(token)
     heroku_apps = @heroku.app.list
 
@@ -27,9 +27,12 @@ class User < ApplicationRecord
       all_applications.delete(application.id)
     end
 
-    heroku_apps.each do |heroku_application|
-      heroku_application_name = heroku_application['name']
+    heroku_apps.each_with_index do |heroku_application, index|
 
+      work_progress = (index + 1).to_f / heroku_apps.length.to_f * 100.0
+      update_attribute(:work_progress, work_progress)
+
+      heroku_application_name = heroku_application['name']
       # add applications to the user if not exists
       if all_applications.find { |application|
         application.name == heroku_application_name }.nil?
@@ -65,10 +68,12 @@ class User < ApplicationRecord
     end
   end
 
-  def commit_config_vars(config_vars)
+  def push_config_vars(config_vars)
     heroku = PlatformAPI.connect_oauth(token)
-    config_vars.each do |config_var|
+    config_vars.each_with_index do |config_var, index|
       commit_config_var(heroku, config_var)
+      work_progress = (index + 1).to_f / config_vars.length.to_f * 100.0
+      update_attribute(:work_progress, work_progress)
     end
   end
 

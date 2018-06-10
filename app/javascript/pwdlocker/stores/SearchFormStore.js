@@ -6,8 +6,8 @@
 
 import {ReduceStore} from 'flux/utils';
 
-import Dispatcher from './PWDLockerDispatcher';
-import ActionTypes from './PWDLockerActionTypes';
+import Dispatcher from '../data/Dispatcher';
+import ActionTypes from '../data/ActionTypes';
 
 class SearchFormStore extends ReduceStore{
     constructor(){

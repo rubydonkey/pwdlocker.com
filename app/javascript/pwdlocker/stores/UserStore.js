@@ -4,11 +4,11 @@ import * as Immutable from 'immutable';
 
 import {ReduceStore} from 'flux/utils';
 
-import Dispatcher from './PWDLockerDispatcher';
-import ActionTypes from './PWDLockerActionTypes';
-import Actions from './PWDLockerActions';
+import Dispatcher from '../data/Dispatcher';
+import ActionTypes from '../data/ActionTypes';
+import Actions from '../data/Actions';
 
-import ConfigVar from './ConfigVar';
+import ConfigVar from '../data/ConfigVar';
 
 class UserStore extends ReduceStore {
     constructor(){

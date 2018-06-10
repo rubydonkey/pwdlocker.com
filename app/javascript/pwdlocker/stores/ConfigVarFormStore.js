@@ -7,10 +7,10 @@
 
 import {ReduceStore} from 'flux/utils';
 
-import Dispatcher from './PWDLockerDispatcher';
-import ActionTypes from './PWDLockerActionTypes';
-import Actions from './PWDLockerActions';
-import ConfigVar from './ConfigVar'
+import Dispatcher from '../data/Dispatcher';
+import ActionTypes from '../data/ActionTypes';
+import Actions from '../data/Actions';
+import ConfigVar from '../data/ConfigVar'
 
 class ConfigVarFormStore extends ReduceStore{
     constructor(){

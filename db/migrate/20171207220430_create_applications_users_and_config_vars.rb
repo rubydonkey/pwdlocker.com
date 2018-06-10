@@ -10,7 +10,7 @@ class CreateApplicationsUsersAndConfigVars < ActiveRecord::Migration[5.1]
       t.string :uid
 
       ## Database authenticatable
-      t.string :email,              default: ""
+      t.string :email, default: ''
 
       ## Rememberable
       t.datetime :remember_created_at

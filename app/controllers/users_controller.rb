@@ -8,16 +8,27 @@ class UsersController < ApplicationController
   def user_data
     if current_user
       @user = current_user
-      @user.pull_config_vars
+      @user.pull_config_vars(session)
     end
     render :json => @user.as_json(include: [:applications, config_vars: { include: :applications, methods: [:is_created, :is_updated, :is_deleted]}])
   end
 
-  def commit_config_vars
+  def push_config_vars
     return unless current_user
     config_vars = parse_config_vars(params[:configVars])
-    current_user.commit_config_vars(config_vars)
+    current_user.push_config_vars(config_vars)
     render json: {}, status: :no_content
+  end
+
+  def work_progress
+    return unless current_user
+    render :json => current_user.work_progress
+  end
+
+  def reset_work_progress
+    if(current_user)
+      current_user.update_attribute(:work_progress, 0.0)
+    end
   end
 
   def parse_config_vars(data)
@@ -43,5 +54,4 @@ class UsersController < ApplicationController
     end
     config_vars
   end
-
 end

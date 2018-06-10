@@ -5,7 +5,7 @@
 import {Container} from 'flux/utils';
 
 import AppView from '../views/AppView';
-import Actions from '../data/PWDLockerActions';
+import Actions from '../data/Actions';
 
 // ConfigVarsStore have to be created before UsersStore
 // so it will be available to respond on ON_GET_USER_DATA action
@@ -13,10 +13,10 @@ import Actions from '../data/PWDLockerActions';
 // ON_GET_USER_DATA action send preparied data from which will be shown immediately
 // while being waited for data to be synchronized from heroku
 
-import SyncStore            from '../data/SyncStore';
-import UsersStore           from '../data/UserStore';
-import ConfigVarFormStore   from '../data/ConfigVarFormStore';
-import SearchFormStore      from '../data/SearchFormStore';
+import SyncStore            from '../stores/SyncStore';
+import UsersStore           from '../stores/UserStore';
+import ConfigVarFormStore   from '../stores/ConfigVarFormStore';
+import SearchFormStore      from '../stores/SearchFormStore';
 
 function getStores() {
     return [

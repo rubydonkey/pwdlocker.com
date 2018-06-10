@@ -15,10 +15,11 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 function AppView(props) {
 
     let mainPanel = null;
+    let sideBar = null;
     if(props.user != null)
     {
         mainPanel = (
-            <div>
+            <div className='padding-top'>
                 <Switch>
                     <Redirect from="/" exact to={`/user/${props.user.id}/configVars`}/>
                     <Route path="/user/:userID/configVars" render={() => <ConfigVars  {...props} />}/>
@@ -26,14 +27,15 @@ function AppView(props) {
                     <Route path="/user/:userID/configVar/:configVarID/edit" render={() => <ConfigVarEditPage  {...props} />}/>
                     <Route path="/user/:userID/configVar/new" render={() => <ConfigVarCreatePage  {...props} />}/>
                 </Switch>
-                <Sidebar {...props} />
             </div>
-        )
+        );
+        sideBar = <Sidebar {...props}/>
     }
 
     return (
         <div className='wrapper'>
             <div className='main-panel'>
+                {sideBar}
                 <Header {...props}/>
                 {mainPanel}
             </div>

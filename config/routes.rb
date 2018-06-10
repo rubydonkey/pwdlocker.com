@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   resources :users
 
   get 'user_data' => 'users#user_data'
-  post 'commit_config_vars' => 'users#commit_config_vars'
+  post 'push_config_vars' => 'users#push_config_vars'
+  get 'work_progress' => 'users#work_progress'
+  get 'reset_work_progress' => 'users#reset_work_progress'
 
 end
