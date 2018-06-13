@@ -29,13 +29,15 @@ function AppView(props) {
                 </Switch>
             </div>
         );
-        sideBar = <Sidebar {...props}/>
+        sideBar = (
+                <Sidebar {...props}/>
+        );
     }
 
     return (
         <div className='wrapper'>
+            {sideBar}
             <div className='main-panel'>
-                {sideBar}
                 <Header {...props}/>
                 {mainPanel}
             </div>
